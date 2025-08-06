@@ -1,4 +1,4 @@
-\# FrontEnd-Passos
+# FrontEnd-Passos
 
 
 
@@ -6,7 +6,7 @@
 
 
 
-\## Objetivo
+## Objetivo
 
 
 
@@ -14,7 +14,7 @@ Documentar minha evolução no front-end, compreendendo conceitos fundamentais c
 
 
 
-\## Estrutura
+## Estrutura
 
 
 
@@ -22,19 +22,19 @@ Os arquivos estão separados por temas ou desafios, com foco em aprendizado prá
 
 
 
-\## O que estou aprendendo
+## O que estou aprendendo
 
 
 
-\- Eventos e interações
+- Eventos e interações
 
-\- Estruturação de sites com HTML + CSS
+- Estruturação de sites com HTML + CSS
 
-\- Uso de variáveis, funções e estruturas de repetição
+- Uso de variáveis, funções e estruturas de repetição
 
 
 
-\## Observações
+## Observações
 
 
 
