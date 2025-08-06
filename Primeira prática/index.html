@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-B" />
+    <script type="text/javascript">
+      var nome;
+
+        nome = prompt("Olá, qual é o seu nome?");
+        nome = nome.trim();
+        while (nome.length < 3) {
+          alert("Por favor, insira o seu nome!");
+          nome = prompt("Olá, qual é o seu nome?");
+          nome = nome.trim();
+        }
+
+        alert("Olá, " + nome + " Bem vindo ao seu primeiro dia de Aula");
+
+        document.write(
+          "<h1> Olá <code>" + nome + "</code> começamos mais um ano</h1>"
+        );
+
+      document.write("<h2> <b> Obrigado por ter vindo! </b></h2>");
+
+      const h1 = document.createElement("h1");
+      h1.innerHTML = `Apareci ${nome}!`;
+    </script>
+    <style>
+        
+      h1 {
+        color: aqua;
+        font-size: larger;
+      }
+      p {
+        color:brown;
+        background-color: bisque;
+        font-size: 30px;
+      }
+      
+      cursor{
+        
+        cursor: pointer;
+        color: aqua;
+      }
+      
+    </style>
+  </head>
+  <body>
+    <a href="https://abre.ai/fK1r"> <button>Jamais clique aqui</button> </a>
+    <br />
+
+    <button onclick="document.body.appendChild(h1);">Pense bem...</button>
+
+    <script type="text/javascript">
+      var contador = 0, corMudadaVez = 0;
+        const exibirContagem = document.createElement("p");
+        const msgCor = document.createElement("p");
+       
+    
+
+      function aumentar() {
+        
+        contador++;
+        exibirContagem.innerHTML = `Esta é a ${contador}° vez que este botão foi clicado!<br>`;
+        document.body.appendChild(exibirContagem);
+      }
+      function mudaCor(){
+        
+        corMudadaVez++;
+        msgCor.innerHTML = `A cor foi mudada pela ${corMudadaVez}° vez, a cor atual é ${document.body.style.backgroundColor}!<br>`;
+        document.body.appendChild(msgCor);
+
+        let r = (Math.random() * 255), g = (Math.random() * 255), b = (Math.random() * 255);
+
+        document.body.style.backgroundColor = `rgb(${r},${g},${b})`;
+        
+    }
+
+    </script>
+
+    <button onclick="aumentar()";>
+      <code> Contagem </code>
+    </button>
+
+    <button onclick="mudaCor()"> Mudar de cor</button>
+
+  </body>
+</html>
