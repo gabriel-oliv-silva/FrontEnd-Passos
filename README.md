@@ -2,7 +2,7 @@
 
 
 
-🧠 Repositório criado para armazenar meus estudos, experimentos e pequenos projetos relacionados ao front-end.
+Repositório criado para armazenar meus estudos, experimentos e pequenos projetos relacionados ao front-end.
 
 
 
@@ -18,7 +18,7 @@ Documentar minha evolução no front-end, compreendendo conceitos fundamentais c
 
 
 
-Os arquivos estão separados por temas ou desafios, com foco em aprendizado prático. Cada exemplo é construído usando apenas \*\*HTML, CSS e JS vanilla\*\*, também tenho interesse em estudar frameworks como React.
+Os arquivos estão separados por temas ou desafios, com foco em aprendizado prático. Cada exemplo é construído usando apenas **HTML, CSS e JS vanilla**, também tenho interesse em estudar frameworks como React.
 
 
 
