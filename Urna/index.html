@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Urna eletrônica</title>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+
+  <body>
+    <p onclick="resetar()" id="reset" style="display: none;">Reset</p>
+    <div class="container">
+      <div id="resultado" style="display: none"></div>
+
+      <div class="tela">
+        <h3>Presidente</h3>
+
+        <label>Numero:</label>
+        <input type="text" disabled id="n1" />
+        <input type="text" disabled id="n2" />
+        <p>Nome: <span id="NomeCandidato"></span></p>
+        <br />
+        <p>Partido: <span id="PartidoCandidato"></span></p>
+
+        <div><img id="foto" /></div>
+      </div>
+      <div class="telaAcao">
+        <div class="digitos">
+          <table>
+            <tr>
+              <td><button onclick="clique(1)">1</button></td>
+              <td><button onclick="clique(2)">2</button></td>
+              <td><button onclick="clique(3)">3</button></td>
+            </tr>
+            <tr>
+              <td><button onclick="clique(4)">4</button></td>
+              <td><button onclick="clique(5)">5</button></td>
+              <td><button onclick="clique(6)">6</button></td>
+            </tr>
+            <tr>
+              <td><button onclick="clique(7)">7</button></td>
+              <td><button onclick="clique(8)">8</button></td>
+              <td><button onclick="clique(9)">9</button></td>
+            </tr>
+            <tr>
+              <td>
+                <button onclick="clique(0)">0</button>
+              </td>
+            </tr>
+          </table>
+        </div>
+        <div class="acoes">
+          <button id="branco" onclick="branco()">Branco</button>
+          <button id="cancela" onclick="cancela()">Cancela</button>
+          <button id="confirma" onclick="confirmarVoto()">Confirma</button>
+        </div>
+      </div>
+    </div>
+    <button type="button" onclick="avanca()" id="avanca" style="display: none">
+      Avançar
+    </button>
+    <button type="button" style="display: none" id="up" onclick="up()">
+      <img src="./img/up.png" style="width: 35px" />
+    </button>
+
+    <script src="./js/script.js"></script>
+  </body>
+</html>
