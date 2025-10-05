@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Validar Cep</title>
+  </head>
+
+  <body>
+    <div class="container">
+      <h3>Validaçao</h3>
+      <form>
+        <div class="cont">
+          <table>
+            <tr>
+              <td><label for="nome">Insira o seu nome:</label></td>
+              <td><label for="cep">Cep:</label></td>
+            </tr>
+            <tr>
+              <td><input type="nome" id="nome" /> <br /></td>
+              <td>
+                <input
+                  type="number"
+                  id="cep"
+                  oninput="verificar()"
+                  maxlength="8"
+                  style="text-align: center;"
+                />
+              </td>
+            </tr>
+            <tr>
+              <td></td>
+              <td>
+                <button id="busca" onclick="buscaCep()" type="button">
+                  Buscar
+                </button>
+              </td>
+            </tr>
+            <tr>
+              <td><label for="rua">Rua:</label></td>
+              <td>
+                <label for="estado">Estado:</label>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="text" id="rua" /> <br /></td>
+              <td><input type="text" id="estado" /> <br /></td>
+            </tr>
+            <tr>
+              <td><label for="bairro">Bairro:</label></td>
+              <td>
+                <label for="regiao">Regiao:</label>
+              </td>
+            </tr>
+            <tr>
+              <td><input type="text" id="bairro" /> <br /></td>
+              <td>
+                <input type="text" id="regiao" />
+              </td>
+            </tr>
+            <tr>
+              <td><label for="uf">UF:</label></td>
+              <td><label for="num">Numero:</label></td>
+            </tr>
+            <tr>
+              <td><input type="text" id="uf" /> <br /></td>
+              <td><input type="number" id="num" /> <br /></td>
+            </tr>
+          </table>
+        </div>
+      </form>
+      <button type="button" id="enviar" onclick="enviar()">Enviar</button>
+      <p id="mensagem"></p>
+    </div>
+    <script src="./js/script.js"></script>
+  </body>
+</html>
