@@ -1,0 +1,140 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  transition: 0.5s;
+}
+
+main {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+#saudacao {
+  margin-bottom: 7px;
+}
+#data {
+  margin-top: 10px;
+}
+.relogio {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  font-family: sans-serif;
+  flex-direction: row;
+  background-color: #898989;
+  padding: 17px;
+  border-radius: 10px;
+  transition: color 0.3s ease;
+}
+@media screen and (max-width: 390px) {
+  .relogio {
+    flex-direction: column;
+  }
+}
+.tempo{
+  margin-top: 7px;
+}
+.valores {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+  background-color: #181b1b;
+  transition: 0.5s;
+  padding: 10px;
+  overflow: hidden; /* esconde número que sobe */
+  position: relative;
+  height: 100px;
+  width: 100px;
+  justify-content: center;
+  align-items: center;
+}
+.valores span {
+  display: block;
+  transition: transform 0.4s ease;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  text-align: center;
+}
+
+.valores span.sair {
+  transform: translateY(-100%); /* sobe o número antigo */
+  opacity: 0.5;
+}
+
+.valores span.entrar {
+  transform: translateY(100%); /* novo número entra de baixo */
+}
+
+#horas,
+#minutos,
+#segundos {
+  font-size: 60px;
+  transition: 0.5s;
+  transition: transform 0.5s ease, background 0.5s ease;
+  margin-top: 20px;
+}
+.lbl {
+  display: block;
+  height: 20px;
+  width: 44px;
+  background: #898989;
+  border-radius: 100px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.lbl:after {
+  position: absolute;
+  left: -2px;
+  top: -3px;
+  display: block;
+  width: 26px;
+  height: 26px;
+  border-radius: 100px;
+  background: rgb(214, 214, 214);
+  box-shadow: 0px 3px 3px rgba(0, 0, 0, 0.05);
+  content: "";
+  transition: all 0.3s ease;
+}
+
+.lbl:active:after {
+  transform: scale(1.15, 0.85);
+}
+
+.cbx:checked ~ label {
+  background: #4d5756;
+}
+
+.cbx:checked ~ label:after {
+  left: 20px;
+  background: #181b1b;
+}
+
+.cbx:disabled ~ label {
+  background: #d5d5d5;
+  pointer-events: none;
+}
+
+.cbx:disabled ~ label:after {
+  background: #bcbdbc;
+}
+
+.cntr {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.press {
+  margin-bottom: 40px;
+}
+
+.hidden {
+  display: none;
+}

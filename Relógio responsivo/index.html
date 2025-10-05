@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Relógio</title>
+  </head>
+  <body>
+    <main>
+        <div class="cntr">
+            <div class="row press">
+                <input type="checkbox" id="unchecked" class="cbx hidden" />
+                <label for="unchecked" class="lbl" onclick="mudarTema()"></label>
+          </div>
+        </div>
+        <p id="saudacao"></p>
+      <div class="relogio">
+        <div class="valores">
+          <span id="horas">00</span>
+          <span class="tempo">Horas</span>
+        </div>
+        <div class="valores">
+          <span id="minutos">00</span>
+          <span class="tempo">Minutos</span>
+        </div>
+        <div class="valores">
+          <span id="segundos">00</span>
+          <span class="tempo">Segundos</span>
+        </div>
+      </div>
+      <div id="data"></div>
+    </main>
+    <script src="./JS/script.js"></script>
+  </body>
+</html>
