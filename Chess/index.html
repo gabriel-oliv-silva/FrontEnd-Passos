@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="shortcut icon" href="./img/shortcut.png" />
+    <link rel="stylesheet" href="./css/style.css" />
+    <title>Chess</title>
+  </head>
+  <body>
+    <header>
+      <img id="logo" src="./img/Chess.png" style="width: 20vh" />
+      <h1>CHE<span class="dec">S</span><span class="dec">S</span></h1>
+    </header>
+    <h2>Versus!</h2>
+    <div id="escolha">
+      <h4>Escolha o modo de jogo:</h4>
+      <div class="cards">
+        <div class="card">
+          <div id="player" class="imgE" onclick="escolha(1)"></div>
+          <p>Player local</p>
+        </div>
+        <div class="card">
+          <div id="com" class="imgE" onclick="escolha(2)"></div>
+          <p>IA</p>
+        </div>
+      </div>
+    </div>
+    <div class="wrap" style="display: none">
+      <div id="boardWrap">
+        <div id="board" aria-label="tabuleiro de xadrez" role="grid"></div>
+      </div>
+      <div id="info">
+        <div class="status">Vez: <span id="turnLabel">Brancas</span></div>
+        <div class="small">
+          Clique numa peça para selecionar. Clique numa casa para mover. O
+          tabuleiro gira automaticamente conforme a vez.
+        </div>
+        <div style="height: 10px"></div>
+        <div class="controls">
+          <button id="undoBtn">Desfazer último</button>
+          <button id="resetBtn">Resetar jogo</button>
+          <button id="flipBtn">Virar manualmente (teste)</button>
+        </div>
+        <div style="height: 12px"></div>
+        <div>Logs recentes:</div>
+        <pre id="log" style="height: 180px; overflow: auto"></pre>
+        <div style="height: 8px"></div>
+        <div id="cronometro">Cronômetro: <span id="horas">00</span>:<span id="minutos">00</span>:<span id="segundos">00</span></div>
+      </div>
+    </div>
+
+    <script src="./js/chess.js"></script>
+  </body>
+</html>
