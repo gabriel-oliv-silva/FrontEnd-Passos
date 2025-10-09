@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1" />
     <link rel="shortcut icon" href="./img/shortcut.png" />
     <link rel="stylesheet" href="./css/style.css" />
+    
     <title>Chess</title>
   </head>
   <body>
@@ -12,21 +13,32 @@
       <img id="logo" src="./img/Chess.png" style="width: 20vh" />
       <h1>CHE<span class="dec">S</span><span class="dec">S</span></h1>
     </header>
-    <h2>Versus!</h2>
-    <div id="escolha">
-      <h4>Escolha o modo de jogo:</h4>
-      <div class="cards">
-        <div class="card">
-          <div id="player" class="imgE" onclick="escolha(1)"></div>
-          <p>Player local</p>
-        </div>
-        <div class="card">
+    <div id="endModal" class="modal hidden" aria-hidden="true">
+  <div class="modal-content" role="dialog" aria-labelledby="endTitle" aria-modal="true">
+    <h2 id="endTitle">Fim de jogo</h2>
+    <p id="endMsg">Mensagem</p>
+    <div class="modal-actions">
+      <button id="playAgainBtn">Jogar novamente</button>
+      <button id="closeModalBtn">Fechar</button>
+    </div>
+  </div>
+</div>
+
+<h2>Versus!</h2>
+<div id="escolha" style="display: none;">
+  <h4>Escolha o modo de jogo:</h4>
+  <div class="cards">
+    <div class="card">
+      <div id="player" class="imgE" onclick="escolha(1)"></div>
+      <p>Player local</p>
+    </div>
+    <div class="card">
           <div id="com" class="imgE" onclick="escolha(2)"></div>
           <p>IA</p>
         </div>
       </div>
     </div>
-    <div class="wrap" style="display: none">
+    <div class="wrap"">
       <div id="boardWrap">
         <div id="board" aria-label="tabuleiro de xadrez" role="grid"></div>
       </div>
@@ -49,7 +61,9 @@
         <div id="cronometro">Cronômetro: <span id="horas">00</span>:<span id="minutos">00</span>:<span id="segundos">00</span></div>
       </div>
     </div>
-
-    <script src="./js/chess.js"></script>
+    
+    <script type="module" src="./js/script.js"></script>
+    <script src="./js/mod.js"></script>
   </body>
-</html>
+  </html>
+  
