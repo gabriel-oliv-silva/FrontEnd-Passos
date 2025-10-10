@@ -438,4 +438,43 @@ function resetarCronometro() {
   if (min) min.innerText = "00";
   if (seg) seg.innerText = "00";
 }
-render();
+
+function escolha(num) {
+  const escolhaEl = document.getElementById("escolha");
+  const wrapEl = document.getElementsByClassName("wrap")[0];
+
+  escolhaEl.classList.add("fadeout");
+  setTimeout(() => {
+    escolhaEl.style.display = "none";
+  }, 300); // espera o fade terminar
+
+  if (num === 1) {
+    escolhaEl.classList.remove("fadeout");
+    wrapEl.style.display = "flex";
+    wrapEl.classList.add("fadein");
+    setTimeout(() => wrapEl.classList.remove("fadein"), 300);
+
+    log("Protótipo pronto — PvP local ativo");
+    render();
+  } else {
+    getAIMove();
+    console.log("Protótipo IA em construção... STATUS: 1%");
+    alert(
+      "Protótipo IA em produção...\nSTATUS: 1%\nA página será recarregada em 5 segundos;"
+    );
+    setTimeout(() => {
+      let s = 5;
+      const interval = setInterval(() => {
+        console.log(`Reiniciando em ${s} segundos;`);
+        s--;
+        if (s === 0) {
+          clearInterval(interval);
+          window.location.reload(true);
+        }
+      }, 1000);
+    }, 3000);
+  }
+}
+
+// 🔥 isto torna a função acessível fora do módulo:
+window.escolha = escolha;
