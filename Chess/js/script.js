@@ -76,6 +76,14 @@ function render() {
         const p = document.createElement("div");
         p.className = "piece";
         p.textContent = pieceToSymbol(piece);
+        // se o rei desta cor estiver em cheque, destaca
+        if (
+          piece.type === "k" &&
+          chess.inCheck() &&
+          piece.color === chess.turn()
+        ) {
+          p.classList.add("king-check");
+        }
         cell.appendChild(p);
       }
 
@@ -89,14 +97,6 @@ function render() {
     }
   }
 
-  boardEl.style.transform = flipped ? "rotate(180deg)" : "rotate(0deg)";
-  // gira peças para ficarem legíveis quando o tabuleiro girar
-  document
-    .querySelectorAll(".piece")
-    .forEach(
-      (p) => (p.style.transform = flipped ? "rotate(180deg)" : "rotate(0deg)")
-    );
-
   highlightSelected();
   // atualiza label
   if (turnLabel)
@@ -105,45 +105,79 @@ function render() {
 }
 
 // ---------- CLIQUE ----------
+// substitua sua função onCellClick por esta (cole sobre a antiga)
+// substitua sua função onCellClick por esta
 function onCellClick(e) {
-  const r = +this.dataset.r,
-    c = +this.dataset.c;
+  const r = +this.dataset.r, c = +this.dataset.c;
   const square = rcToSquare(r, c);
   const piece = chess.get(square);
 
   if (selected) {
     if (selected === square) {
-      // deseleciona
       selected = null;
       highlightSelected();
       return;
     }
 
-    // tenta mover via chess.js (promo automática para rainha)
-    const move = chess.move({ from: selected, to: square, promotion: "q" });
-    if (move) {
-      log(
-        `${move.color === "w" ? "Brancas" : "Pretas"}: ${move.from} -> ${
-          move.to
-        }`
-      );
-      cronometrar();
-      selected = null;
-      // alterna rotação conforme vez
-      flipped = chess.turn() === "b";
-      render();
-    } else {
-      // se não foi válido, se clicou em peça do jogador atual, seleciona a nova
+    // se não for legal, trocar seleção se clicou em peça própria
+    if (!isLegalMove(selected, square)) {
       const p2 = chess.get(square);
       if (p2 && p2.color === chess.turn()) {
         selected = square;
         highlightSelected();
       } else {
-        // inválido — limpa seleção
         selected = null;
         highlightSelected();
       }
+      return;
     }
+
+    // aqui: movimento é legal -> ANIMAÇÃO ANTES de aplicar o chess.move()
+    // símbolos para efeito visual
+    const fromPieceBefore = chess.get(selected);
+    const destPieceBefore = chess.get(square); // peça que existe no destino (se for captura)
+    const fromSymbol = pieceToSymbol(fromPieceBefore);
+    const toSymbol = destPieceBefore ? pieceToSymbol(destPieceBefore) : fromSymbol;
+
+    // coords DOM
+    const [fr, fc] = squareToRC(selected);
+    const [tr, tc] = squareToRC(square);
+
+    // pega elementos DOM da origem/destino (se existirem)
+    const fromCell = boardEl.children[fr * 8 + fc];
+    const toCell   = boardEl.children[tr * 8 + tc];
+    const originPieceEl = fromCell ? fromCell.querySelector('.piece') : null;
+    const existingDestPiece = toCell ? toCell.querySelector('.piece') : null;
+
+    // Esconder IMEDIATAMENTE os elementos DOM visíveis para evitar duplicata fantasma
+    if (originPieceEl) {
+      originPieceEl.style.transition = 'opacity 100ms linear';
+      originPieceEl.style.opacity = '0';
+      // forçar visibility hidden logo depois (pequeno delay evita flicker em alguns browsers)
+      setTimeout(() => { originPieceEl.style.visibility = 'hidden'; }, 80);
+    }
+    if (existingDestPiece) {
+      // marca remoção suave, e também esconde para evitar flashes
+      existingDestPiece.classList.add('removing');
+      existingDestPiece.style.visibility = 'hidden';
+    }
+
+    // bloqueia interações enquanto anima
+    boardEl.style.pointerEvents = 'none';
+
+    // ANIMAÇÃO: fade bonito (faz os fades de saída/entrada)
+    animateFadeMove(fromSymbol, toSymbol, fr, fc, tr, tc, () => {
+      // depois da animação, aplica o movimento real e atualiza o DOM
+      chess.move({ from: selected, to: square, promotion: 'q' });
+      // reativa interações
+      boardEl.style.pointerEvents = 'auto';
+      // limpa seleção e atualiza UI
+      selected = null;
+      cronometrar();
+      log(`${(fromPieceBefore.color === 'w') ? 'Brancas' : 'Pretas'}: ${selected || '??'} -> ${square}`);
+      render(); // renderiza estado real (inclui destaque de xeque)
+    });
+
   } else {
     // nenhuma seleção — seleciona se for peça da vez
     if (piece && piece.color === chess.turn()) {
@@ -151,6 +185,77 @@ function onCellClick(e) {
       highlightSelected();
     }
   }
+}
+
+// adiciona essa função ao seu script.js
+// adiciona esta função ao seu script.js (para criar o fade bonito)
+function animateFadeMove(fromSymbol, toSymbol, fr, fc, tr, tc, onDone) {
+  const S = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--size')) || 64;
+
+  const fromX = fc * S, fromY = fr * S;
+  const toX   = tc * S, toY   = tr * S;
+
+  // cria elemento de saída (fade out)
+  const fpOut = document.createElement('div');
+  fpOut.className = 'fade-piece';
+  fpOut.textContent = fromSymbol;
+  fpOut.style.left = '0';
+  fpOut.style.top = '0';
+  fpOut.style.transform = `translate(${fromX}px, ${fromY}px) scale(1)`;
+  fpOut.style.opacity = '1';
+  boardEl.appendChild(fpOut);
+
+  // cria elemento de entrada (fade in) no destino
+  const fpIn = document.createElement('div');
+  fpIn.className = 'fade-piece enter';
+  fpIn.textContent = toSymbol;
+  fpIn.style.left = '0';
+  fpIn.style.top = '0';
+  fpIn.style.transform = `translate(${toX}px, ${toY}px) scale(0.85)`;
+  fpIn.style.opacity = '0';
+  fpIn.style.filter = 'blur(2px)';
+  boardEl.appendChild(fpIn);
+
+  // força reflow
+  void fpOut.offsetWidth;
+
+  // executa animação: saída sobe/fade; entrada cresce e fica opaca
+  fpOut.classList.add('exit');
+  requestAnimationFrame(() => {
+    fpIn.classList.remove('enter');
+    fpIn.style.opacity = '1';
+    fpIn.style.transform = `translate(${toX}px, ${toY}px) scale(1)`;
+    fpIn.style.filter = 'blur(0)';
+  });
+
+  // remover ambos depois de terminarem (ou fallback)
+  let doneCount = 0;
+  function maybeDone() {
+    doneCount++;
+    if (doneCount >= 2) {
+      if (fpOut.parentElement) fpOut.parentElement.removeChild(fpOut);
+      if (fpIn.parentElement)  fpIn.parentElement.removeChild(fpIn);
+      if (typeof onDone === 'function') onDone();
+    }
+  }
+
+  const outEnd = (ev) => { if (ev.propertyName === 'opacity' || ev.propertyName === 'transform') { fpOut.removeEventListener('transitionend', outEnd); maybeDone(); } };
+  const inEnd  = (ev) => { if (ev.propertyName === 'opacity' || ev.propertyName === 'transform') { fpIn.removeEventListener('transitionend', inEnd); maybeDone(); } };
+
+  fpOut.addEventListener('transitionend', outEnd);
+  fpIn.addEventListener('transitionend', inEnd);
+
+  // fallback seguro
+  setTimeout(() => {
+    if (fpOut.parentElement) try { fpOut.parentElement.removeChild(fpOut); } catch(e){}
+    if (fpIn.parentElement)  try { fpIn.parentElement.removeChild(fpIn); } catch(e){}
+    if (doneCount < 2 && typeof onDone === 'function') onDone();
+  }, 200);
+}
+// verifica se um movimento from->to é legal (usa chess.js, sem mutar o estado)
+function isLegalMove(from, to) {
+  const moves = chess.moves({ square: from, verbose: true }) || [];
+  return moves.some(m => m.to === to);
 }
 
 // ---------- HIGHLIGHT e dicas ----------
