@@ -1,0 +1,248 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-color: #cecece;
+    transition: 0.5s;
+
+}
+
+header {
+    width: 100%;
+    height: max-content;
+    background-color: #242424;
+    color: white;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+}
+
+.container:first-of-type {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 250px;
+    background-image: url(https://cdn.pixabay.com/photo/2020/04/18/20/01/background-5060836_1280.jpg);
+    background-size: cover;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container:nth-of-type(2) img {
+    width: 200px;
+}
+.sobre{
+    margin: 40px;
+    font-weight: 400;
+}
+.sobreCard{
+    font-weight: 400;
+
+}
+.dados {
+    display: flex;
+    flex-direction: row;
+    gap: 80px;    
+    align-items: center;
+}
+.dados:last-of-type{
+    display: flex;
+    flex-direction: row-reverse;
+}
+.dados p {
+    width: 500px;
+    height: 200px;
+    text-align: justify;
+    display: flex;
+    align-items: center;
+}
+
+.container:nth-of-type(2) {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#bannerP {
+    position: absolute;
+    color: white;
+}
+
+#logo {
+    margin: 10px;
+    width: 100px;
+}
+
+#menu {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    list-style: none;
+    margin: 10px;
+}
+
+#menu li {
+    padding: 5px;
+    transition: 0.5s;
+    border-radius: 5px;
+    border: 1px solid #242424;
+
+}
+
+#menu li:hover {
+    transition: 0.5s;
+    border: 1px solid yellow;
+    cursor: pointer;
+
+}
+#cards{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    width: 100%;
+    align-items: center;
+    transition: 0.5s;
+}
+.card{
+    height: 270px;
+    width: 290px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 20px;
+    gap: 10px;
+    transition: 0.5s;
+}
+.card:hover{
+    box-shadow: 0px 0px 10px snow;
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+a{
+    color: white;
+    text-decoration: none;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    height: 350px;
+    width: 500px;
+    padding: 35px;
+    background-color: white;
+    margin-bottom: 22px;
+    
+}
+input{
+    width: 100%;
+    height: max-content;
+    padding: 10px;
+    border: #d3d3d3 solid 1px;
+    border-radius: 5px;
+}
+input[type="submit"]{
+    background-color: #242424;
+    transition: 0.5s;
+    color: white;
+}
+input[type="submit"]:hover{
+    transition: 0.5s;
+    transform: scale(1.1);
+    cursor: pointer;
+
+}
+#mensagem{
+    padding: 20px;
+}
+hr{
+    background-color: #383838;
+    width: 90%;
+    height: 5px;
+    border-radius: 5px;
+    margin-top: 25px;
+}
+.imgServices{
+    width: 100px;
+    height: 100px;
+    border-radius: 100px;
+    background-size: cover;
+}
+#i1{
+    background-image: url(../img/service1.jpg);
+
+}
+#i2{
+    background-image: url(../img/service2.jpg);
+
+}
+#i3{
+    background-image: url(../img/service3.jpg);
+
+}
+
+.card p{
+    text-align: center;
+    width: 270px;
+}
+footer{
+    background-color: #242424;
+    height: 80px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+}
+#show{
+    display: none;
+}
+#change{
+    position: absolute;
+    left: 10px;
+    font-size: small;
+    transition: 0.5s;
+    border: #242424 1px solid;
+    padding: 10px;
+}
+#change:hover{
+    transition: 0.5s;
+    border: wheat 1px dashed;
+    cursor: pointer;
+}
+@media (max-width: 930px){
+    #cards{
+        flex-direction: column;
+        align-content: space-around;
+        gap: 20px;
+        transition: 0.5s;
+    }
+    .dados{
+        flex-direction: column;
+        transition: 0.5s;
+    }
+    .dados p{
+        width: 80%;
+        height: auto;
+    }
+    header{
+        flex-direction: column;
+        transition: 0.5s;
+    }
+    form{
+        width: 90%;
+    }
+}

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/style.css">
+    <title>Avaliação</title>
+</head>
+
+<body>
+    <header>
+        <img src="https://placehold.co/100/" id="logo">
+        <ul id="menu">
+            <li><a href="#index.html">Inicio</a></li>
+            <li><a href="#sobre">Sobre</a></li>
+            <li><a href="#servicos">Serviços</a></li>
+            <li><a href="#portfolio">Portfólio</a></li>
+            <li><a href="#contato">Contato</a></li>
+        </ul>
+    </header>
+
+    <div class="container">
+        <p id="bannerP">Bem vindo à minha página</p>
+    </div>
+
+    <div class="container">
+        <h3 class="sobre" id="sobre">Sobre</h3>
+        <div class="dados">
+            <img
+                src="https://images.pexels.com/photos/25019974/pexels-photo-25019974/free-photo-of-mulher-camera-maquina-relogio-de-punho.jpeg">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum aperiam odio corporis, consectetur ducimus
+                repellat, distinctio, voluptatum dignissimos quia recusandae delectus nam eius libero laboriosam eum
+                perferendis accusantium excepturi natus?</p>
+        </div>
+        <h3 class="sobre" id="portfolio">Portfólio</h3>
+        <div class="dados">
+            <img
+                src="https://images.pexels.com/photos/906457/pexels-photo-906457.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Perspiciatis consectetur beatae, quae error ex
+                mollitia dolor debitis incidunt vitae officiis eos voluptatem veniam ipsum aliquam animi. Maiores
+                dignissimos tempora recusandae.
+                Repellendus, corporis alias. Praesentium eos, quaerat architecto nesciunt numquam incidunt odit
+                cupiditate, reiciendis voluptatem deserunt necessitatibus non fuga reprehenderit quia eum! Facere
+                doloremque nulla voluptates, ut ea sapiente doloribus ex.
+                Dignissimos sint qui obcaecati consequuntur animi quam eos voluptas ipsum corporis. Nesciunt eius error
+                expedita ipsum dignissimos laborum? Temporibus totam aliquid ipsa, tenetur in unde iusto magnam! Esse,
+                sed omnis.</p>
+        </div>
+        <h3 class="sobre" id="servicos">Serviços</h3>
+        <div id="cards">
+            <div class="card">
+
+                <div class="imgServices" id="i1">
+                </div>
+                <h3 class="sobreCard">Serviço 1</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div class="card">
+
+                <div class="imgServices" id="i2">
+                </div>
+
+                <h3 class="sobreCard">Serviço 2</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+            <div class="card">
+
+                <div class="imgServices" id="i3">
+                </div>
+
+                <h3 class="sobreCard">Serviço 3</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+        </div>
+        <hr>
+
+        <h3 class="sobre" id="contato">Contato</h3>
+        <form onsubmit="validar()">
+            <label for="nome">Nome:</label>
+            <input type="text" id="nome" placeholder="Digite o seu nome">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Insira o seu email">
+            <label for="mensagem">Mensagem:</label>
+            <input type="text" id="mensagem" placeholder="Digite a sua menagem">
+
+            <input type="submit" value="Enviar">
+        </form>
+        <p id="show"></p>
+        <footer>
+            <div id="change" onclick="mudarBkg()">Mudar tema</div>
+            <p>&copy;2023 Minha página profissional</p>
+        </footer>
+    </div>
+
+
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
