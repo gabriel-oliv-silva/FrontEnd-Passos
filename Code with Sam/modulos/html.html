@@ -1,0 +1,1077 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code with Sam - Módulo HTML</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/png">
+
+    <style>
+        :root {
+            --html-theme: #e34c26;
+            --css-theme: #264de4;
+            --js-theme: #f0db4f;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #e34c26 0%, #ff7b59 100%);
+        }
+
+        /* Estilos de Conteúdo */
+        .content-box {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .tag-highlight {
+            background-color: #f1f3f5;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #e34c26;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background-color: #fff9e6;
+            border-left: 4px solid #f0db4f;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        /* Estilos de Código e Demonstração */
+        .code-display {
+            background: #1e1e24;
+            color: #abb2bf;
+            padding: 25px 20px 20px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            margin: 20px 0 0 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--html-theme);
+            color: white;
+            padding: 2px 10px;
+            font-size: 0.75rem;
+            border-radius: 8px 0 8px 0;
+            font-weight: bold;
+        }
+
+        .interactive-demo {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            margin: 0 0 25px 0;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .demo-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Estilos do Quiz e Acordeão */
+        .quiz-box {
+            background: #fff3f0;
+            border: 1px solid #ffccbd;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .locked-unit {
+            opacity: 0.6;
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #ffe8e3;
+            color: var(--html-theme);
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+        }
+
+        .accordion-button:focus {
+            border-color: var(--html-theme);
+            box-shadow: 0 0 0 0.25rem rgba(227, 76, 38, 0.25);
+        }
+
+        /* ===== CHECKBOX CUSTOM ===== */
+
+        .form-check {
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+        /* hover suave */
+        .form-check:hover {
+            background-color: rgba(38, 77, 228, 0.08);
+            transform: translateX(3px);
+        }
+
+        /* esconde aparência padrão */
+        .form-check-input {
+            cursor: pointer;
+        }
+
+        /* quando marcado */
+        .form-check-input:checked+.form-check-label {
+            font-weight: 600;
+            color: var(--css-theme);
+        }
+
+        /* foco acessível */
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 77, 228, .25);
+        }
+
+        /* Estilos do Popup Customizado (Toast) */
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            /* Escondido para cima */
+            opacity: 0;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            /* Efeito elástico */
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            min-width: 300px;
+        }
+
+        .custom-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .custom-toast.success {
+            border-left: 6px solid #198754;
+            color: #198754;
+        }
+
+        .custom-toast.error {
+            border-left: 6px solid #dc3545;
+            color: #dc3545;
+        }
+
+        .custom-toast i {
+            font-size: 1.5rem;
+        }
+
+        /* ---- HOVER e FOCUS para inputs / selects / labels ---- */
+        .form-control:hover,
+        .form-select:hover {
+            border-color: var(--html-theme);
+            box-shadow: 0 0 0 0.15rem rgba(227, 76, 38, 0.12);
+            transition: box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+        .form-check-input:hover {
+            transform: scale(1.05);
+            transition: transform 0.12s ease;
+        }
+
+        .form-check-input:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(227, 76, 38, 0.18);
+            border-color: var(--html-theme);
+        }
+
+        .form-check-label:hover {
+            color: var(--html-theme);
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.12s ease;
+        }
+
+        /* Micro-ajuste para labels dentro de .form-check (melhor alinhamento) */
+        .form-check {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        /* melhora visual para botões de quiz concluído */
+        .btn-success[disabled] {
+            opacity: 0.95;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="toastAlert" class="custom-toast">
+        <i id="toastIcon" class="bi"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <header class="text-center text-white py-5 mb-4 shadow-sm">
+        <h1 class="fw-bold"><i class="bi bi-filetype-html"></i> Módulo HTML</h1>
+        <p class="lead mb-0">Leia o conteúdo com atenção e responda ao quiz para avançar.</p>
+    </header>
+
+    <main class="container mb-5">
+        <nav class="mb-4 d-flex justify-content-between align-items-center">
+            <a href="../index.html" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Voltar ao
+                Dashboard</a>
+            <span class="badge bg-danger fs-6 p-2">Progresso: <span id="html-progress-text">0/8</span></span>
+        </nav>
+
+        <div class="accordion shadow-sm" id="htmlCourseAccordion">
+
+            <div class="accordion-item" id="item-u1">
+                <h2 class="accordion-header">
+                    <button class="accordion-button fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u1">
+                        1. O que é a Web e o HTML
+                    </button>
+                </h2>
+                <div id="u1" class="accordion-collapse collapse show" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>A internet funciona como um restaurante: você (o cliente) faz um pedido pelo navegador, e o
+                            servidor (o cozinheiro) te devolve a página pronta. O <strong>HTML (HyperText Markup
+                                Language)</strong> não é uma linguagem de programação, mas sim uma <strong>linguagem de
+                                marcação</strong>.</p>
+                        <p>Ele é responsável por montar o "esqueleto" da página. Todo arquivo HTML precisa de uma
+                            estrutura básica para que o navegador entenda o que está lendo.</p>
+
+                        <div class="tip-box">
+                            <i class="bi bi-lightbulb-fill text-warning"></i> <strong>Atenção:</strong> A tag <span
+                                class="tag-highlight">&lt;!DOCTYPE html&gt;</span> sempre deve ser a primeira linha do
+                            seu código. Ela avisa ao navegador que você está usando a versão mais recente do HTML
+                            (HTML5).
+                        </div>
+
+                        <ul>
+                            <li><span class="tag-highlight">&lt;html&gt;</span>: A tag raiz que abraça todo o site.</li>
+                            <li><span class="tag-highlight">&lt;head&gt;</span>: A "cabeça". Fica invisível para o
+                                usuário. Guarda configurações, título da aba e links de CSS.</li>
+                            <li><span class="tag-highlight">&lt;body&gt;</span>: O "corpo". Tudo que o usuário vê na
+                                tela (textos, imagens, botões) fica aqui dentro.</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">HTML</span>
+&lt;!DOCTYPE html&gt; 
+ &lt;html lang="pt-BR"&gt; 
+  &lt;head&gt; 
+    &lt;meta charset="UTF-8"&gt;
+    &lt;title&gt;Minha Primeira Página&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    Olá, Mundo! Este é o corpo do site.
+  &lt;/body&gt;
+&lt;/html&gt;
+                        </pre>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-eye"></i> Resultado ao vivo</div>
+                            <p class="mb-0">Olá, Mundo! Este é o corpo do site.</p>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 1</h5>
+                            <form id="quiz-u1">
+                                <p class="mb-1 mt-3 fw-bold">1. O HTML é considerado uma linguagem de programação?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u1_q1_a">Sim, ele possui lógica avançada e
+                                        cálculos.</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u1_q1_b">Não, é uma linguagem de marcação que
+                                        estrutura a página.</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Onde deve ficar o conteúdo visual (textos, imagens) que
+                                    o usuário vai ver na tela?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u1_q2_a">Dentro da tag &lt;body&gt;</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u1_q2_b">Dentro da tag &lt;head&gt;</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(1, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u2">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u2">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 2. Textos e Hierarquia
+                    </button>
+                </h2>
+                <div id="u2" class="accordion-collapse collapse" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>O HTML tem <strong>6 níveis de títulos</strong>: de <span
+                                class="tag-highlight">&lt;h1&gt;</span> (mais importante) até <span
+                                class="tag-highlight">&lt;h6&gt;</span> (menos importante). Isso cria uma hierarquia que
+                            ajuda tanto o leitor quanto o Google a entender sua página. Para textos comuns, usamos a tag
+                            de parágrafo <span class="tag-highlight">&lt;p&gt;</span>.</p>
+
+                        <div class="tip-box">
+                            <i class="bi bi-exclamation-triangle-fill text-warning"></i> <strong>Regra de Ouro:</strong>
+                            Use apenas <strong>um H1</strong> por página. Os H2 são subtópicos do H1, H3 são subtópicos
+                            dos H2, e assim por diante.
+                        </div>
+
+                        <p><strong>Tags de formatação de texto:</strong></p>
+                        <ul>
+                            <li><span class="tag-highlight">&lt;strong&gt;</span> &rarr; Negrito com importância
+                                semântica.</li>
+                            <li><span class="tag-highlight">&lt;em&gt;</span> &rarr; Itálico com ênfase.</li>
+                            <li><span class="tag-highlight">&lt;mark&gt;</span> &rarr; Texto destacado (marcador
+                                amarelo).</li>
+                            <li><span class="tag-highlight">&lt;del&gt;</span> &rarr; Texto riscado (deletado).</li>
+                            <li><span class="tag-highlight">&lt;sup&gt;</span> e <span
+                                    class="tag-highlight">&lt;sub&gt;</span> &rarr; Sobrescrito (ex: x²) e Subscrito
+                                (ex: H₂O).</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">HTML</span>
+&lt;h1&gt;Título Principal (só um por página)&lt;/h1&gt; 
+&lt;h2&gt;Subtítulo&lt;/h2&gt; 
+&lt;h3&gt;Sub-subtítulo&lt;/h3&gt;
+
+&lt;p&gt;Parágrafo comum com &lt;strong&gt;negrito&lt;/strong&gt; e &lt;em&gt;itálico&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;A fórmula da água é H&lt;sub&gt;2&lt;/sub&gt;O e a equação é E=mc&lt;sup&gt;2&lt;/sup&gt;&lt;/p&gt;
+&lt;p&gt;Preço: &lt;del&gt;R$100&lt;/del&gt; &lt;strong&gt;R$79&lt;/strong&gt;&lt;/p&gt;
+                        </pre>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-eye"></i> Resultado ao vivo</div>
+                            <h1>Título Principal (só um por página)</h1>
+                            <h2>Subtítulo</h2>
+                            <h3>Sub-subtítulo</h3>
+                            <p>Parágrafo comum com <strong>negrito</strong> e <em>itálico</em>.</p>
+                            <p>A fórmula da água é H<sub>2</sub>O e a equação é E=mc<sup>2</sup></p>
+                            <p>Preço: <del>R$100</del> <strong>R$79</strong></p>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 2</h5>
+                            <form id="quiz-u2">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual afirmação sobre os níveis de título (Heading) é
+                                    verdadeira?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u2_q1_a">Podemos usar quantos H1 quisermos para
+                                        deixar os textos maiores.</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u2_q1_b">Devemos usar apenas um H1 por página,
+                                        seguindo a ordem lógica até o H6.</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Qual tag utilizamos para aplicar a formatação de "marca
+                                    texto" (fundo amarelo) em uma palavra?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u2_q2_a">&lt;mark&gt;</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u2_q2_b">&lt;strong&gt;</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(2, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u3">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u3">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 3. Links, Imagens e Mídia
+                    </button>
+                </h2>
+                <div id="u3" class="accordion-collapse collapse" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Sem links, a internet seria apenas um documento gigante. Para criar links (âncoras), usamos a
+                            tag <span class="tag-highlight">&lt;a&gt;</span>. Para exibir imagens, usamos a tag <span
+                                class="tag-highlight">&lt;img&gt;</span>, que é uma "tag vazia" (não precisa de
+                            fechamento).</p>
+
+                        <div class="tip-box">
+                            <i class="bi bi-universal-access text-warning"></i> <strong>Acessibilidade:</strong> Nunca
+                            esqueça o atributo <code>alt</code> nas imagens. Ele descreve a imagem para deficientes
+                            visuais e é exibido caso a imagem quebre.
+                        </div>
+
+                        <ul>
+                            <li><span class="tag-highlight">href</span>: Atributo do link que diz para qual URL a pessoa
+                                vai.</li>
+                            <li><span class="tag-highlight">target="_blank"</span>: Atributo que faz o link abrir em uma
+                                nova aba.</li>
+                            <li><span class="tag-highlight">src</span>: Atributo da imagem (Source). O caminho ou URL de
+                                onde a foto está vindo.</li>
+                        </ul>
+
+                        <div class="code-display">
+                            <span class="code-label">HTML</span>
+                            &lt;!-- Link abrindo em nova aba --&gt;<br>
+                            &lt;a href="https://google.com" target="_blank"&gt;Acessar o Google&lt;/a&gt;<br><br>
+
+                            &lt;!-- Imagem com descrição --&gt;<br>
+                            &lt;img src="https://via.placeholder.com/150" alt="Quadrado cinza de exemplo"&gt;<br>
+                        </div>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-eye"></i> Resultado ao vivo</div>
+                            <p><a href="https://google.com" target="_blank">Acessar o Google</a></p>
+                            <img src="https://via.placeholder.com/150" alt="Quadrado cinza de exemplo">
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 3</h5>
+                            <form id="quiz-u3">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual atributo define o destino (URL) de um link?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u3_q1_a">src</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u3_q1_b">href</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. A tag &lt;img&gt; precisa ter uma tag de fechamento como
+                                    &lt;/img&gt;?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u3_q2_a">Sim, como qualquer outra tag.</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u3_q2_b">Não, ela se fecha em si mesma (tag
+                                        vazia).</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(3, 'b', 'b')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u4">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u4">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 4. Listas e Tabelas
+                    </button>
+                </h2>
+                <div id="u4" class="accordion-collapse collapse" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Para agrupar itens em tópicos, o HTML oferece dois tipos principais de listas. Já as tabelas
+                            são usadas <strong>estritamente para exibir dados tabulares</strong>, e não para criar o
+                            layout do site (isso era feito nos anos 90!).</p>
+
+                        <ul>
+                            <li><span class="tag-highlight">&lt;ul&gt;</span> (Unordered List): Lista com marcadores
+                                (bolinhas).</li>
+                            <li><span class="tag-highlight">&lt;ol&gt;</span> (Ordered List): Lista numerada (1, 2,
+                                3...).</li>
+                            <li><span class="tag-highlight">&lt;li&gt;</span> (List Item): Os itens dentro das listas.
+                            </li>
+                        </ul>
+
+                        <p><strong>Para Tabelas:</strong></p>
+                        <ul>
+                            <li><span class="tag-highlight">&lt;table&gt;</span> &rarr; Cria a tabela.</li>
+                            <li><span class="tag-highlight">&lt;tr&gt;</span> (Table Row) &rarr; Cria uma nova linha
+                                horizontal.</li>
+                            <li><span class="tag-highlight">&lt;th&gt;</span> (Table Header) &rarr; Célula de cabeçalho
+                                (fica em negrito).</li>
+                            <li><span class="tag-highlight">&lt;td&gt;</span> (Table Data) &rarr; Célula de dado comum.
+                            </li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">HTML</span>
+&lt;!-- Lista Ordenada --&gt;
+&lt;h4&gt;Top 3 Frutas&lt;/h4&gt;
+&lt;ol&gt;
+  &lt;li&gt;Maçã&lt;/li&gt;
+  &lt;li&gt;Banana&lt;/li&gt;
+  &lt;li&gt;Uva&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;!-- Tabela --&gt;
+&lt;table border="1"&gt;
+  &lt;tr&gt;
+    &lt;th&gt;Produto&lt;/th&gt;
+    &lt;th&gt;Preço&lt;/th&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+    &lt;td&gt;Teclado&lt;/td&gt;
+    &lt;td&gt;R$ 150&lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/table&gt;
+                        </pre>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-eye"></i> Resultado ao vivo</div>
+                            <h4>Top 3 Frutas</h4>
+                            <ol>
+                                <li>Maçã</li>
+                                <li>Banana</li>
+                                <li>Uva</li>
+                            </ol>
+                            <table class="table table-bordered w-50 mb-0">
+                                <tr>
+                                    <th>Produto</th>
+                                    <th>Preço</th>
+                                </tr>
+                                <tr>
+                                    <td>Teclado</td>
+                                    <td>R$ 150</td>
+                                </tr>
+                            </table>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 4</h5>
+                            <form id="quiz-u4">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual tag cria uma lista com bolinhas (não ordenada)?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u4_q1_a">&lt;ol&gt;</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u4_q1_b">&lt;ul&gt;</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Em uma tabela, o que a tag &lt;tr&gt; faz?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u4_q2_a">Cria uma nova linha.</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u4_q2_b">Cria uma coluna de cabeçalho.</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(4, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u5">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u5">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 5. Formulários Completos
+                    </button>
+                </h2>
+                <div id="u5" class="accordion-collapse collapse" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Os formulários são a principal forma de receber dados dos usuários (login, cadastro,
+                            mensagens). Tudo começa envolvendo os campos na tag <span
+                                class="tag-highlight">&lt;form&gt;</span>.</p>
+
+                        <div class="tip-box">
+                            <i class="bi bi-hand-index-thumb-fill text-warning"></i> <strong>Dica de UX:</strong> Sempre
+                            use a tag <span class="tag-highlight">&lt;label&gt;</span> atrelada ao id do <span
+                                class="tag-highlight">&lt;input&gt;</span>. Isso permite que o usuário clique no texto
+                            para focar/marcar a caixinha.
+                        </div>
+
+                        <p><strong>Principais Inputs e Campos:</strong></p>
+                        <ul>
+                            <li><span class="tag-highlight">type="text"</span>, <span
+                                    class="tag-highlight">"email"</span>, <span class="tag-highlight">"password"</span>
+                                &rarr; Campos de texto clássicos.</li>
+                            <li><span class="tag-highlight">type="radio"</span> &rarr; Permite escolher apenas UMA opção
+                                do grupo.</li>
+                            <li><span class="tag-highlight">type="checkbox"</span> &rarr; Caixinha de seleção (pode
+                                marcar várias).</li>
+                            <li><span class="tag-highlight">&lt;select&gt;</span> e <span
+                                    class="tag-highlight">&lt;option&gt;</span> &rarr; Cria um menu suspenso (dropdown).
+                            </li>
+                            <li><span class="tag-highlight">&lt;textarea&gt;</span> &rarr; Caixa grande para textos
+                                longos.</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">HTML</span>
+&lt;form&gt;
+  &lt;label for="nome"&gt;Nome:&lt;/label&gt;
+  &lt;input type="text" id="nome" placeholder="Seu nome"&gt;
+
+  &lt;label for="curso"&gt;Curso:&lt;/label&gt;
+  &lt;select id="curso"&gt;<br>
+    &lt;option value="html"&gt;HTML&lt;/option&gt;
+    &lt;option value="css"&gt;CSS&lt;/option&gt;
+  &lt;/select&gt;
+
+  &lt;label&gt;
+    &lt;input type="checkbox"&gt; Aceito os termos
+  &lt;/label&gt;
+&lt;/form&gt;
+                        </pre>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-eye"></i> Resultado ao vivo</div>
+                            <form>
+                                <div class="mb-2">
+                                    <label for="dem_nome" class="form-label">Nome:</label>
+                                    <input type="text" id="dem_nome" class="form-control" placeholder="Seu nome">
+                                </div>
+                                <div class="mb-2">
+                                    <label for="dem_curso" class="form-label">Curso:</label>
+                                    <select id="dem_curso" class="form-select">
+                                        <option value="html">HTML</option>
+                                        <option value="css">CSS</option>
+                                    </select>
+                                </div>
+                                <div class="form-check">
+                                    <input type="checkbox" id="dem_check" class="form-check-input">
+                                    <label class="form-check-label" for="dem_check">Aceito os termos</label>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 5</h5>
+                            <form id="quiz-u5">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual tipo de input cria uma caixa de seleção múltipla
+                                    (onde posso marcar várias ao mesmo tempo)?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u5_q1_a">type="radio"</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u5_q1_b">type="checkbox"</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Qual tag cria uma lista suspensa de opções (dropdown)?
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u5_q2_a">&lt;select&gt;</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u5_q2_b">&lt;dropdown&gt;</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(5, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u6">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u6">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 6. HTML Semântico
+                    </button>
+                </h2>
+                <div id="u6" class="accordion-collapse collapse" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>No passado, os sites eram feitos usando apenas blocos genéricos chamados <span
+                                class="tag-highlight">&lt;div&gt;</span>. O HTML5 introduziu as <strong>Tags
+                                Semânticas</strong>: elas fazem a mesma coisa que a div visualmente, mas seus
+                            <em>nomes</em> explicam qual o propósito do conteúdo. Isso é essencial para o Google
+                            ranquear seu site.</p>
+
+                        <ul>
+                            <li><span class="tag-highlight">&lt;header&gt;</span>: Cabeçalho do site ou de uma seção.
+                            </li>
+                            <li><span class="tag-highlight">&lt;nav&gt;</span>: Menu principal de navegação.</li>
+                            <li><span class="tag-highlight">&lt;main&gt;</span>: O conteúdo principal e exclusivo da
+                                página.</li>
+                            <li><span class="tag-highlight">&lt;section&gt;</span>: Uma seção genérica de agrupamento
+                                temático.</li>
+                            <li><span class="tag-highlight">&lt;article&gt;</span>: Conteúdo independente (como um post
+                                de blog ou notícia).</li>
+                            <li><span class="tag-highlight">&lt;footer&gt;</span>: Rodapé do site.</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">HTML</span>
+&lt;body&gt;
+  &lt;header&gt;
+    &lt;h1&gt;Meu Blog&lt;/h1&gt;
+    &lt;nav&gt;&lt;a href="#"&gt;Início&lt;/a&gt;&lt;/nav&gt;
+  &lt;/header&gt;
+  
+  &lt;main&gt;
+    &lt;article&gt;
+      &lt;h2&gt;Notícia de Hoje&lt;/h2&gt;
+      &lt;p&gt;O HTML semântico salva a web!&lt;/p&gt;
+    &lt;/article&gt;
+  &lt;/main&gt;
+
+  &lt;footer&gt;Todos os direitos reservados.&lt;/footer&gt;
+&lt;/body&gt;
+                        </pre>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-eye"></i> Estrutura Visualizada</div>
+                            <div
+                                style="border: 2px dashed #0d6efd; padding: 10px; margin-bottom: 5px; text-align: center; color: #0d6efd;">
+                                &lt;header&gt; e &lt;nav&gt;</div>
+                            <div
+                                style="border: 2px dashed #198754; padding: 20px 10px; margin-bottom: 5px; text-align: center; color: #198754;">
+                                &lt;main&gt; contendo &lt;article&gt;</div>
+                            <div style="border: 2px dashed #dc3545; padding: 10px; text-align: center; color: #dc3545;">
+                                &lt;footer&gt;</div>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 6</h5>
+                            <form id="quiz-u6">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual a vantagem de usar Tags Semânticas em vez de apenas
+                                    divs?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u6_q1_a">Ajudam motores de busca (Google) e
+                                        leitores de tela a entenderem a estrutura da página.</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u6_q1_b">Deixam o site visualmente mais bonito
+                                        e colorido automaticamente.</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Qual tag é a ideal para englobar os links do menu do
+                                    site?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u6_q2_a">&lt;header&gt;</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u6_q2_b">&lt;nav&gt;</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(6, 'a', 'b')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u7">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u7">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 7. Meta Tags e SEO
+                    </button>
+                </h2>
+                <div id="u7" class="accordion-collapse collapse" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>O <strong>SEO (Otimização para Mecanismos de Busca)</strong> determina se seu site vai
+                            aparecer na primeira página do Google ou não. Muito disso é configurado nas <strong>Meta
+                                Tags</strong>, que ficam escondidas dentro da tag <span
+                                class="tag-highlight">&lt;head&gt;</span>.</p>
+
+                        <ul>
+                            <li><span class="tag-highlight">&lt;meta charset="UTF-8"&gt;</span>: Garante que os acentos
+                                (ç, ã, é) apareçam corretamente.</li>
+                            <li><span class="tag-highlight">&lt;meta name="viewport"...&gt;</span>: Diz ao navegador que
+                                o site deve se adaptar a telas de celular (design responsivo).</li>
+                            <li><span class="tag-highlight">&lt;meta name="description" content="..."&gt;</span>: A
+                                descrição curta que aparece embaixo do link do site no Google.</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">HTML</span>
+&lt;head&gt;
+  &lt;!-- Codificação e Responsividade --&gt;
+  &lt;meta charset="UTF-8"&gt;
+  &lt;meta name="viewport" content="width=device-width, initial-scale=1.0"&gt;
+  
+  &lt;!-- Título e Descrição para o Google --&gt;
+  &lt;title&gt;Curso de HTML - Code with Sam&lt;/title&gt;
+  &lt;meta name="description" content="Aprenda HTML do zero ao avançado de forma fácil."&gt;
+&lt;/head&gt;
+                        </pre>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 7</h5>
+                            <form id="quiz-u7">
+                                <p class="mb-1 mt-3 fw-bold">1. Onde as meta tags devem ser colocadas no documento HTML?
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u7_q1_a">Dentro do &lt;body&gt;</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u7_q1_b">Dentro do &lt;head&gt;</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Qual atributo da meta tag garante que caracteres com
+                                    acentos (como "ç" ou "ã") funcionem direito?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u7_q2_a">charset="UTF-8"</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u7_q2_b">name="viewport"</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(7, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u8">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u8">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 8. Acessibilidade e Boas Práticas
+                    </button>
+                </h2>
+                <div id="u8" class="accordion-collapse collapse" data-bs-parent="#htmlCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>O código não é escrito apenas para máquinas, mas também para outros programadores lerem e
+                            para pessoas com deficiências navegarem. Seguir as <strong>boas práticas</strong> diferencia
+                            um amador de um profissional.</p>
+
+                        <ul>
+                            <li><strong>Identação (Recuo):</strong> Use espaços ou "Tab" para empurrar o código para
+                                frente dentro das tags. Isso mostra claramente "quem está dentro de quem".</li>
+                            <li><strong>Comentários:</strong> Use <span class="tag-highlight">&lt;!-- texto
+                                    --&gt;</span> para deixar recados no código. O navegador ignora os comentários, eles
+                                não aparecem na tela do usuário.</li>
+                            <li><strong>Acessibilidade (a11y):</strong> Sempre mantenha contraste alto de cores, textos
+                                descritivos em links (evite "clique aqui"), e nunca pule a hierarquia (não pule do H1
+                                direto para o H3).</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">HTML</span>
+&lt;!-- Jeito RUIM (Sem identação) --&gt;
+&lt;div&gt;&lt;p&gt;Texto&lt;/p&gt;&lt;/div&gt;
+
+&lt;!-- Jeito PROFISSIONAL --&gt;
+&lt;div&gt;
+  &lt;!-- Este é o parágrafo principal --&gt;
+  &lt;p&gt;Texto bem formatado e fácil de ler.&lt;/p&gt;
+&lt;/div&gt;
+                        </pre>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 8</h5>
+                            <form id="quiz-u8">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual a sintaxe correta para fazer um comentário no HTML?
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8_q1_a" name="q1" value="a">
+                                    <label class="form-check-label" for="u8_q1_a">// Este é um comentário</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8_q1_b" name="q1" value="b">
+                                    <label class="form-check-label" for="u8_q1_b">&lt;!-- Este é um comentário
+                                        --&gt;</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. O que é "identação" no desenvolvimento web?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8_q2_a" name="q2" value="a">
+                                    <label class="form-check-label" for="u8_q2_a">O uso de espaços na margem esquerda
+                                        para organizar visualmente o código em hierarquias.</label>
+                                </div>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8_q2_b" name="q2" value="b">
+                                    <label class="form-check-label" for="u8_q2_b">Uma tecnologia para tornar o site mais
+                                        rápido no celular.</label>
+                                </div>
+
+                                <button type="button" class="btn btn-danger mt-4"
+                                    onclick="checkQuiz(8, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const TOTAL_HTML_UNITS = 8;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            localStorage.setItem('lastModuleVisited', 'modulos/html.html');
+            updateUI();
+        });
+
+        // FUNÇÃO DE ALERTA CUSTOMIZADO (Toast)
+        function showToast(message, type) {
+            const toast = document.getElementById('toastAlert');
+            const icon = document.getElementById('toastIcon');
+            const msg = document.getElementById('toastMessage');
+
+            // Limpa as classes de cor
+            toast.className = 'custom-toast';
+            icon.className = 'bi';
+
+            // Configurações baseadas no tipo
+            if (type === 'success') {
+                toast.classList.add('success');
+                icon.classList.add('bi-check-circle-fill');
+            } else if (type === 'error') {
+                toast.classList.add('error');
+                icon.classList.add('bi-x-circle-fill');
+            } else if (type === 'warning') {
+                toast.classList.add('error'); // reuso da cor de erro para avisos gerais
+                icon.classList.add('bi-exclamation-triangle-fill');
+            }
+
+            msg.innerText = message;
+
+            // Força o reflow para reiniciar a animação se clicar rápido
+            void toast.offsetWidth;
+
+            // Exibe
+            toast.classList.add('show');
+
+            // Oculta depois de 3.5 segundos
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        function updateUI() {
+            let htmlProgress = parseInt(localStorage.getItem('htmlProgress')) || 0;
+            document.getElementById('html-progress-text').innerText = `${htmlProgress}/${TOTAL_HTML_UNITS}`;
+
+            for (let i = 1; i <= TOTAL_HTML_UNITS; i++) {
+                const itemDiv = document.getElementById(`item-u${i}`);
+                const btn = itemDiv.querySelector('.accordion-button');
+                const icon = itemDiv.querySelector('.lock-icon');
+
+                if (i <= htmlProgress + 1) {
+                    itemDiv.classList.remove('locked-unit');
+                    if (icon) icon.className = "bi bi-unlock-fill me-2 text-success";
+
+                    if (i <= htmlProgress) {
+                        const quizBtn = document.querySelector(`#quiz-u${i} button`);
+                        if (quizBtn) {
+                            quizBtn.disabled = true;
+                            quizBtn.innerText = "✓ Unidade Concluída";
+                            quizBtn.classList.replace('btn-danger', 'btn-success');
+                        }
+                    }
+                }
+            }
+        }
+
+        function checkQuiz(unitId, correctQ1, correctQ2) {
+            const form = document.getElementById(`quiz-u${unitId}`);
+            const q1Answer = form.querySelector('input[name="q1"]:checked');
+            const q2Answer = form.querySelector('input[name="q2"]:checked');
+
+            if (!q1Answer || !q2Answer) {
+                showToast("Por favor, responda todas as perguntas da unidade antes de enviar!", "warning");
+                return;
+            }
+
+            if (q1Answer.value === correctQ1 && q2Answer.value === correctQ2) {
+
+                showToast(`Parabéns! Você acertou tudo e concluiu a Unidade ${unitId}!`, "success");
+
+                let htmlProgress = parseInt(localStorage.getItem('htmlProgress')) || 0;
+                if (htmlProgress < unitId) {
+                    localStorage.setItem('htmlProgress', unitId);
+
+                    let globalUnits = parseInt(localStorage.getItem('unitsCompleted')) || 0;
+                    let globalQuizzes = parseInt(localStorage.getItem('quizzesAnswered')) || 0;
+                    let globalScore = parseFloat(localStorage.getItem('totalScore')) || 0;
+
+                    localStorage.setItem('unitsCompleted', globalUnits + 1);
+                    localStorage.setItem('quizzesAnswered', globalQuizzes + 1);
+                    localStorage.setItem('totalScore', globalScore + 10);
+                }
+
+                updateUI();
+
+                if (unitId < TOTAL_HTML_UNITS) {
+                    let currentCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId}`), { toggle: false });
+                    let nextCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId + 1}`), { toggle: false });
+                    currentCollapse.hide();
+                    nextCollapse.show();
+
+                    // Rolar a página para a próxima aba aberta
+                    setTimeout(() => {
+                        document.getElementById(`item-u${unitId + 1}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                } else {
+                    // Atrasa o aviso final de curso para não encavalar com o parabéns da unidade
+                    setTimeout(() => {
+                        showToast("Você finalizou o Módulo HTML! Volte ao Dashboard.", "success");
+                    }, 3500);
+                }
+
+            } else {
+                showToast("Oops! Você errou alguma questão. Revise o material com atenção e tente novamente.", "error");
+            }
+        }
+    </script>
+</body>
+
+</html>

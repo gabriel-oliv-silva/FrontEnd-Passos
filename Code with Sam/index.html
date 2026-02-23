@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code with Sam - Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="./img/logo.png" type="image/png">
+    <style>
+        :root {
+            --primary-blue: #0056b3;
+            --light-blue: #e9f2fb;
+            --dark-blue: #003366;
+            --html-theme: #e34c26;
+            --css-theme: #264de4;
+            --js-theme: #f0db4f;
+            --bg-color: #f8fafc;
+            --text-dark: #1e293b;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+        }
+
+        /* Hero Section com design moderno e elementos decorativos */
+        .hero-section {
+            background: linear-gradient(135deg, var(--dark-blue) 0%, var(--primary-blue) 100%);
+            color: white;
+            padding: 80px 0 100px 0;
+            border-radius: 0 0 40px 40px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 86, 179, 0.15);
+        }
+
+        /* Círculos decorativos de fundo no Hero */
+        .hero-section::before,
+        .hero-section::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .hero-section::before {
+            width: 300px;
+            height: 300px;
+            top: -100px;
+            left: -50px;
+        }
+
+        .hero-section::after {
+            width: 400px;
+            height: 400px;
+            bottom: -150px;
+            right: -100px;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Cartão do Dashboard de Progresso */
+        .dashboard-card {
+            border-radius: 20px;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            background: white;
+            margin-top: -60px;
+            /* Faz o card "subir" para cima do Hero */
+            z-index: 10;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Caixinhas de Estatísticas */
+        .stat-box {
+            background-color: var(--light-blue);
+            border-radius: 15px;
+            padding: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin: 0 auto 15px auto;
+            font-size: 1.5rem;
+        }
+
+        /* Cartões dos Módulos */
+        .card-tech {
+            border: 1px solid #edf2f7;
+            border-radius: 20px;
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            cursor: pointer;
+            background: white;
+            height: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Bordinha superior colorida para identificar a tecnologia */
+        .card-tech::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+        }
+
+        .card-html::before {
+            background-color: var(--html-theme);
+        }
+
+        .card-css::before {
+            background-color: var(--css-theme);
+        }
+
+        .card-js::before {
+            background-color: var(--js-theme);
+        }
+
+        .card-tech:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0, 86, 179, 0.08);
+            border-color: var(--light-blue);
+        }
+
+        .icon-wrapper {
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin: 0 auto 20px auto;
+            background: var(--bg-color);
+        }
+
+        .progress {
+            background-color: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-bar {
+            background-color: var(--primary-blue) !important;
+        }
+
+        /* Badges de tecnologias mais elegantes */
+        .tech-badge {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header class="hero-section text-center">
+        <div class="container hero-content">
+            <h1 class="display-4 fw-bold mb-3"> <i class="bi bi-code"></i> Code with Sam <span
+                    class="badge bg-white text-primary rounded-pill fs-6 align-middle ms-2">v3.0</span></h1>
+            <p class="lead text-white-50 mx-auto" style="max-width: 600px;">
+                Sua trilha de Front-end (sujeita a atualizações). <br> Estude no seu ritmo, resolva os desafios e continue evoluindo. 
+            </p>
+            <div class="mt-4 d-flex justify-content-center gap-2 flex-wrap">
+                <span class="tech-badge"><i class="bi bi-filetype-html"></i> HTML5</span>
+                <span class="tech-badge"><i class="bi bi-palette"></i> CSS3</span>
+                <span class="tech-badge"><i class="bi bi-lightning-fill"></i> JS ES6</span>
+            </div>
+
+            <div class="mt-5">
+                <a href="modulos/html.html" id="btn-start"
+                    class="btn btn-light text-primary fw-bold px-4 py-2 rounded-pill shadow-sm">
+                    <i class="bi bi-play-fill me-1"></i> Começar Jornada
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="container my-5">
+        <div class="row mb-5 justify-content-center">
+            <div class="col-lg-10">
+                <div class="card dashboard-card p-4 p-md-5">
+                    <div class="d-flex justify-content-between align-items-center border-bottom pb-3 mb-4">
+                        <h3 class="mb-0 fw-bold text-dark"><i class="bi bi-bar-chart-line text-primary me-2"></i> Seu
+                            Progresso</h3>
+                        <button class="btn btn-sm btn-outline-danger" onclick="resetarProgresso()"
+                            title="Apagar todo o progresso"><i class="bi bi-arrow-counterclockwise"></i> Reset</button>
+                    </div>
+
+                    <div class="row text-center mb-5 g-3">
+                        <div class="col-md-4">
+                            <div class="stat-box">
+                                <div class="stat-icon bg-white text-primary shadow-sm"><i class="bi bi-check2-all"></i>
+                                </div>
+                                <h2 class="text-dark fw-bold mb-0" id="val-units">0/24</h2>
+                                <p class="text-secondary mb-0 fw-semibold small text-uppercase">Unidades Feitas</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-box">
+                                <div class="stat-icon bg-white text-primary shadow-sm"><i class="bi bi-controller"></i>
+                                </div>
+                                <h2 class="text-dark fw-bold mb-0" id="val-quizzes">0</h2>
+                                <p class="text-secondary mb-0 fw-semibold small text-uppercase">Quizzes Salvos</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="stat-box">
+                                <div class="stat-icon bg-white text-primary shadow-sm"><i class="bi bi-star"></i></div>
+                                <h2 class="text-dark fw-bold mb-0" id="val-average">0.0</h2>
+                                <p class="text-secondary mb-0 fw-semibold small text-uppercase">Meritocracia <br> (pontos acumulados)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="px-2">
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-bold text-secondary text-uppercase small">Jornada Front-end</span>
+                            <span class="fw-bold text-primary" id="val-progress-text">0%</span>
+                        </div>
+                        <div class="progress shadow-sm" style="height: 18px;">
+                            <div id="val-progress-bar" class="progress-bar progress-bar-striped progress-bar-animated"
+                                role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0"
+                                aria-valuemax="100"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mb-5 mt-5">
+            <h2 class="fw-bold text-dark">Trilhas de Estudo</h2>
+            <p class="text-muted">Selecione o módulo para continuar aprendendo.</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <div class="col-md-4 col-lg-3">
+                <a href="modulos/html.html" class="text-decoration-none">
+                    <div class="card card-tech card-html p-4 text-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-filetype-html display-4" style="color: var(--html-theme)"></i>
+                        </div>
+                        <h4 class="text-dark fw-bold">HTML5</h4>
+                        <p class="text-muted small mb-0">Do esqueleto à semântica e acessibilidade.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                <a href="modulos/css.html" class="text-decoration-none">
+                    <div class="card card-tech card-css p-4 text-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-palette display-4" style="color: var(--css-theme)"></i>
+                        </div>
+                        <h4 class="text-dark fw-bold">CSS3</h4>
+                        <p class="text-muted small mb-0">Design, Layout, Flexbox, Grid e Animações.</p>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-4 col-lg-3">
+                <a href="modulos/js.html" class="text-decoration-none">
+                    <div class="card card-tech card-js p-4 text-center">
+                        <div class="icon-wrapper">
+                            <i class="bi bi-lightning display-4" style="color: var(--js-theme)"></i>
+                        </div>
+                        <h4 class="text-dark fw-bold">JavaScript</h4>
+                        <p class="text-muted small mb-0">Lógica de programação e manipulação do DOM.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-4 mt-5 border-top">
+        <p class="text-muted mb-0 fw-semibold">&copy; 2026 Code with Sam.</p>
+        <p class="text-muted small">O conhecimento é a maior arma do mundo. </p>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+            // O total de unidades dos 3 cursos (exemplo: 8 HTML + 8 CSS + 8 JS)
+            const TOTAL_UNIDADES = 24;
+
+            // Resgata os dados globais
+            const quizzesAnswered = parseInt(localStorage.getItem('quizzesAnswered')) || 0;
+            const unitsCompleted = parseInt(localStorage.getItem('unitsCompleted')) || 0;
+            const totalScore = parseFloat(localStorage.getItem('totalScore')) || 0;
+
+            // Lógica do Botão Hero (Começar vs Continuar)
+            const btnStart = document.getElementById('btn-start');
+            const lastModule = localStorage.getItem('lastModuleVisited'); // Busca a anotação
+
+            if (unitsCompleted > 0) {
+                // Muda o texto
+                btnStart.innerHTML = '<i class="bi bi-arrow-right-circle-fill me-1"></i> Continuar de onde parei';
+
+                // Se existir um último módulo salvo, muda o destino do clique!
+                if (lastModule) {
+                    btnStart.href = lastModule;
+                }
+            }
+            // Cálculos
+            let progressPercentage = (unitsCompleted / TOTAL_UNIDADES) * 100;
+            if (progressPercentage > 100) progressPercentage = 100;
+
+            let averageScore = 0;
+            if (quizzesAnswered > 0) {
+                averageScore = (totalScore / quizzesAnswered).toFixed(1);
+            }
+
+            // Injetar no HTML
+            document.getElementById('val-units').innerText = `${unitsCompleted}/${TOTAL_UNIDADES}`;
+            document.getElementById('val-quizzes').innerText = quizzesAnswered;
+            document.getElementById('val-average').innerText = averageScore;
+
+            // Animar Barra de Progresso
+            setTimeout(() => {
+                document.getElementById('val-progress-text').innerText = `${progressPercentage.toFixed(0)}%`;
+                document.getElementById('val-progress-bar').style.width = `${progressPercentage}%`;
+                document.getElementById('val-progress-bar').setAttribute('aria-valuenow', progressPercentage);
+            }, 300); // Pequeno delay para a barra correr na tela
+        });
+
+        // Adicionei uma função de Reset caso você queira testar a plataforma do zero!
+        function resetarProgresso() {
+            if (confirm("Tem certeza que deseja apagar todo o seu progresso? Isso não pode ser desfeito.")) {
+                localStorage.clear();
+                location.reload();
+            }
+        }
+    </script>
+</body>
+
+</html>

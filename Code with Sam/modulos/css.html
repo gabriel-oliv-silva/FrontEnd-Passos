@@ -1,0 +1,1043 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code with Sam - Módulo CSS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+        <link rel="shortcut icon" href="../img/logo.png" type="image/png">
+
+    <style>
+        /* ===== CHECKBOX CUSTOM ===== */
+
+        .form-check {
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+        /* hover suave */
+        .form-check:hover {
+            background-color: rgba(38, 77, 228, 0.08);
+            transform: translateX(3px);
+        }
+
+        /* esconde aparência padrão */
+        .form-check-input {
+            cursor: pointer;
+        }
+
+        /* quando marcado */
+        .form-check-input:checked+.form-check-label {
+            font-weight: 600;
+            color: var(--css-theme);
+        }
+
+        /* foco acessível */
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 77, 228, .25);
+        }
+
+        :root {
+            --html-theme: #e34c26;
+            --css-theme: #264de4;
+            --js-theme: #f0db4f;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #264de4 0%, #4b6deb 100%);
+        }
+
+        /* Estilos de Conteúdo */
+        .content-box {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .tag-highlight {
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: var(--css-theme);
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background-color: #e6f0ff;
+            border-left: 4px solid var(--css-theme);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        /* Estilos de Código e Demonstração */
+        .code-display {
+            background: #1e1e24;
+            color: #abb2bf;
+            padding: 25px 20px 20px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            margin: 20px 0 0 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--css-theme);
+            color: white;
+            padding: 2px 10px;
+            font-size: 0.75rem;
+            border-radius: 8px 0 8px 0;
+            font-weight: bold;
+        }
+
+        .interactive-demo {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            margin: 0 0 25px 0;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .demo-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Estilos do Quiz e Acordeão */
+        .quiz-box {
+            background: #f0f4ff;
+            border: 1px solid #c2d6ff;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .locked-unit {
+            opacity: 0.6;
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #e6f0ff;
+            color: var(--css-theme);
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+        }
+
+        .accordion-button:focus {
+            border-color: var(--css-theme);
+            box-shadow: 0 0 0 0.25rem rgba(38, 77, 228, 0.25);
+        }
+
+        /* Estilos Específicos das Demos do CSS */
+        .grid-container-demo {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+
+        .grid-item {
+            background: var(--css-theme);
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        @keyframes giro {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .rotacao {
+            width: 50px;
+            height: 50px;
+            background: var(--css-theme);
+            animation: giro 2s linear infinite;
+            margin: 0 auto;
+            border-radius: 8px;
+        }
+
+        /* Estilos do Popup Customizado (Toast) */
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            opacity: 0;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            min-width: 300px;
+        }
+
+        .custom-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .custom-toast.success {
+            border-left: 6px solid #198754;
+            color: #198754;
+        }
+
+        .custom-toast.error {
+            border-left: 6px solid #dc3545;
+            color: #dc3545;
+        }
+
+        .custom-toast i {
+            font-size: 1.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="toastAlert" class="custom-toast">
+        <i id="toastIcon" class="bi"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <header class="text-center text-white py-5 mb-4 shadow-sm">
+        <h1 class="fw-bold"><i class="bi bi-filetype-css"></i> Módulo CSS</h1>
+        <p class="lead mb-0">Domine a estilização e crie layouts incríveis para a Web.</p>
+    </header>
+
+    <main class="container mb-5">
+        <nav class="mb-4 d-flex justify-content-between align-items-center">
+            <a href="../index.html" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Voltar ao
+                Dashboard</a>
+            <span class="badge bg-primary fs-6 p-2">Progresso: <span id="css-progress-text">0/8</span></span>
+        </nav>
+
+        <div class="accordion shadow-sm" id="cssCourseAccordion">
+
+            <div class="accordion-item" id="item-u1">
+                <h2 class="accordion-header">
+                    <button class="accordion-button fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u1">
+                        1. Introdução ao CSS
+                    </button>
+                </h2>
+                <div id="u1" class="accordion-collapse collapse show" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>O <strong>CSS (Cascading Style Sheets)</strong> é o responsável por dar vida e beleza ao
+                            HTML. Se o HTML é o esqueleto de uma casa, o CSS é a pintura, a decoração e o design de
+                            interiores.</p>
+
+                        <p>Existem 3 formas de conectar o CSS ao seu HTML:</p>
+                        <ul>
+                            <li><strong>Inline:</strong> Direto na tag HTML usando o atributo <code>style="..."</code>.
+                                (Não recomendado para projetos grandes).</li>
+                            <li><strong>Interno:</strong> Dentro da tag <span class="tag-highlight">&lt;style&gt;</span>
+                                no <code>&lt;head&gt;</code> do documento.</li>
+                            <li><strong>Externo:</strong> Em um arquivo separado (ex: <code>style.css</code>) lincado
+                                através da tag <span class="tag-highlight">&lt;link rel="stylesheet"
+                                    href="style.css"&gt;</span>. Esta é a melhor prática!</li>
+                        </ul>
+
+                        <div class="tip-box">
+                            <i class="bi bi-lightbulb-fill text-primary"></i> <strong>Atenção:</strong> O termo
+                            "Cascading" (Cascata) significa que o CSS lê o código de cima para baixo. Se você der a cor
+                            azul para um botão e, na linha de baixo, der a cor vermelha para o mesmo botão, ele ficará
+                            vermelho.
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 1</h5>
+                            <form id="quiz-u1">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual é a forma mais recomendada e profissional de usar
+                                    CSS em um projeto?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u1q1a">
+                                        CSS Inline (direto na tag)
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u1q1b">
+                                        CSS Externo (arquivo separado)
+                                    </label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. O que acontece se você definir duas cores diferentes
+                                    para o mesmo elemento no CSS, uma na linha 10 e outra na linha 20?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u1q2a">
+                                        A regra da linha 20 será aplicada (efeito cascata).
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u1q2b">
+                                        O navegador dará erro e não exibirá cor nenhuma.
+                                    </label>
+                                </div>
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(1, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u2">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u2">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 2. Seletores e Especificidade
+                    </button>
+                </h2>
+                <div id="u2" class="accordion-collapse collapse" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Para o CSS saber qual elemento ele deve pintar, precisamos selecioná-lo. Usamos
+                            <strong>Seletores</strong> para isso.
+                        </p>
+
+                        <ul>
+                            <li><strong>Seletor de Tag:</strong> Seleciona pelo nome do elemento HTML. Ex: <span
+                                    class="tag-highlight">p { ... }</span></li>
+                            <li><strong>Seletor de Classe (Class):</strong> Usa-se um ponto (<code>.</code>) antes do
+                                nome. Pode ser repetido várias vezes na página. Ex: <span
+                                    class="tag-highlight">.botao-azul { ... }</span></li>
+                            <li><strong>Seletor de ID:</strong> Usa-se a cerquilha (<code>#</code>). Deve ser
+                                <strong>único</strong> na página. Ex: <span class="tag-highlight">#cabecalho-principal {
+                                    ... }</span>
+                            </li>
+                        </ul>
+
+                        <p><strong>Especificidade:</strong> É um sistema de pontos que o navegador usa para resolver
+                            conflitos de estilo. A regra é: <code>Inline > ID > Classe > Tag</code>. O ID "vence" a
+                            Classe, e a Classe "vence" a Tag.</p>
+
+                        <pre class="code-display">
+                            <span class="code-label">CSS</span>
+/* Tag - Especificidade Baixa */
+h2 { color: black; }
+
+/* Classe - Especificidade Média */
+.titulo-destaque { color: blue; }
+
+/* ID - Especificidade Alta */
+#titulo-unico { color: red; }
+                        </pre>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 2</h5>
+                            <form id="quiz-u2">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual símbolo usamos para selecionar uma "class" no CSS?
+                                </p>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u2q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u2q1a">
+                                        Ponto (.) </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u2q1b">
+                                        Cerquilha (#) </label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Se um elemento tem uma classe dizendo que ele é verde, e
+                                    um ID dizendo que ele é amarelo, qual cor ele ficará?</p>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u2q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u2q2a">
+                                        Verde, porque a classe é mais forte.
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u2q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u2q2b">
+                                        Amarelo, porque o ID tem maior especificidade.
+                                    </label>
+                                </div>
+
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(2, 'a', 'b')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u3">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u3">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 3. Box Model e Unidades
+                    </button>
+                </h2>
+                <div id="u3" class="accordion-collapse collapse" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Na web, <strong>tudo é uma caixa (retângulo)</strong>. O comportamento dessas caixas é ditado
+                            pelo <strong>Box Model (Modelo de Caixa)</strong>. Ele é composto por quatro áreas:</p>
+
+
+
+                        <ul>
+                            <li><span class="tag-highlight">Content (Conteúdo):</span> Onde o texto ou imagem fica.
+                                Definido por <code>width</code> e <code>height</code>.</li>
+                            <li><span class="tag-highlight">Padding (Preenchimento):</span> Espaço interno, entre o
+                                conteúdo e a borda.</li>
+                            <li><span class="tag-highlight">Border (Borda):</span> A linha que envolve o preenchimento e
+                                o conteúdo.</li>
+                            <li><span class="tag-highlight">Margin (Margem):</span> Espaço externo, afasta a sua caixa
+                                das outras caixas ao redor.</li>
+                        </ul>
+
+                        <p><strong>Unidades de Medida Principais:</strong></p>
+                        <p>Além de Pixels (<code>px</code>), usamos unidades relativas como <code>%</code> (porcentagem
+                            do pai), <code>rem</code> (relativo ao tamanho da fonte raiz), <code>vh</code> e
+                            <code>vw</code> (relativo à altura e largura da tela visualizada).
+                        </p>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 3</h5>
+                            <form id="quiz-u3">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual propriedade empurra os elementos para longe,
+                                    criando um espaço EXTERNO à borda?</p>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u3q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u3q1a">
+                                        Padding </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u3q1b">
+                                        Margin </label>
+                                </div>
+
+
+                                <p class="mb-1 mt-3 fw-bold">2. Por que o uso de unidades relativas como 'rem' ou '%' é
+                                    muitas vezes preferido sobre 'px'?</p>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u3q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u3q2a">
+                                        Porque ajudam a criar layouts responsivos e acessíveis. </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u3q2b">
+                                        Porque computadores não conseguem ler pixels. </label>
+                                </div>
+
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(3, 'b', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u4">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u4">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 4. Flexbox
+                    </button>
+                </h2>
+                <div id="u4" class="accordion-collapse collapse" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>O <strong>Flexbox</strong> (Flexible Box Layout) é um modelo focado em organizar elementos em
+                            uma <strong>única direção (linha ou coluna)</strong>. É perfeito para alinhar botões, criar
+                            menus de navegação e centralizar coisas (o que antigamente era um pesadelo!).</p>
+
+                        <p>Para ativá-lo, você coloca <span class="tag-highlight">display: flex;</span> no elemento PAI.
+                            Feito isso, as principais propriedades são:</p>
+                        <ul>
+                            <li><span class="tag-highlight">flex-direction:</span> Define se os itens ficam em linha
+                                (<code>row</code>) ou em coluna (<code>column</code>).</li>
+                            <li><span class="tag-highlight">justify-content:</span> Alinha os itens no eixo principal
+                                (Ex: <code>center</code>, <code>space-between</code>).</li>
+                            <li><span class="tag-highlight">align-items:</span> Alinha os itens no eixo cruzado (ex:
+                                centralizar verticalmente).</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">CSS</span>
+.container-flex {
+  display: flex;
+  justify-content: <span id="js-val-flex" class="text-warning">flex-start</span>;
+  align-items: center;
+  gap: 15px; /* Espaço entre os itens */
+}
+                        </pre>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-mouse2"></i> Controle o Flexbox</div>
+                            <div class="mb-3">
+                                <select class="form-select w-50" onchange="updateFlexDemo(this.value)">
+                                    <option value="flex-start">justify-content: flex-start</option>
+                                    <option value="center">justify-content: center</option>
+                                    <option value="flex-end">justify-content: flex-end</option>
+                                    <option value="space-between">justify-content: space-between</option>
+                                    <option value="space-around">justify-content: space-around</option>
+                                </select>
+                            </div>
+                            <div id="flex-demo-area"
+                                style="display: flex; justify-content: flex-start; background: #e9ecef; padding: 10px; border-radius: 8px;">
+                                <div
+                                    style="width: 50px; height: 50px; background: var(--css-theme); margin: 5px; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 5px;">
+                                    1</div>
+                                <div
+                                    style="width: 50px; height: 50px; background: var(--css-theme); margin: 5px; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 5px;">
+                                    2</div>
+                                <div
+                                    style="width: 50px; height: 50px; background: var(--css-theme); margin: 5px; color: white; display: flex; align-items: center; justify-content: center; font-weight: bold; border-radius: 5px;">
+                                    3</div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 4</h5>
+                            <form id="quiz-u4">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual propriedade você usa no elemento pai para ativar o
+                                    Flexbox?</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u4q1a">
+                                        display: flex;
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u4q1b">
+                                        position: flex;
+                                    </label>
+                                </div>
+                                <p class="mb-1 mt-3 fw-bold">2. Qual valor do 'justify-content' joga o primeiro item
+                                    para o início, o último para o fim e distribui o resto do espaço entre eles?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u4q2a">
+                                        center
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u4q2b">
+                                        space-between
+                                    </label>
+                                </div>
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(4, 'a', 'b')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u5">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u5">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 5. CSS Grid
+                    </button>
+                </h2>
+                <div id="u5" class="accordion-collapse collapse" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Enquanto o Flexbox é excelente para uma direção, o <strong>CSS Grid</strong> é o rei do
+                            layout <strong>Bidimensional (linhas e colunas ao mesmo tempo)</strong>. Ele é ideal para
+                            montar a estrutura principal inteira do seu site.</p>
+
+                        <p>Com o <span class="tag-highlight">display: grid;</span>, você desenha uma "grade" e diz
+                            exatamente onde cada elemento deve ficar.</p>
+
+                        <ul>
+                            <li><span class="tag-highlight">grid-template-columns:</span> Define a quantidade e a
+                                largura das colunas.</li>
+                            <li><span class="tag-highlight">grid-template-rows:</span> Define a altura das linhas.</li>
+                            <li>A unidade <code>fr</code> (fração) é exclusiva do Grid. <code>1fr 1fr 1fr</code> cria 3
+                                colunas de tamanhos perfeitamente iguais.</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">CSS</span>
+.grid-container {
+  display: grid;
+  /* Cria 3 colunas de tamanhos iguais */
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px; /* Espaçamento entre os blocos */
+}
+                        </pre>
+                        <div class="interactive-demo">
+                            <div class="demo-label"><i class="bi bi-eye"></i> Resultado Visual</div>
+                            <div class="grid-container-demo">
+                                <div class="grid-item">A</div>
+                                <div class="grid-item">B</div>
+                                <div class="grid-item">C</div>
+                                <div class="grid-item">D</div>
+                                <div class="grid-item">E</div>
+                                <div class="grid-item">F</div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 5</h5>
+                            <form id="quiz-u5">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual a principal diferença entre Flexbox e Grid?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u5q1a">
+                                        Grid é 2D; Flexbox é 1D.
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u5q1b">
+                                        Flexbox substituiu o Grid.
+                                    </label>
+                                </div>
+
+
+                                <p class="mb-1 mt-3 fw-bold">2. No CSS Grid, o que faz a unidade "fr"?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u5q2a">
+                                        Medida fixa em pixels franceses.
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u5q2b">
+                                        Distribui o espaço restante como fração.
+                                    </label>
+                                </div>
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(5, 'a', 'b')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u6">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u6">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 6. Responsividade (Mobile-First)
+                    </button>
+                </h2>
+                <div id="u6" class="accordion-collapse collapse" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Hoje, a maioria das pessoas acessa a internet pelo celular. O seu site precisa se adaptar a
+                            qualquer tamanho de tela. Fazemos isso usando <strong>Media Queries</strong>.</p>
+
+                        <p><strong>Mobile-First</strong> é a prática de escrever o CSS base para a tela do celular e,
+                            usando Media Queries, ir alterando o layout conforme a tela vai crescendo (para tablets e
+                            PCs).</p>
+
+                        <pre class="code-display">
+                            <span class="code-label">CSS</span>
+/* CSS Base (Celulares) */
+.coluna { width: 100%; }
+
+/* Se a tela for MAIOR que 768px (Tablets e PCs) */
+@media (min-width: 768px) {
+  .coluna { width: 50%; } /* Agora ficam lado a lado */
+}
+                        </pre>
+
+                        <div class="tip-box">
+                            <i class="bi bi-phone-fill text-primary"></i> <strong>Atenção:</strong> Sempre teste seu
+                            site diminuindo a janela do navegador no computador ou inspecionando pelo "Modo de
+                            Dispositivo" do Google Chrome.
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 6</h5>
+                            <form id="quiz-u6">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual regra no CSS utilizamos para criar pontos de quebra
+                                    (breakpoints) e mudar o design conforme o tamanho da tela?</p>
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u6q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u6q1a">
+                                        @media </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u6q1b">
+                                        @responsive </label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. O que significa a abordagem "Mobile-First"?</p>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u6q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u6q2a">
+                                        Desenvolver todo o estilo pensando
+                                        primeiramente em telas pequenas, e
+                                        depois adaptar para telas maiores. </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u6q2b">
+                                        Criar um aplicativo para Android e iOS antes
+                                        de fazer o site web. </label>
+                                </div>
+
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(6, 'a', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u7">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u7">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 7. Animações e Transições
+                    </button>
+                </h2>
+                <div id="u7" class="accordion-collapse collapse" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Movimento atrai a atenção. O CSS possui ferramentas poderosas e leves para isso sem precisar
+                            de JavaScript.</p>
+
+                        <ul>
+                            <li><strong>Transitions (Transições):</strong> Servem para suavizar mudanças de estado. Se
+                                você muda a cor no <code>:hover</code> (quando o mouse passa por cima), a transição faz
+                                essa mudança ser fluida em vez de seca.</li>
+                            <li><strong>Animations (@keyframes):</strong> Para movimentos contínuos e complexos. Você
+                                cria uma "linha do tempo" (de 0% a 100%) e diz o que o elemento faz em cada passo.</li>
+                        </ul>
+
+                        <pre class="code-display">
+                            <span class="code-label">CSS</span>
+/* Transição simples de botão */
+.botao { background: blue; transition: background 0.3s ease; }
+.botao:hover { background: darkblue; }
+
+/* Animação com Keyframes */
+@keyframes giro {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+.rotacao { animation: giro 2s linear infinite; }
+                        </pre>
+                        <div class="interactive-demo text-center py-4">
+                            <div class="demo-label justify-content-center"><i class="bi bi-magic"></i> Demo ao vivo
+                            </div>
+                            <div class="rotacao"></div>
+                            <p class="mt-3 text-muted">A caixa giratória do exemplo (Keyframes contínuos).</p>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 7</h5>
+                            <form id="quiz-u7">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual propriedade suaviza a mudança de cor de um botão
+                                    quando passamos o mouse por cima?</p>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u7q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u7q1a">
+                                        transition </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u7q1b">
+                                        transform </label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Qual regra utilizamos para definir os passos exatos de
+                                    uma animação complexa?</p>
+
+                                <div class="form-check">
+
+                                    <input class="form-check-input" type="radio" id="u7q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u7q2a">
+                                        @keyframes </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u7q2b">
+                                        @animate </label>
+                                </div>
+
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(7, 'a', 'a')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u8">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u8">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 8. Variáveis CSS e Design Avançado
+                    </button>
+                </h2>
+                <div id="u8" class="accordion-collapse collapse" data-bs-parent="#cssCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Projetos grandes requerem organização. As <strong>Custom Properties (Variáveis CSS)</strong>
+                            permitem que você guarde uma cor ou tamanho uma única vez e o chame pelo nome no resto do
+                            código. Se o cliente pedir para mudar a cor do site de azul para roxo, você só muda na
+                            variável!</p>
+
+                        <p>Geralmente, declaramos as variáveis na pseudo-classe <code>:root</code> para que todo o site
+                            tenha acesso a elas.</p>
+
+                        <pre class="code-display">
+                            <span class="code-label">CSS</span>
+:root {
+  --cor-primaria: #264de4;
+  --espacamento-padrao: 15px;
+}
+
+.cartao {
+  background-color: var(--cor-primaria);
+  padding: var(--espacamento-padrao);
+}
+                        </pre>
+
+                        <p class="mt-4"><strong>Recursos Visuais Modernos:</strong></p>
+                        <ul>
+                            <li><span class="tag-highlight">linear-gradient:</span> Cria degrades de cores no
+                                background.</li>
+                            <li><span class="tag-highlight">box-shadow:</span> Cria sombras suaves ao redor dos
+                                elementos para dar profundidade e efeito de "card" flutuando.</li>
+                            <li><span class="tag-highlight">filter:</span> Aplica efeitos fotográficos a elementos (como
+                                <code>blur()</code>, <code>grayscale()</code>).
+                            </li>
+                        </ul>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 8</h5>
+                            <form id="quiz-u8">
+                                <p class="mb-1 mt-3 fw-bold">1. Como se declara e como se chama uma variável nativa no
+                                    CSS?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u8q1a">
+                                        Declara: --cor-base; usa: var(--cor-base)
+                                    </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u8q1b">
+                                        Declara: $cor-base; usa: color($cor-base)
+                                    </label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Qual pseudo-classe é geralmente usada para abrigar as
+                                    variáveis globais do site?</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u8q2a">
+                                        :global </label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u8q2b">
+                                        :root </label>
+                                </div>
+                                <button type="button" class="btn btn-primary mt-4"
+                                    onclick="checkQuiz(8, 'a', 'b')">Enviar Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const TOTAL_CSS_UNITS = 8;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            localStorage.setItem('lastModuleVisited', 'modulos/css.html');
+            updateUI();
+        });
+
+        // FUNÇÃO DE ALERTA CUSTOMIZADO (Toast)
+        function showToast(message, type) {
+            const toast = document.getElementById('toastAlert');
+            const icon = document.getElementById('toastIcon');
+            const msg = document.getElementById('toastMessage');
+
+            toast.className = 'custom-toast';
+            icon.className = 'bi';
+
+            if (type === 'success') {
+                toast.classList.add('success');
+                icon.classList.add('bi-check-circle-fill');
+            } else if (type === 'error') {
+                toast.classList.add('error');
+                icon.classList.add('bi-x-circle-fill');
+            } else if (type === 'warning') {
+                toast.classList.add('error');
+                icon.classList.add('bi-exclamation-triangle-fill');
+            }
+
+            msg.innerText = message;
+
+            void toast.offsetWidth;
+
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        function updateFlexDemo(val) {
+            document.getElementById('flex-demo-area').style.justifyContent = val;
+            document.getElementById('js-val-flex').textContent = val;
+        }
+
+        function updateUI() {
+            let cssProgress = parseInt(localStorage.getItem('cssProgress')) || 0;
+            document.getElementById('css-progress-text').innerText = `${cssProgress}/${TOTAL_CSS_UNITS}`;
+
+            for (let i = 1; i <= TOTAL_CSS_UNITS; i++) {
+                const itemDiv = document.getElementById(`item-u${i}`);
+                const btn = itemDiv.querySelector('.accordion-button');
+                const icon = itemDiv.querySelector('.lock-icon');
+
+                if (i <= cssProgress + 1) {
+                    itemDiv.classList.remove('locked-unit');
+                    if (icon) icon.className = "bi bi-unlock-fill me-2 text-success";
+
+                    if (i <= cssProgress) {
+                        const quizBtn = document.querySelector(`#quiz-u${i} button`);
+                        if (quizBtn) {
+                            quizBtn.disabled = true;
+                            quizBtn.innerText = "✓ Unidade Concluída";
+                            quizBtn.classList.replace('btn-primary', 'btn-success');
+                        }
+                    }
+                }
+            }
+        }
+
+        function checkQuiz(unitId, correctQ1, correctQ2) {
+            const form = document.getElementById(`quiz-u${unitId}`);
+            const q1Answer = form.querySelector('input[name="q1"]:checked');
+            const q2Answer = form.querySelector('input[name="q2"]:checked');
+
+            if (!q1Answer || !q2Answer) {
+                showToast("Por favor, responda todas as perguntas da unidade antes de enviar!", "warning");
+                return;
+            }
+
+            if (q1Answer.value === correctQ1 && q2Answer.value === correctQ2) {
+
+                showToast(`Incrível! Você dominou a Unidade ${unitId}!`, "success");
+
+                let cssProgress = parseInt(localStorage.getItem('cssProgress')) || 0;
+                if (cssProgress < unitId) {
+                    localStorage.setItem('cssProgress', unitId);
+
+                    let globalUnits = parseInt(localStorage.getItem('unitsCompleted')) || 0;
+                    let globalQuizzes = parseInt(localStorage.getItem('quizzesAnswered')) || 0;
+                    let globalScore = parseFloat(localStorage.getItem('totalScore')) || 0;
+
+                    localStorage.setItem('unitsCompleted', globalUnits + 1);
+                    localStorage.setItem('quizzesAnswered', globalQuizzes + 1);
+                    localStorage.setItem('totalScore', globalScore + 10);
+                }
+
+                updateUI();
+
+                if (unitId < TOTAL_CSS_UNITS) {
+                    let currentCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId}`), { toggle: false });
+                    let nextCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId + 1}`), { toggle: false });
+                    currentCollapse.hide();
+                    nextCollapse.show();
+
+                    setTimeout(() => {
+                        document.getElementById(`item-u${unitId + 1}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                } else {
+                    setTimeout(() => {
+                        showToast("Parabéns! Você finalizou o Módulo CSS! Que tal ir para o JS?", "success");
+                    }, 3500);
+                }
+
+            } else {
+                showToast("Quase lá! Revise as regras do CSS e tente mais uma vez.", "error");
+            }
+        }
+    </script>
+</body>
+
+</html>

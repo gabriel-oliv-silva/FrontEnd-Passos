@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Code with Sam - Módulo JavaScript</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="shortcut icon" href="../img/logo.png" type="image/png">
+
+    <style>
+        :root {
+            --html-theme: #e34c26;
+            --css-theme: #264de4;
+            --js-theme: #f0db4f;
+            --js-dark: #323330;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        header {
+            background: linear-gradient(135deg, #f0db4f 0%, #d4b106 100%);
+            color: var(--js-dark);
+        }
+
+        /* Estilos de Conteúdo */
+        .content-box {
+            font-size: 1.05rem;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .tag-highlight {
+            background-color: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            color: #b8860b;
+            font-weight: bold;
+        }
+
+        .tip-box {
+            background-color: #fffde6;
+            border-left: 4px solid var(--js-theme);
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+
+        /* Estilos de Código e Demonstração */
+        .code-display {
+            background: #1e1e24;
+            color: #abb2bf;
+            padding: 25px 20px 20px;
+            border-radius: 8px;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.95rem;
+            margin: 20px 0 0 0;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-label {
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: var(--js-theme);
+            color: var(--js-dark);
+            padding: 2px 10px;
+            font-size: 0.75rem;
+            border-radius: 8px 0 8px 0;
+            font-weight: bold;
+        }
+
+        .interactive-demo {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-top: none;
+            padding: 20px;
+            border-radius: 0 0 8px 8px;
+            margin: 0 0 25px 0;
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.02);
+        }
+
+        .demo-label {
+            font-size: 0.75rem;
+            color: #6c757d;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        /* Estilos do Quiz e Acordeão */
+        .quiz-box {
+            background: #faf9f0;
+            border: 1px solid #e8e2b3;
+            padding: 25px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+
+        .locked-unit {
+            opacity: 0.6;
+            pointer-events: none;
+            filter: grayscale(100%);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #fffde6;
+            color: var(--js-dark);
+            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
+        }
+
+        .accordion-button:focus {
+            border-color: var(--js-theme);
+            box-shadow: 0 0 0 0.25rem rgba(240, 219, 79, 0.25);
+        }
+
+        .btn-js {
+            background-color: var(--js-theme);
+            color: var(--js-dark);
+            font-weight: bold;
+            border: none;
+        }
+
+        .btn-js:hover {
+            background-color: #d4b106;
+            color: var(--js-dark);
+        }
+
+        /* Estilos do Popup Customizado (Toast) */
+        .custom-toast {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) translateY(-100px);
+            opacity: 0;
+            background: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            z-index: 9999;
+            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-weight: 600;
+            min-width: 300px;
+        }
+
+        .custom-toast.show {
+            transform: translateX(-50%) translateY(0);
+            opacity: 1;
+        }
+
+        .custom-toast.success {
+            border-left: 6px solid #198754;
+            color: #198754;
+        }
+
+        .custom-toast.error {
+            border-left: 6px solid #dc3545;
+            color: #dc3545;
+        }
+
+        .custom-toast i {
+            font-size: 1.5rem;
+        }
+
+        /* ===== CHECKBOX CUSTOM ===== */
+
+        .form-check {
+            padding: 10px 12px;
+            border-radius: 8px;
+            transition: all .2s ease;
+            cursor: pointer;
+        }
+
+        /* hover suave */
+        .form-check:hover {
+            background-color: rgba(38, 77, 228, 0.08);
+            transform: translateX(3px);
+        }
+
+        /* esconde aparência padrão */
+        .form-check-input {
+            cursor: pointer;
+        }
+
+        /* quando marcado */
+        .form-check-input:checked+.form-check-label {
+            font-weight: 600;
+            color: var(--css-theme);
+        }
+
+        /* foco acessível */
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 77, 228, .25);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="toastAlert" class="custom-toast">
+        <i id="toastIcon" class="bi"></i>
+        <span id="toastMessage"></span>
+    </div>
+
+    <header class="text-center py-5 mb-4 shadow-sm">
+        <h1 class="fw-bold"><i class="bi bi-filetype-js"></i> Módulo JavaScript</h1>
+        <p class="lead mb-0">Adicione lógica, interatividade e dinamismo às suas páginas.</p>
+    </header>
+
+    <main class="container mb-5">
+        <nav class="mb-4 d-flex justify-content-between align-items-center">
+            <a href="../index.html" class="btn btn-secondary btn-sm"><i class="bi bi-arrow-left"></i> Voltar ao
+                Dashboard</a>
+            <span class="badge bg-dark text-warning fs-6 p-2">Progresso: <span id="js-progress-text">0/8</span></span>
+        </nav>
+
+        <div class="accordion shadow-sm" id="jsCourseAccordion">
+
+            <div class="accordion-item" id="item-u1">
+                <h2 class="accordion-header">
+                    <button class="accordion-button fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u1">
+                        1. Variáveis e Tipos
+                    </button>
+                </h2>
+                <div id="u1" class="accordion-collapse collapse show" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Variáveis são como "caixas" onde guardamos informações para usar depois. No JavaScript
+                            moderno, utilizamos <span class="tag-highlight">let</span> (para valores que podem mudar) e
+                            <span class="tag-highlight">const</span> (para valores constantes/fixos).
+                        </p>
+
+                        <p>Os principais <strong>Tipos de Dados</strong> são:</p>
+                        <ul>
+                            <li><strong>String:</strong> Textos (ex: <code>"Olá Mundo"</code>).</li>
+                            <li><strong>Number:</strong> Números inteiros ou decimais (ex: <code>25</code>,
+                                <code>3.14</code>).
+                            </li>
+                            <li><strong>Boolean:</strong> Verdadeiro ou Falso (<code>true</code> ou <code>false</code>).
+                            </li>
+                        </ul>
+
+                        <div class="code-display">
+                            <span class="code-label">JS</span>
+                            let idade = 25; // number (pode mudar) <br>
+                            idade = 26; // válido<br><br>
+
+                            const nome = "Sam"; // string (fixo)<br>
+                            nome = "João"; // ERRO! Não se muda uma constante<br><br>
+
+                            let estaLogado = true; // boolean<br>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 1</h5>
+                            <form id="quiz-u1">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual palavra-chave devemos usar para criar uma variável
+                                    que NUNCA terá seu valor alterado?</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u1q1a">let</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u1q1b">const</label>
+                                </div>
+
+                                <p class="fw-bold mt-4">2. Qual é o tipo de dado do valor <code>true</code>?</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u1q2a">Boolean</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u1q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u1q2b">String</label>
+                                </div>
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(1, 'b', 'a')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u2">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u2">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 2. Condicionais e Loops
+                    </button>
+                </h2>
+                <div id="u2" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Como fazemos o código tomar decisões ou repetir tarefas? Usando <strong>estruturas de
+                                controle de fluxo</strong>.</p>
+
+                        <ul>
+                            <li><strong>Condicionais (if/else):</strong> Executa um bloco de código SE a condição for
+                                verdadeira, SENÃO, executa outro.</li>
+                            <li><strong>Loop (for):</strong> Repete um bloco de código um número específico de vezes.
+                            </li>
+                            <li><strong>Loop (while):</strong> Repete um bloco ENQUANTO uma condição for verdadeira.
+                            </li>
+                        </ul>
+
+                        <div class="code-display">
+                            <span class="code-label">JS</span>
+                            // Condicional<br>
+                            let hora = 14;<br>
+                            if (hora < 12) { <br>
+                                console.log("Bom dia!"); <br>
+                                } else { <br>
+                                console.log("Boa tarde!");<br>
+                                }<br>
+                                // Loop for (inicialização; condição; incremento) <br><br>
+                                for (let i=1; i <=3; i++) { <br>
+                                    console.log("Contagem: " + i);
+                                    <br>}
+                        </div>
+
+                        <div class=" quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 2</h5>
+                            <form id="quiz-u2">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual estrutura usamos para tomar uma decisão de "ou
+                                    isso, ou aquilo" no código?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u2q1a">for / while</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u2q1b">if / else</label>
+                                </div>
+
+                                <p class="fw-bold mt-4">2. Qual loop repete enquanto a condição for verdadeira?</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u2q2a">while</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u2q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u2q2b">if</label>
+                                </div>
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(2, 'b', 'a')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u3">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u3">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 3. Funções
+                    </button>
+                </h2>
+                <div id="u3" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p><strong>Funções</strong> são blocos de código que realizam uma tarefa específica e podem ser
+                            reutilizados (chamados) várias vezes, evitando que você repita código.</p>
+
+                        <p>Existem duas formas principais de escrever funções modernas:</p>
+                        <ul>
+                            <li><strong>Declaração Tradicional:</strong> Usa a palavra <code>function</code>.</li>
+                            <li><strong>Arrow Functions:</strong> Uma sintaxe mais curta e limpa usando <code>=></code>.
+                                Muito comum em Callbacks (funções passadas como parâmetro para outras).</li>
+                        </ul>
+
+                        <div class="code-display">
+                            <span class="code-label">JS</span>
+                            // Função Tradicional<br>
+                            function somar(a, b) {<br>
+                            return a + b;<br>
+                            }<br><br>
+
+                            // Arrow Function (faz exatamente a mesma coisa)<br>
+                            const somarArrow = (a, b) => {<br>
+                            return a + b;<br>
+                            };<br><br>
+
+                            // Se tiver só uma linha, pode ser ainda menor:<br>
+                            const dobrar = x => x * 2;<br>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 3</h5>
+                            <form id="quiz-u3">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual é a utilidade da palavra-chave <code>return</code>
+                                    dentro de uma função?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u3q1a">Devolve o resultado</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u3q1b">Imprime no console</label>
+                                </div>
+
+                                <p class="fw-bold mt-4">2. Qual símbolo identifica arrow functions?</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u3q2a">===</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u3q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u3q2b">=&gt;</label>
+                                </div>
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(3, 'a', 'b')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u4">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u4">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 4. Arrays e Métodos
+                    </button>
+                </h2>
+                <div id="u4" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p><strong>Arrays (Vetores)</strong> são listas que guardam múltiplos valores em uma única
+                            variável. Arrays possuem "poderes" embutidos, chamados de métodos, para manipulá-los
+                            facilmente.</p>
+
+                        <ul>
+                            <li><span class="tag-highlight">map()</span>: Cria um novo array transformando todos os
+                                itens originais.</li>
+                            <li><span class="tag-highlight">filter()</span>: Cria um novo array apenas com os itens que
+                                passarem num teste.</li>
+                            <li><span class="tag-highlight">push()</span> / <span class="tag-highlight">pop()</span>:
+                                Adiciona ou remove itens do final da lista.</li>
+                        </ul>
+
+                        <div class="code-display">
+                            <span class="code-label">JS</span>
+                            let notas = [5, 8, 10, 4];<br>
+
+                            // Usando o método filter() com uma Arrow Function<br>
+                            let aprovados = notas.filter(nota => nota >= 7);<br>
+                            console.log(aprovados); // Resultado: [8, 10]<br><br>
+
+                            // Usando o método map() para dar ponto extra<br>
+                            let notasExtras = notas.map(nota => nota + 1);<br>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 4</h5>
+                            <form id="quiz-u4">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual método usamos se quisermos "filtrar" um array para
+                                    remover itens indesejados?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u4q1a">filter()</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u4q1b">map()</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. Como acessamos o primeiro item do array
+                                    <code>let cores = ["azul", "verde"]</code>?
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u4q2a">cores[1]</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u4q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u4q2b">cores[0] (A contagem começa em
+                                        zero)</label>
+                                </div>
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(4, 'a', 'b')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u5">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u5">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 5. Objetos e JSON
+                    </button>
+                </h2>
+                <div id="u5" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>Enquanto arrays são listas, <strong>Objetos</strong> representam coisas do mundo real
+                            agrupando propriedades (chaves) e valores. São definidos usando chaves <code>{}</code>.</p>
+
+                        <p>O <strong>JSON (JavaScript Object Notation)</strong> é um formato de texto derivado dos
+                            objetos JS, usado para enviar e receber dados entre um site e um servidor.</p>
+
+                        <div class="code-display">
+                            <span class="code-label">JS</span>
+                            // Criando um Objeto<br>
+                            let usuario = {<br>
+                            nome: "Ana",<br>
+                            idade: 28,<br>
+                            admin: true<br>
+                            };<br><br>
+
+                            // Acessando propriedades<br>
+                            console.log(usuario.nome); // "Ana"<br><br>
+
+                            // Convertendo o objeto para JSON (Texto) para enviar a um servidor<br>
+                            let textoJSON = JSON.stringify(usuario);<br>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 5</h5>
+                            <form id="quiz-u5">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual sintaxe usamos para criar um objeto no JavaScript?
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u5q1a">Chaves { }</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u5q1b">Colchetes [ ]</label>
+                                </div>
+                                <p class="mb-1 mt-3 fw-bold">2. Se quisermos ler a idade do objeto <code>usuario</code>,
+                                    como escrevemos?</p>
+
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u5q2a">usuario[idade]</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u5q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u5q2b">usuario.idade</label>
+                                </div>
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(5, 'a', 'b')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u6">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u6">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 6. Manipulação do DOM
+                    </button>
+                </h2>
+                <div id="u6" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>O <strong>DOM (Document Object Model)</strong> é a representação do seu HTML na memória do
+                            navegador. O JavaScript usa o objeto <code>document</code> para "entrar" no HTML, pegar
+                            elementos, alterá-los ou criar novos.</p>
+
+                        <ul>
+                            <li><span class="tag-highlight">document.querySelector()</span>: Seleciona um elemento
+                                usando seletores CSS (ex: <code>".minha-classe"</code>).</li>
+                            <li><span class="tag-highlight">document.createElement()</span>: Cria um novo elemento (tag)
+                                do zero.</li>
+                            <li><span class="tag-highlight">elemento.textContent</span>: Altera o texto visível.</li>
+                        </ul>
+
+                        <div class="code-display">
+                            <span class="code-label">JS</span>
+                            const titulo = document.querySelector('#domTitulo');<br><br>
+
+                            // Quando chamado, muda o texto e o CSS via JS<br>
+                            function mudarTexto() {<br>
+                            titulo.textContent = "Modificado pelo JS! 🎉";<br>
+                            titulo.style.color = "#d4b106";<br>
+                            }
+                        </div>
+
+                        <div class="interactive-demo text-center py-4">
+                            <h3 id="domTitulo" class="fw-bold mb-3">Título Original</h3>
+                            <button class="btn btn-dark" onclick="mudarTextoDOM()">Executar Código Acima</button>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 6</h5>
+                            <form id="quiz-u6">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual método usamos para selecionar a primeira tag
+                                    <code>&lt;p&gt;</code> do documento?
+                                </p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u6q1a">document.querySelector('p')</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u6q1b">document.createElement('p')</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. O DOM é o que?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u6q2a">É uma linguagem de programação mais
+                                        antiga que o JS.</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u6q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u6q2b">É a representação em árvore da estrutura
+                                        do HTML que o JS pode
+                                        manipular.</label>
+                                </div>
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(6, 'a', 'b')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u7">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u7">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 7. Eventos (Interatividade)
+                    </button>
+                </h2>
+                <div id="u7" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>A web é interativa porque o JS fica "escutando" as ações do usuário (cliques, digitação,
+                            rolar a página). Esses são os <strong>Eventos</strong>.</p>
+
+                        <p>Usamos o método <span class="tag-highlight">addEventListener()</span> para atrelar uma função
+                            a uma ação do usuário.</p>
+
+                        <div class="row align-items-center mt-4">
+                            <div class="col-lg-7">
+                                <div class="code-display mb-0">
+                                    <span class="code-label">JS</span>
+                                    // Criando uma Lista de Tarefas (To-Do)<br>
+                                    function adicionarTarefa() {<br>
+                                    const input = document.querySelector('#inputTarefa');<br>
+                                    const lista = document.querySelector('#minhaLista');<br><br>
+
+                                    if (input.value === '') return;<br><br>
+
+                                    const novoItem = document.createElement('li');<br>
+                                    novoItem.className = 'list-group-item';<br>
+                                    novoItem.textContent = input.value;<br><br>
+
+                                    lista.appendChild(novoItem); // Adiciona na tela<br>
+                                    input.value = ""; // Limpa o campo<br>
+                                    }
+                                </div>
+                            </div>
+                            <div class="col-lg-5 mt-3 mt-lg-0">
+                                <div class="interactive-demo shadow-sm">
+                                    <div class="demo-label"><i class="bi bi-check2-square"></i> Teste a Lista</div>
+                                    <div class="input-group mb-3">
+                                        <input type="text" id="inputTarefa" class="form-control"
+                                            placeholder="Estudar React...">
+                                        <button class="btn btn-dark" onclick="addTodo()"><i
+                                                class="bi bi-plus-lg"></i></button>
+                                    </div>
+                                    <ul id="minhaLista" class="list-group list-group-flush">
+                                        <li class="list-group-item">Aprender HTML</li>
+                                        <li class="list-group-item">Estilizar com CSS</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 7</h5>
+                            <form id="quiz-u7">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual método usamos para fazer o JavaScript "escutar" um
+                                    clique em um botão?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u7q1a">addEventListener('click',
+                                        funcao)</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u7q1b">querySelector('click')</label>
+                                </div>
+
+                                <p class="mb-1 mt-3 fw-bold">2. O que faz o método <code>appendChild()</code>?</p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u7q2a">Deleta o elemento selecionado da
+                                        tela.</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u7q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u7q2b">Insere um novo elemento como "filho"
+                                        (dentro) do elemento
+                                        selecionado.</label>
+                                </div>
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(7, 'a', 'b')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item locked-unit" id="item-u8">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#u8">
+                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 8. Async/Await e APIs
+                    </button>
+                </h2>
+                <div id="u8" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+                    <div class="accordion-body content-box">
+                        <p>O JavaScript pode se comunicar com outros computadores (servidores) para buscar dados (como a
+                            previsão do tempo, ou a lista de filmes da Netflix). Isso leva tempo. Por isso, usamos a
+                            programação <strong>Assíncrona</strong>.</p>
+
+                        <p>A função <span class="tag-highlight">fetch()</span> faz a requisição à API. Como não sabemos
+                            quando a resposta chega, ela retorna uma <strong>Promise (Promessa)</strong>. Para esperar
+                            por ela, usamos <code>async</code> e <code>await</code>.</p>
+
+                        <div class="code-display">
+                            <span class="code-label">JS</span>
+                            // Função Assíncrona buscando um conselho aleatório<br>
+                            async function buscarConselho() {<br>
+                            // Await: "Espere a internet responder..."<br>
+                            const resposta = await fetch('https://api.adviceslip.com/advice');<br>
+                            const dados = await resposta.json();<br><br>
+
+                            console.log(dados.slip.advice);<br>
+                            }<br>
+                        </div>
+
+                        <div class="interactive-demo text-center">
+                            <button class="btn btn-dark mb-3" onclick="chamarAPI()" id="btnApi">
+                                <i class="bi bi-cloud-arrow-down"></i> Buscar Conselho da API
+                            </button>
+                            <p id="resultadoApi" class="fst-italic fs-5 text-muted">"Os conselhos aparecerão aqui..."
+                            </p>
+                        </div>
+
+                        <div class="quiz-box">
+                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 8</h5>
+                            <form id="quiz-u8">
+                                <p class="mb-1 mt-3 fw-bold">1. Qual método nativo usamos para buscar dados de uma URL
+                                    (API externa)?</p>
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q1a" name="q1" value="a">
+                                    <label class="form-check-label" for="u8q1a">fetch()</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q1b" name="q1" value="b">
+                                    <label class="form-check-label" for="u8q1b">get()</label>
+                                </div>
+                                <p class="mb-1 mt-3 fw-bold">2. Por que usamos as palavras <code>async</code> e
+                                    <code>await</code>?
+                                </p>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q2a" name="q2" value="a">
+                                    <label class="form-check-label" for="u8q2a">Porque fazem o código rodar 10x mais
+                                        rápido do que o normal.</label>
+                                </div>
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="radio" id="u8q2b" name="q2" value="b">
+                                    <label class="form-check-label" for="u8q2b">Porque operações de rede demoram, e
+                                        precisamos pausar e "esperar"
+                                        (await) a promessa ser resolvida.</label>
+                                </div>
+
+
+                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(8, 'a', 'b')">Enviar
+                                    Respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        const TOTAL_JS_UNITS = 8;
+
+        document.addEventListener("DOMContentLoaded", () => {
+            localStorage.setItem('lastModuleVisited', 'modulos/js.html');
+            updateUI();
+        });
+
+        // FUNÇÃO DE ALERTA CUSTOMIZADO (Toast)
+        function showToast(message, type) {
+            const toast = document.getElementById('toastAlert');
+            const icon = document.getElementById('toastIcon');
+            const msg = document.getElementById('toastMessage');
+
+            toast.className = 'custom-toast';
+            icon.className = 'bi';
+
+            if (type === 'success') {
+                toast.classList.add('success');
+                icon.classList.add('bi-check-circle-fill');
+            } else if (type === 'error') {
+                toast.classList.add('error');
+                icon.classList.add('bi-x-circle-fill');
+            } else if (type === 'warning') {
+                toast.classList.add('error');
+                icon.classList.add('bi-exclamation-triangle-fill');
+            }
+
+            msg.innerText = message;
+
+            void toast.offsetWidth;
+
+            toast.classList.add('show');
+
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3500);
+        }
+
+        // FUNÇÕES DOS DEMOS INTERATIVOS
+        function mudarTextoDOM() {
+            const titulo = document.querySelector('#domTitulo');
+            titulo.textContent = "Modificado pelo JS! 🎉";
+            titulo.style.color = "#d4b106";
+        }
+
+        function addTodo() {
+            const input = document.querySelector('#inputTarefa');
+            const lista = document.querySelector('#minhaLista');
+            if (input.value.trim() === '') return;
+
+            const novoItem = document.createElement('li');
+            novoItem.className = 'list-group-item d-flex justify-content-between align-items-center bg-light';
+            novoItem.innerHTML = `${input.value} <button class="btn btn-sm btn-outline-danger border-0" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>`;
+
+            lista.appendChild(novoItem);
+            input.value = '';
+        }
+
+        async function chamarAPI() {
+            const result = document.getElementById('resultadoApi');
+            const btn = document.getElementById('btnApi');
+            btn.disabled = true;
+            result.innerText = "Buscando...";
+
+            try {
+                const response = await fetch('https://api.adviceslip.com/advice');
+                const data = await response.json();
+                result.innerText = `"${data.slip.advice}"`;
+                result.style.color = "#000";
+                result.classList.add("fw-bold");
+            } catch (error) {
+                result.innerText = "Erro ao buscar dados.";
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // LÓGICA DO CURSO
+        function updateUI() {
+            let jsProgress = parseInt(localStorage.getItem('jsProgress')) || 0;
+            document.getElementById('js-progress-text').innerText = `${jsProgress}/${TOTAL_JS_UNITS}`;
+
+            for (let i = 1; i <= TOTAL_JS_UNITS; i++) {
+                const itemDiv = document.getElementById(`item-u${i}`);
+                const btn = itemDiv.querySelector('.accordion-button');
+                const icon = itemDiv.querySelector('.lock-icon');
+
+                if (i <= jsProgress + 1) {
+                    itemDiv.classList.remove('locked-unit');
+                    if (icon) icon.className = "bi bi-unlock-fill me-2 text-warning";
+
+                    if (i <= jsProgress) {
+                        const quizBtn = document.querySelector(`#quiz-u${i} button`);
+                        if (quizBtn) {
+                            quizBtn.disabled = true;
+                            quizBtn.innerHTML = "<i class='bi bi-check2-all'></i> Unidade Concluída";
+                            quizBtn.classList.replace('btn-js', 'btn-success');
+                        }
+                    }
+                }
+            }
+        }
+
+        function checkQuiz(unitId, correctQ1, correctQ2) {
+            const form = document.getElementById(`quiz-u${unitId}`);
+            const q1Answer = form.querySelector('input[name="q1"]:checked');
+            const q2Answer = form.querySelector('input[name="q2"]:checked');
+
+            if (!q1Answer || !q2Answer) {
+                showToast("Por favor, responda todas as perguntas da unidade antes de enviar!", "warning");
+                return;
+            }
+
+            if (q1Answer.value === correctQ1 && q2Answer.value === correctQ2) {
+
+                showToast(`Incrível! Você dominou a Unidade ${unitId}!`, "success");
+
+                let jsProgress = parseInt(localStorage.getItem('jsProgress')) || 0;
+                if (jsProgress < unitId) {
+                    localStorage.setItem('jsProgress', unitId);
+
+                    let globalUnits = parseInt(localStorage.getItem('unitsCompleted')) || 0;
+                    let globalQuizzes = parseInt(localStorage.getItem('quizzesAnswered')) || 0;
+                    let globalScore = parseFloat(localStorage.getItem('totalScore')) || 0;
+
+                    localStorage.setItem('unitsCompleted', globalUnits + 1);
+                    localStorage.setItem('quizzesAnswered', globalQuizzes + 1);
+                    localStorage.setItem('totalScore', globalScore + 15);
+                }
+
+                updateUI();
+
+                if (unitId < TOTAL_JS_UNITS) {
+                    let currentCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId}`), { toggle: false });
+                    let nextCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId + 1}`), { toggle: false });
+                    currentCollapse.hide();
+                    nextCollapse.show();
+
+                    setTimeout(() => {
+                        document.getElementById(`item-u${unitId + 1}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }, 300);
+                } else {
+                    setTimeout(() => {
+                        showToast("🎉 PARABÉNS! Você finalizou os 3 módulos da Trilha Front-End!", "success");
+                        // Opcional: Redirecionar para o painel principal após um tempo
+                        // window.location.href = "index.html";
+                    }, 3000);
+                }
+
+            } else {
+                showToast("Quase lá! Revise os conceitos lógicos e tente mais uma vez.", "error");
+            }
+        }
+    </script>
+</body>
+
+</html>
