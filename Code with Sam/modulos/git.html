@@ -153,6 +153,63 @@
             right: 20px;
             z-index: 1055;
         }
+                .form-check-input:hover {
+            transform: scale(1.05);
+            transition: transform 0.12s ease;
+        }
+        
+        .form-check-input:focus-visible {
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(227, 76, 38, 0.18);
+            border-color: var(--git-dark);
+        }
+        
+        .form-check-label:hover {
+            color: var(--git-dark);
+            cursor: pointer;
+            text-decoration: underline;
+            transition: color 0.12s ease;
+        }
+        .form-check {
+        transition: 0.5s;}
+
+                .form-check:hover {
+            background-color: rgba(38, 77, 228, 0.08);
+            transform: translateX(3px);
+            transition: 0.5s;
+        }
+                .form-control:hover,
+        .form-select:hover {
+            border-color: var(--git-main);
+            box-shadow: 0 0 0 0.15rem rgba(227, 76, 38, 0.12);
+            transition: box-shadow 0.15s ease, border-color 0.15s ease;
+        }
+
+
+        /* esconde aparência padrão */
+        .form-check-input {
+            cursor: pointer;
+        }
+        .form-check-label:hover{
+            transition: 0.4s;
+        }
+        .form-check-label{
+            transition: 0.4s;
+        }
+
+        /* quando marcado */
+        .form-check-input:checked+.form-check-label {
+            font-weight: 600;
+            color: var(--css-theme);
+        }
+
+        /* foco acessível */
+        .form-check-input:focus {
+            box-shadow: 0 0 0 0.2rem rgba(38, 77, 228, .25);
+        }
+
+
+
     </style>
 </head>
 <body>
@@ -773,7 +830,7 @@
          */
         function showFeedback(msg, type) {
             // Remove classes antigas de cor
-            toastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+            toastEl.classList.remove('bg-success', 'bg-danger', 'bg-dark');
             
             // Adiciona a classe correspondente
             toastEl.classList.add(`bg-${type}`);
@@ -797,7 +854,7 @@
 
             // Validação: checa se ambas foram respondidas
             if (!q1 || !q2) {
-                showFeedback('<i class="bi bi-exclamation-circle-fill me-2"></i> Por favor, responda todas as perguntas!', 'warning');
+                showFeedback('<i class="bi bi-exclamation-circle-fill me-2"></i> Por favor, responda todas as perguntas!', 'dark');
                 return;
             }
 
