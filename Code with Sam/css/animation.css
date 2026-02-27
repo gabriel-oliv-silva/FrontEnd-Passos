@@ -1,0 +1,25 @@
+/* ===== PAGE TRANSITION FIX ===== */
+        .btn-dark{
+            transition: 0.5s;
+            display: flex;
+            justify-self: start;
+        }
+        .btn-dark:hover{
+            transition: 0.5s;
+            transform: translateX(-10px);
+        }
+#page-transition {
+    position: fixed;
+    inset: 0;
+    background: linear-gradient(135deg, #3274f0,#3274f0, #ff7b59);
+    z-index: 99999;
+
+    /* COMEÇA VISÍVEL */
+    transform: translateY(0);
+    transition: transform 0.6s cubic-bezier(.77,0,.18,1);
+}
+
+/* anima saída (revelar página) */
+#page-transition.loaded {
+    transform: translateY(-100%);
+}

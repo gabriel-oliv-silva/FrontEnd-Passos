@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GIT ESSENTIALS — Do Zero ao GitHub Pages</title>
+    
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="../css/animation.css">
+      
+    <link rel="shortcut icon" href="../img/logo.png" type="image/png">
+
+    <style>
+        /* Variáveis de Cores Temáticas do Git */
+        :root {
+            --git-main: #f05032;
+            --git-dark: #c83b22;
+            --git-light: #ffefe6;
+            --text-dark: #24292e;
+            --text-muted: #586069;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--text-dark);
+            background-color: #f6f8fa;
+        }
+        .btn{
+            transition: 0.5s;
+            display: flex;
+            justify-self: start;
+        }
+        .btn:hover{
+            transition: 0.5s;
+            transform: translateX(-10px);
+        }
+        /* Header e Gradiente */
+        .header-gradient {
+            background: linear-gradient(135deg, var(--git-main) 0%, var(--git-dark) 100%);
+            color: white;
+            padding: 3rem 1rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        /* Estilos do Accordion Educacional */
+        .accordion-item {
+            border: none;
+            border-radius: 8px !important;
+            margin-bottom: 1rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            overflow: hidden;
+        }
+        
+        .accordion-button {
+            font-weight: 600;
+            font-size: 1.1rem;
+            background-color: white;
+            color: var(--text-dark);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: var(--git-light);
+            color: var(--git-main);
+            box-shadow: inset 0 calc(-1 * var(--bs-accordion-border-width)) 0 var(--git-main);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(240, 80, 50, 0.5);
+        }
+
+        /* Componentes Pedagógicos */
+        .tip-box {
+            background-color: var(--git-light);
+            border-left: 5px solid var(--git-main);
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box h5 {
+            color: var(--git-main);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .analogy-box {
+            background-color: #e8f4fd;
+            border-left: 5px solid #0366d6;
+            padding: 1rem;
+            border-radius: 0 8px 8px 0;
+            margin: 1.5rem 0;
+        }
+
+        /* Terminal Fake */
+        .fake-terminal {
+            background-color: #1e1e1e;
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', Courier, monospace;
+            margin: 1.5rem 0;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+        }
+
+        .fake-terminal .header {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
+        }
+
+        .dot { height: 12px; width: 12px; border-radius: 50%; }
+        .dot.red { background-color: #ff5f56; }
+        .dot.yellow { background-color: #ffbd2e; }
+        .dot.green { background-color: #27c93f; }
+
+        .cmd { color: #fff; font-weight: bold; }
+        .cmd::before { content: "$ "; color: #27c93f; }
+        .output { color: #aaa; margin-bottom: 10px; display: block; }
+        .comment { color: #6a9955; font-style: italic; display: block; margin-bottom: 5px; }
+
+        /* Estilo do Quiz */
+        .quiz-section {
+            background-color: #fff;
+            border: 1px solid #e1e4e8;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .form-check-input:checked {
+            background-color: var(--git-main);
+            border-color: var(--git-main);
+        }
+
+        .btn-custom {
+            background-color: var(--git-main);
+            color: white;
+            font-weight: 500;
+        }
+        
+        .btn-custom:hover {
+            background-color: var(--git-dark);
+            color: white;
+        }
+
+        /* Toast Container */
+        .toast-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1055;
+        }
+    </style>
+</head>
+<body>
+<div id="page-transition"></div>
+    <header class="header-gradient text-center">
+        <a href="/index.html" class="btn btn-dark"><i class="bi bi-arrow-left mx-1"></i> Home</a>
+        <div class="container">
+            <i class="bi bi-git" style="font-size: 4rem;"></i>
+            <h1 class="display-4 fw-bold mt-2">GIT ESSENTIALS</h1>
+        <p class="lead mb-0">Do Zero ao GitHub Pages — Sem complicação</p>
+        </div>
+    </header>
+
+    <main class="container py-5">
+        <p class="text-center mb-5 text-muted">
+            Bem-vindo ao módulo interativo! Todas as unidades estão desbloqueadas. Sinta-se livre para explorar na ordem que preferir.
+        </p>
+
+        <div class="accordion" id="courseAccordion">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingOne">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <i class="bi bi-1-circle-fill me-2"></i> O que é Git e Controle de Versão
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>A Máquina do Tempo dos Desenvolvedores</h4>
+                        <p>O <strong>Git</strong> é um sistema de controle de versão. Ele rastreia as mudanças feitas em arquivos ao longo do tempo, permitindo que você volte para versões anteriores e trabalhe em equipe sem que um sobrescreva o trabalho do outro.</p>
+                        
+                        <div class="analogy-box">
+                            <strong><i class="bi bi-lightbulb"></i> Analogia:</strong>
+                            <p class="mb-0">Pense no Git como o "Save Point" de um videogame. Se você cometer um erro terrível na fase atual, basta carregar o jogo no ponto seguro anterior e tentar de novo.</p>
+                        </div>
+
+                        <div class="tip-box">
+                            <h5><i class="bi bi-exclamation-triangle"></i> Atenção</h5>
+                            <p class="mb-0"><strong>Git não é GitHub!</strong> O Git é a ferramenta (o motor) instalada no seu computador. O GitHub é um site (a garagem) onde você guarda seus projetos usando o Git.</p>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u1">
+                                <p class="fw-bold mb-1">1. Qual o principal problema que o Git resolve?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u1q1" value="correct" id="u1q1a">
+                                    <label class="form-check-label" for="u1q1a">Perda de histórico de arquivos e conflitos de código em equipe.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u1q1" value="wrong" id="u1q1b">
+                                    <label class="form-check-label" for="u1q1b">Deixa o computador mais rápido ao programar.</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. Git e GitHub são a mesma coisa?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u1q2" value="wrong" id="u1q2a">
+                                    <label class="form-check-label" for="u1q2a">Sim, são sinônimos da mesma empresa.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u1q2" value="correct" id="u1q2b">
+                                    <label class="form-check-label" for="u1q2b">Não. Git é a ferramenta local, GitHub é a plataforma de hospedagem online.</label>
+                                </div>
+                                
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(1)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTwo">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <i class="bi bi-2-circle-fill me-2"></i> Instalação do Git
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Trazendo o Git para sua máquina</h4>
+                        <p>Para usar o Git, precisamos instalá-lá no nosso computador. O processo varia um pouco de acordo com o Sistema Operacional:</p>
+                        
+                        <ul>
+                            <li><strong>Windows:</strong> Baixe o instalador no site oficial (git-scm.com) e siga o "Next, Next, Install". Ele instala o <em>Git Bash</em>, o terminal que usaremos.</li>
+                            <li><strong>Mac:</strong> Se você abrir o terminal e digitar <code>git</code>, o Mac geralmente sugere a instalação. Ou use o Homebrew: <code>brew install git</code>.</li>
+                            <li><strong>Linux:</strong> Use o gerenciador do sistema. Ex: <code>sudo apt install git</code> (Ubuntu/Debian).</li>
+                        </ul>
+
+                        <div class="fake-terminal">
+                            <div class="header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                            </div>
+                            <span class="comment"># Para verificar se a instalação deu certo, digite no terminal:</span>
+                            <div class="cmd">git --version</div>
+                            <span class="output">git version 2.40.1.windows.1</span>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u2">
+                                <p class="fw-bold mb-1">1. Qual comando usamos para verificar se o Git está instalado?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u2q1" value="correct" id="u2q1a">
+                                    <label class="form-check-label" for="u2q1a">git --version</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u2q1" value="wrong" id="u2q1b">
+                                    <label class="form-check-label" for="u2q1b">git install check</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. No Windows, qual terminal é instalado junto com o Git e altamente recomendado para uso?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u2q2" value="wrong" id="u2q2a">
+                                    <label class="form-check-label" for="u2q2a">Prompt de Comando (CMD)</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u2q2" value="correct" id="u2q2b">
+                                    <label class="form-check-label" for="u2q2b">Git Bash</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(2)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingThree">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <i class="bi bi-3-circle-fill me-2"></i> Configuração Inicial
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Apresente-se ao Git</h4>
+                        <p>Antes de começar a salvar as versões do seu código, o Git precisa saber quem é você. Todo registro (commit) que você fizer carregará seu nome e email.</p>
+
+                        <div class="analogy-box">
+                            <strong><i class="bi bi-lightbulb"></i> Analogia:</strong>
+                            <p class="mb-0">É como colocar um crachá de identificação antes de entrar na empresa. Tudo o que você fizer lá dentro ficará registrado no sistema com o seu nome.</p>
+                        </div>
+
+                        <div class="fake-terminal">
+                            <div class="header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                            </div>
+                            <span class="comment"># Configure seu nome:</span>
+                            <div class="cmd">git config --global user.name "Seu Nome Aqui"</div>
+                            <span class="output"></span>
+                            <span class="comment"># Configure seu email:</span>
+                            <div class="cmd">git config --global user.email "seu-email@exemplo.com"</div>
+                        </div>
+
+                        <div class="tip-box">
+                            <h5><i class="bi bi-info-circle"></i> Dica</h5>
+                            <p class="mb-0">A flag <code>--global</code> significa que essas configurações valerão para todos os projetos no seu computador. Você só precisa fazer isso uma vez!</p>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u3">
+                                <p class="fw-bold mb-1">1. Por que precisamos configurar nome e email no Git?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u3q1" value="correct" id="u3q1a">
+                                    <label class="form-check-label" for="u3q1a">Para que o Git saiba de quem é a autoria de cada modificação no código.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u3q1" value="wrong" id="u3q1b">
+                                    <label class="form-check-label" for="u3q1b">Para que o Git possa nos enviar emails de propaganda.</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. O que a flag --global faz no comando git config?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u3q2" value="wrong" id="u3q2a">
+                                    <label class="form-check-label" for="u3q2a">Configura o Git apenas para o projeto atual.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u3q2" value="correct" id="u3q2b">
+                                    <label class="form-check-label" for="u3q2b">Aplica a configuração para todos os projetos do seu usuário no computador.</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(3)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFour">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+                        <i class="bi bi-4-circle-fill me-2"></i> Primeiro Repositório
+                    </button>
+                </h2>
+                <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Começando a Mágica</h4>
+                        <p>Para o Git começar a vigiar uma pasta, você precisa transformá-la em um <strong>repositório</strong>. A partir daí, o fluxo de trabalho tem duas etapas fundamentais: separar o que vai ser salvo (add) e registrar oficialmente (commit).</p>
+
+                        <div class="analogy-box">
+                            <strong><i class="bi bi-lightbulb"></i> Analogia da Caixa de Mudança:</strong>
+                            <ul class="mb-0">
+                                <li><code>git init</code>: Comprar a caixa vazia.</li>
+                                <li><code>git add</code>: Colocar os itens dentro da caixa (preparação).</li>
+                                <li><code>git commit</code>: Fechar a caixa com fita, colocar uma etiqueta (mensagem) e guardar.</li>
+                            </ul>
+                        </div>
+                        
+                         <div class="fake-terminal">
+                            <div class="header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                            </div>
+                            <span class="comment"># Inicia o repositório na pasta atual:</span>
+                            <div class="cmd">git init</div>
+                            <span class="output">Initialized empty Git repository in /caminho/do/projeto/.git/</span>
+                            
+                            <span class="comment"># Adiciona o arquivo index.html "na caixa":</span>
+                            <div class="cmd">git add index.html</div>
+                            
+                            <span class="comment"># Salva a versão com uma mensagem:</span>
+                            <div class="cmd">git commit -m "Cria a página inicial"</div>
+                            <span class="output">[main (root-commit) 4a2f8c] Cria a página inicial</span>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u4">
+                                <p class="fw-bold mb-1">1. Qual a diferença entre git add e git commit?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u4q1" value="correct" id="u4q1a">
+                                    <label class="form-check-label" for="u4q1a">O 'add' prepara os arquivos; o 'commit' registra definitivamente as mudanças na história.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u4q1" value="wrong" id="u4q1b">
+                                    <label class="form-check-label" for="u4q1b">São exatamente a mesma coisa, só nomes diferentes.</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. Qual comando inicializa um novo repositório Git em uma pasta?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u4q2" value="wrong" id="u4q2a">
+                                    <label class="form-check-label" for="u4q2a">git start</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u4q2" value="correct" id="u4q2b">
+                                    <label class="form-check-label" for="u4q2b">git init</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(4)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingFive">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
+                        <i class="bi bi-5-circle-fill me-2"></i> Histórico e Versionamento
+                    </button>
+                </h2>
+                <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Investigando o Passado</h4>
+                        <p>Depois de realizar vários commits, você pode querer ver o que já foi feito, ou quem fez determinada alteração. O Git fornece ferramentas poderosas para auditar o histórico.</p>
+
+                        <div class="tip-box">
+                            <h5><i class="bi bi-search"></i> Inspecionando</h5>
+                            <ul class="mb-0">
+                                <li><code>git log</code>: Lista o histórico de commits.</li>
+                                <li><code>git status</code>: Mostra o estado atual (se há arquivos modificados ou esperando o commit).</li>
+                            </ul>
+                        </div>
+
+                        <div class="fake-terminal">
+                            <div class="header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                            </div>
+                            <div class="cmd">git log --oneline</div>
+                            <span class="output">
+                                4a2f8c9 (HEAD -> main) Corrige o erro no botão de login<br>
+                                9b1e7f2 Adiciona CSS a página de contatos<br>
+                                d83c1a4 Cria a página inicial
+                            </span>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u5">
+                                <p class="fw-bold mb-1">1. Qual comando lista os commits que já foram feitos no repositório?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u5q1" value="correct" id="u5q1a">
+                                    <label class="form-check-label" for="u5q1a">git log</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u5q1" value="wrong" id="u5q1b">
+                                    <label class="form-check-label" for="u5q1b">git history</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. O que o comando git status informa?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u5q2" value="wrong" id="u5q2a">
+                                    <label class="form-check-label" for="u5q2a">Apaga o histórico de alterações da pasta atual.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u5q2" value="correct" id="u5q2b">
+                                    <label class="form-check-label" for="u5q2b">O estado atual dos arquivos (modificados, adicionados, não rastreados).</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(5)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSix">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
+                        <i class="bi bi-6-circle-fill me-2"></i> Branches
+                    </button>
+                </h2>
+                <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Trabalhando em Universos Paralelos</h4>
+                        <p>No Git, a linha principal do seu código costuma se chamar <strong>main</strong>. Se você quer testar uma ideia nova ou criar uma funcionalidade sem arriscar quebrar o código principal, você cria uma <strong>branch</strong> (ramificação).</p>
+
+                         <div class="analogy-box">
+                            <strong><i class="bi bi-lightbulb"></i> Analogia:</strong>
+                            <p class="mb-0">É como o "Multiverso" nos filmes. Você cria uma linha do tempo alternativa. Lá você pode explodir coisas à vontade. Se der certo, você traz o resultado de volta para o universo original (processo chamado <strong>Merge</strong>).</p>
+                        </div>
+
+                        <div class="fake-terminal">
+                            <div class="header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                            </div>
+                            <span class="comment"># Cria e muda para uma nova branch chamada "nova-tela":</span>
+                            <div class="cmd">git checkout -b nova-tela</div>
+                            <span class="output">Switched to a new branch 'nova-tela'</span>
+                            
+                            <span class="comment"># Para juntar as coisas depois, você volta para a main:</span>
+                            <div class="cmd">git checkout main</div>
+                            <span class="comment"># E puxa as alterações:</span>
+                            <div class="cmd">git merge nova-tela</div>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u6">
+                                <p class="fw-bold mb-1">1. Qual a principal vantagem de usar branches?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u6q1" value="correct" id="u6q1a">
+                                    <label class="form-check-label" for="u6q1a">Desenvolver e testar funcionalidades isoladamente sem quebrar o código principal.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u6q1" value="wrong" id="u6q1b">
+                                    <label class="form-check-label" for="u6q1b">Comprime o tamanho dos arquivos HTML e CSS.</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. Qual termo é usado para o ato de juntar uma branch na outra?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u6q2" value="wrong" id="u6q2a">
+                                    <label class="form-check-label" for="u6q2a">Commit</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u6q2" value="correct" id="u6q2b">
+                                    <label class="form-check-label" for="u6q2b">Merge</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(6)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingSeven">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSeven" aria-expanded="false" aria-controls="collapseSeven">
+                        <i class="bi bi-7-circle-fill me-2"></i> GitHub
+                    </button>
+                </h2>
+                <div id="collapseSeven" class="accordion-collapse collapse" aria-labelledby="headingSeven" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>A Nuvem do Desenvolvedor</h4>
+                        <p>Até agora, tudo estava apenas no seu computador. Mas e se o seu PC quebrar? Ou se você precisar trabalhar com alguém do outro lado do mundo? É aí que entra o <strong>GitHub</strong>.</p>
+                        <p>O GitHub é uma plataforma online que hospeda repositórios Git na nuvem.</p>
+
+                        <div class="tip-box">
+                            <h5><i class="bi bi-link-45deg"></i> Conectando os mundos</h5>
+                            <p class="mb-0">Para enviar seu código local para o GitHub, você precisa apontar para qual endereço ele deve ir. Nós chamamos esse endereço remoto de <strong>origin</strong> por convenção.</p>
+                        </div>
+
+                        <div class="fake-terminal">
+                            <div class="header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                            </div>
+                            <span class="comment"># Conectando seu repositório local com o do GitHub:</span>
+                            <div class="cmd">git remote add origin https://github.com/seu-usuario/seu-projeto.git</div>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u7">
+                                <p class="fw-bold mb-1">1. Qual a função do comando git remote add origin?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u7q1" value="correct" id="u7q1a">
+                                    <label class="form-check-label" for="u7q1a">Vincular seu repositório local a um repositório remoto (ex: no GitHub).</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u7q1" value="wrong" id="u7q1b">
+                                    <label class="form-check-label" for="u7q1b">Cria uma nova conta no site do GitHub.</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. O GitHub é a única plataforma que hospeda repositórios Git?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u7q2" value="wrong" id="u7q2a">
+                                    <label class="form-check-label" for="u7q2a">Sim, o Git pertence ao GitHub.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u7q2" value="correct" id="u7q2b">
+                                    <label class="form-check-label" for="u7q2b">Não. Existem outras como GitLab e Bitbucket.</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(7)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingEight">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseEight" aria-expanded="false" aria-controls="collapseEight">
+                        <i class="bi bi-8-circle-fill me-2"></i> Push e Pull
+                    </button>
+                </h2>
+                <div id="collapseEight" class="accordion-collapse collapse" aria-labelledby="headingEight" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Subindo e Descendo Código</h4>
+                        <p>Depois de conectar seu repositório local ao GitHub, você precisa enviar os commits para lá (Upload) ou baixar as atualizações que outras pessoas fizeram (Download).</p>
+
+                        <div class="analogy-box">
+                            <strong><i class="bi bi-lightbulb"></i> Analogia:</strong>
+                            <ul class="mb-0">
+                                <li><code>git push</code> (Empurrar): Enviar o seu novo vídeo para o YouTube.</li>
+                                <li><code>git pull</code> (Puxar): Atualizar o feed do seu celular para ver os posts mais novos.</li>
+                                <li><code>git clone</code> (Clonar): Fazer o download completo de uma série da Netflix pela primeira vez.</li>
+                            </ul>
+                        </div>
+
+                        <div class="fake-terminal">
+                            <div class="header">
+                                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+                            </div>
+                            <span class="comment"># Enviando código para o GitHub (branch main):</span>
+                            <div class="cmd">git push origin main</div>
+                            <span class="output">
+                                Counting objects: 100% (5/5), done.<br>
+                                Writing objects: 100% (3/3), 284 bytes | 284.00 KiB/s, done.<br>
+                                To https://github.com/usuario/projeto.git
+                            </span>
+                        </div>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u8">
+                                <p class="fw-bold mb-1">1. Qual comando usamos para enviar nossos commits locais para o GitHub?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u8q1" value="wrong" id="u8q1a">
+                                    <label class="form-check-label" for="u8q1a">git pull</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u8q1" value="correct" id="u8q1b">
+                                    <label class="form-check-label" for="u8q1b">git push</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. Se eu chegar em um computador novo e quiser baixar meu projeto do GitHub do zero, eu uso:</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u8q2" value="wrong" id="u8q2a">
+                                    <label class="form-check-label" for="u8q2a">git init e git add</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u8q2" value="correct" id="u8q2b">
+                                    <label class="form-check-label" for="u8q2b">git clone</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(8)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingNine">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseNine" aria-expanded="false" aria-controls="collapseNine">
+                        <i class="bi bi-9-circle-fill me-2"></i> Boas Práticas
+                    </button>
+                </h2>
+                <div id="collapseNine" class="accordion-collapse collapse" aria-labelledby="headingNine" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Trabalhando como um Profissional</h4>
+                        <p>O Git é livre e aceita qualquer coisa, mas trabalhar em equipe exige etiqueta. Escrever mensagens de commit ruins ou enviar códigos quebrados atrapalha muito.</p>
+
+                        <div class="tip-box">
+                            <h5><i class="bi bi-check2-square"></i> O que fazer e o que NÃO fazer</h5>
+                            <p><strong><span style="color:red">Ruim:</span></strong> <code>git commit -m "consertei umas coisas ai"</code></p>
+                            <p><strong><span style="color:green">Bom:</span></strong> <code>git commit -m "Corrige bug no alinhamento do cabeçalho mobile"</code></p>
+                        </div>
+
+                        <ul>
+                            <li><strong>Commits Atômicos:</strong> Faça commits pequenos e focados. Não altere 30 arquivos de 5 tarefas diferentes e agrupe em um único commit.</li>
+                            <li><strong>Escreva no Imperativo:</strong> "Adiciona tela de login" ao invés de "Adicionado" ou "Adicionando".</li>
+                            <li><strong>Sempre faça Pull:</strong> Antes de começar a programar no dia, faça um `git pull` para garantir que seu código não está desatualizado.</li>
+                        </ul>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u9">
+                                <p class="fw-bold mb-1">1. O que é um "Commit Atômico"?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u9q1" value="correct" id="u9q1a">
+                                    <label class="form-check-label" for="u9q1a">Um commit que contém apenas mudanças referentes a uma única e específica tarefa.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u9q1" value="wrong" id="u9q1b">
+                                    <label class="form-check-label" for="u9q1b">Um commit gigantesco que salva o trabalho de toda a semana.</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. Qual é o estilo recomendado para escrever mensagens de commit?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u9q2" value="wrong" id="u9q2a">
+                                    <label class="form-check-label" for="u9q2a">Usar gírias para descontrair a equipe (ex: "zerei o bug mano kkk").</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u9q2" value="correct" id="u9q2b">
+                                    <label class="form-check-label" for="u9q2b">Verbos no imperativo, descrevendo claramente a alteração (ex: "Adiciona botão X").</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(9)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="headingTen">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTen" aria-expanded="false" aria-controls="collapseTen">
+                        <i class="bi bi-10-circle-fill me-2"></i> GitHub Pages
+                    </button>
+                </h2>
+                <div id="collapseTen" class="accordion-collapse collapse" aria-labelledby="headingTen" data-bs-parent="#courseAccordion">
+                    <div class="accordion-body p-4">
+                        <h4>Seu Site no Ar de Graça</h4>
+                        <p>O <strong>GitHub Pages</strong> é um serviço de hospedagem de site estático gratuito embutido no GitHub. Se você tem um projeto com HTML, CSS e JavaScript no seu repositório, o GitHub gera um link público para ele!</p>
+
+                        <div class="analogy-box">
+                            <strong><i class="bi bi-lightbulb"></i> Analogia:</strong>
+                            <p class="mb-0">É como se o GitHub transformasse a caixa onde você guardou o código em uma vitrine de loja, para que qualquer pessoa com a URL possa ver o site funcionando, em vez de apenas ler os códigos.</p>
+                        </div>
+
+                        <h5>Como ativar:</h5>
+                        <ol>
+                            <li>Faça o <code>push</code> do seu projeto HTML para o GitHub.</li>
+                            <li>Vá na aba <strong>Settings</strong> do repositório.</li>
+                            <li>No menu lateral, clique em <strong>Pages</strong>.</li>
+                            <li>Em <em>Source</em>, selecione a branch <code>main</code> e clique em <em>Save</em>.</li>
+                            <li>Aguarde 1 minutinho e seu link estará pronto! Ex: <code>https://seu-usuario.github.io/seu-projeto/</code></li>
+                        </ol>
+
+                        <div class="quiz-section">
+                            <h5 class="mb-3"><i class="bi bi-controller"></i> Quiz Rápido</h5>
+                            <form id="form-u10">
+                                <p class="fw-bold mb-1">1. O que o GitHub Pages permite fazer?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u10q1" value="wrong" id="u10q1a">
+                                    <label class="form-check-label" for="u10q1a">Criar banco de dados complexos gratuitamente.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u10q1" value="correct" id="u10q1b">
+                                    <label class="form-check-label" for="u10q1b">Hospedar sites estáticos (HTML/CSS/JS) diretamente de um repositório, de forma pública e gratuita.</label>
+                                </div>
+
+                                <p class="fw-bold mb-1">2. Onde habilitamos o GitHub Pages no repositório?</p>
+                                <div class="form-check mb-2">
+                                    <input class="form-check-input" type="radio" name="u10q2" value="wrong" id="u10q2a">
+                                    <label class="form-check-label" for="u10q2a">No terminal, digitando git pages enable.</label>
+                                </div>
+                                <div class="form-check mb-3">
+                                    <input class="form-check-input" type="radio" name="u10q2" value="correct" id="u10q2b">
+                                    <label class="form-check-label" for="u10q2b">Na aba 'Settings' (Configurações) do repositório no site do GitHub.</label>
+                                </div>
+                                <button type="button" class="btn btn-custom mt-2" onclick="checkAnswers(10)">Enviar respostas</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div> </main>
+
+    <div class="toast-container">
+        <div id="feedbackToast" class="toast text-white border-0" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="d-flex">
+                <div class="toast-body fw-bold" id="toastMessage">
+                    </div>
+                <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Instancia o componente Toast do Bootstrap
+        const toastEl = document.getElementById('feedbackToast');
+        const bsToast = new bootstrap.Toast(toastEl, { delay: 4000 });
+        const toastBody = document.getElementById('toastMessage');
+
+        /**
+         * Exibe o feedback visual na tela.
+         * @param {string} msg Mensagem a ser exibida.
+         * @param {string} type Tipo visual (success, danger, warning).
+         */
+        function showFeedback(msg, type) {
+            // Remove classes antigas de cor
+            toastEl.classList.remove('bg-success', 'bg-danger', 'bg-warning');
+            
+            // Adiciona a classe correspondente
+            toastEl.classList.add(`bg-${type}`);
+            toastBody.innerHTML = msg;
+            
+            // Exibe o Toast
+            bsToast.show();
+        }
+
+        /**
+         * Verifica as respostas do formulário da Unidade informada.
+         * @param {number} unitNumber Número da unidade (1 a 10).
+         */
+        function checkAnswers(unitNumber) {
+            // Pega o formulário específico
+            const form = document.getElementById(`form-u${unitNumber}`);
+            
+            // Pega as opções selecionadas de ambas as perguntas (q1 e q2)
+            const q1 = form.querySelector(`input[name="u${unitNumber}q1"]:checked`);
+            const q2 = form.querySelector(`input[name="u${unitNumber}q2"]:checked`);
+
+            // Validação: checa se ambas foram respondidas
+            if (!q1 || !q2) {
+                showFeedback('<i class="bi bi-exclamation-circle-fill me-2"></i> Por favor, responda todas as perguntas!', 'warning');
+                return;
+            }
+
+            // Validação: checa se as respostas têm o 'value' setado como 'correct'
+            if (q1.value === 'correct' && q2.value === 'correct') {
+                showFeedback('<i class="bi bi-check-circle-fill me-2"></i> Excelente! Você acertou tudo!', 'success');
+            } else {
+                showFeedback('<i class="bi bi-x-circle-fill me-2"></i> Ops! Alguma resposta está incorreta. Revise o material e tente novamente.', 'danger');
+            }
+        }
+    </script>
+    <script src="../js/animation.js"></script>
+</body>
+</html>
