@@ -1,989 +1,1820 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pt-BR">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Code with Sam - Módulo JavaScript</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
-    <link rel="shortcut icon" href="../img/logo.png" type="image/png">
-        <link rel="stylesheet" href="../css/animation.css">
-
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css"
+    />
+    <link rel="shortcut icon" href="../img/logo.png" type="image/png" />
+    <link rel="stylesheet" href="../css/animation.css" />
 
     <style>
-        :root {
-            --html-theme: #e34c26;
-            --css-theme: #264de4;
-            --js-theme: #f0db4f;
-            --js-dark: #323330;
-        }
+      .bg-dark .text-muted {
+        color: white !important;
+      }
+      :root {
+        --html-theme: #e34c26;
+        --css-theme: #264de4;
+        --js-theme: #f0db4f;
+        --js-dark: #323330;
+      }
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f7f6;
-        }
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f4f7f6;
+      }
 
-        header {
-            background: linear-gradient(135deg, #f0db4f 0%, #d4b106 100%);
-            color: var(--js-dark);
-        }
+      header {
+        background: linear-gradient(135deg, #f0db4f 0%, #d4b106 100%);
+        color: var(--js-dark);
+      }
+      textarea {
+        scroll-behavior: smooth;
+        scrollbar-color: #aeb100 #000000;
+      }
+      /* ===== CHECKBOX CUSTOM ===== */
+      .form-control::placeholder {
+        color: whitesmoke;
+      }
 
-        /* Estilos de Conteúdo */
-        .content-box {
-            font-size: 1.05rem;
-            line-height: 1.6;
-            color: #333;
-        }
+      /* Estilos de Conteúdo */
+      .content-box {
+        font-size: 1.05rem;
+        line-height: 1.6;
+        color: #333;
+      }
 
-        .tag-highlight {
-            background-color: #e9ecef;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-family: monospace;
-            color: #b8860b;
-            font-weight: bold;
-        }
+      .tag-highlight {
+        background-color: #e9ecef;
+        padding: 2px 6px;
+        border-radius: 4px;
+        font-family: monospace;
+        color: #b8860b;
+        font-weight: bold;
+      }
 
-        .tip-box {
-            background-color: #fffde6;
-            border-left: 4px solid var(--js-theme);
-            padding: 15px;
-            border-radius: 4px;
-            margin: 20px 0;
-        }
+      .tip-box {
+        background-color: #fffde6;
+        border-left: 4px solid var(--js-theme);
+        padding: 15px;
+        border-radius: 4px;
+        margin: 20px 0;
+      }
 
-        /* Estilos de Código e Demonstração */
-        .code-display {
-            background: #1e1e24;
-            color: #abb2bf;
-            padding: 25px 20px 20px;
-            border-radius: 8px;
-            font-family: 'Fira Code', monospace;
-            font-size: 0.95rem;
-            margin: 20px 0 0 0;
-            position: relative;
-            overflow-x: auto;
-        }
+      /* Estilos de Código e Demonstração */
+      .code-display {
+        background: #1e1e24;
+        color: #abb2bf;
+        padding: 25px 20px 20px;
+        border-radius: 8px;
+        font-family: "Fira Code", monospace;
+        font-size: 0.95rem;
+        margin: 20px 0 0 0;
+        position: relative;
+        overflow-x: auto;
+      }
 
-        .code-label {
-            position: absolute;
-            top: 0;
-            left: 0;
-            background: var(--js-theme);
-            color: var(--js-dark);
-            padding: 2px 10px;
-            font-size: 0.75rem;
-            border-radius: 8px 0 8px 0;
-            font-weight: bold;
-        }
+      .code-label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: var(--js-theme);
+        color: var(--js-dark);
+        padding: 2px 10px;
+        font-size: 0.75rem;
+        border-radius: 8px 0 8px 0;
+        font-weight: bold;
+      }
 
-        .interactive-demo {
-            background: white;
-            border: 1px solid #e0e0e0;
-            border-top: none;
-            padding: 20px;
-            border-radius: 0 0 8px 8px;
-            margin: 0 0 25px 0;
-            box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.02);
-        }
+      .interactive-demo {
+        background: white;
+        border: 1px solid #e0e0e0;
+        border-top: none;
+        padding: 20px;
+        border-radius: 0 0 8px 8px;
+        margin: 0 0 25px 0;
+        box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.02);
+      }
 
-        .demo-label {
-            font-size: 0.75rem;
-            color: #6c757d;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
+      .demo-label {
+        font-size: 0.75rem;
+        color: #6c757d;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 15px;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
 
-        /* Estilos do Quiz e Acordeão */
-        .quiz-box {
-            background: #faf9f0;
-            border: 1px solid #e8e2b3;
-            padding: 25px;
-            border-radius: 10px;
-            margin-top: 30px;
-        }
+      /* Estilos do Quiz e Acordeão */
+      .quiz-box {
+        background: #faf9f0;
+        border: 1px solid #e8e2b3;
+        padding: 25px;
+        border-radius: 10px;
+        margin-top: 30px;
+      }
 
-        .locked-unit {
-            opacity: 0.6;
-            pointer-events: none;
-            filter: grayscale(100%);
-        }
+      .locked-unit {
+        opacity: 0.6;
+        pointer-events: none;
+        filter: grayscale(100%);
+      }
 
-        .accordion-button:not(.collapsed) {
-            background-color: #fffde6;
-            color: var(--js-dark);
-            box-shadow: inset 0 -1px 0 rgba(0, 0, 0, .125);
-        }
+      .accordion-button:not(.collapsed) {
+        background-color: #fffde6;
+        color: var(--js-dark);
+        box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.125);
+      }
 
-        .accordion-button:focus {
-            border-color: var(--js-theme);
-            box-shadow: 0 0 0 0.25rem rgba(240, 219, 79, 0.25);
-        }
+      .accordion-button:focus {
+        border-color: var(--js-theme);
+        box-shadow: 0 0 0 0.25rem rgba(240, 219, 79, 0.25);
+      }
 
-        .btn-js {
-            background-color: var(--js-theme);
-            color: var(--js-dark);
-            font-weight: bold;
-            border: none;
-        }
+      .btn-js {
+        background-color: var(--js-theme);
+        color: var(--js-dark);
+        font-weight: bold;
+        border: none;
+      }
 
-        .btn-js:hover {
-            background-color: #d4b106;
-            color: var(--js-dark);
-        }
+      .btn-js:hover {
+        background-color: #d4b106;
+        color: var(--js-dark);
+      }
 
-        /* Estilos do Popup Customizado (Toast) */
-        .custom-toast {
-            position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%) translateY(-100px);
-            opacity: 0;
-            background: white;
-            padding: 15px 25px;
-            border-radius: 8px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-            z-index: 9999;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            font-weight: 600;
-            min-width: 300px;
-        }
+      /* Estilos do Popup Customizado (Toast) */
+      .custom-toast {
+        position: fixed;
+        top: 20px;
+        left: 50%;
+        transform: translateX(-50%) translateY(-100px);
+        opacity: 0;
+        background: white;
+        padding: 15px 25px;
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        z-index: 9999;
+        transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        font-weight: 600;
+        min-width: 300px;
+      }
 
-        .custom-toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
+      .custom-toast.show {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
 
-        .custom-toast.success {
-            border-left: 6px solid #198754;
-            color: #198754;
-        }
+      .custom-toast.success {
+        border-left: 6px solid #198754;
+        color: #198754;
+      }
 
-        .custom-toast.error {
-            border-left: 6px solid #dc3545;
-            color: #dc3545;
-        }
+      .custom-toast.error {
+        border-left: 6px solid #dc3545;
+        color: #dc3545;
+      }
 
-        .custom-toast i {
-            font-size: 1.5rem;
-        }
+      .custom-toast i {
+        font-size: 1.5rem;
+      }
 
-        /* ===== CHECKBOX CUSTOM ===== */
+      /* ===== CHECKBOX CUSTOM ===== */
 
-        .form-check {
-            padding: 10px 12px;
-            border-radius: 8px;
-            transition: all .2s ease;
-            cursor: pointer;
-        }
+      .form-check {
+        padding: 10px 12px;
+        border-radius: 8px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
 
-        /* hover suave */
-        .form-check:hover {
-            background-color: rgba(38, 77, 228, 0.08);
-            transform: translateX(3px);
-        }
+      /* hover suave */
+      .form-check:hover {
+        background-color: rgba(38, 77, 228, 0.08);
+        transform: translateX(3px);
+      }
 
-        /* esconde aparência padrão */
-        .form-check-input {
-            cursor: pointer;
-        }
+      /* esconde aparência padrão */
+      .form-check-input {
+        cursor: pointer;
+      }
+      .form-check-label {
+        transition: 0.5s;
+        cursor: pointer;
+        width: 100%;
+      }
 
-        /* quando marcado */
-        .form-check-input:checked+.form-check-label {
-            font-weight: 600;
-            color: var(--css-theme);
-        }
+      /* quando marcado */
+      .form-check-input:checked + .form-check-label {
+        font-weight: 600;
+        color: var(--css-theme);
+      }
 
-        /* foco acessível */
-        .form-check-input:focus {
-            box-shadow: 0 0 0 0.2rem rgba(38, 77, 228, .25);
-        }
+      /* foco acessível */
+      .form-check-input:focus {
+        box-shadow: 0 0 0 0.2rem rgba(38, 77, 228, 0.25);
+      }
     </style>
-</head>
+  </head>
 
-<body>
-<div id="page-transition"></div>
+  <body>
+    <div id="page-transition"></div>
     <div id="toastAlert" class="custom-toast">
-        <i id="toastIcon" class="bi"></i>
-        <span id="toastMessage"></span>
+      <i id="toastIcon" class="bi"></i>
+      <span id="toastMessage"></span>
     </div>
 
     <header class="text-center py-5 mb-4 shadow-sm">
-        <h1 class="fw-bold"><i class="bi bi-filetype-js"></i> Módulo JavaScript</h1>
-        <p class="lead mb-0">Adicione lógica, interatividade e dinamismo às suas páginas.</p>
+      <h1 class="fw-bold">
+        <i class="bi bi-filetype-js"></i> Módulo JavaScript
+      </h1>
+      <p class="lead mb-0">
+        Adicione lógica, interatividade e dinamismo às suas páginas.
+      </p>
     </header>
 
     <main class="container mb-5">
-        <nav class="mb-4 d-flex justify-content-between align-items-center">
-            <a href="../index.html" class="btn btn-dark btn-sm"><i class="bi bi-arrow-left mx-1"></i> Voltar ao
-                Dashboard</a>
-            <span class="badge bg-dark text-warning fs-6 p-2">Progresso: <span id="js-progress-text">0/8</span></span>
-        </nav>
+      <nav class="mb-4 d-flex justify-content-between align-items-center">
+        <a href="../index.html" class="btn btn-dark btn-sm"
+          ><i class="bi bi-arrow-left mx-1"></i> Voltar ao Dashboard</a
+        >
+        <span class="badge bg-dark text-warning fs-6 p-2"
+          >Progresso: <span id="js-progress-text">0/8</span></span
+        >
+      </nav>
 
-        <div class="accordion shadow-sm" id="jsCourseAccordion">
+      <div class="accordion shadow-sm" id="jsCourseAccordion">
+        <div class="accordion-item" id="item-u1">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button fw-bold fs-5"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#u1"
+            >
+              <i class="bi bi-filetype-js me-2 text-warning"></i> 1. Variáveis e
+              Tipos
+            </button>
+          </h2>
+          <div
+            id="u1"
+            class="accordion-collapse collapse show"
+            data-bs-parent="#jsCourseAccordion"
+          >
+            <div class="accordion-body content-box">
+              <p>
+                Variáveis são como "caixas" onde guardamos informações para usar
+                depois. No JavaScript moderno, utilizamos
+                <span class="tag-highlight bg-warning text-dark">let</span>
+                (para valores que podem mudar) e
+                <span class="tag-highlight bg-warning text-dark">const</span>
+                (para valores fixos).
+              </p>
 
-            <div class="accordion-item" id="item-u1">
-                <h2 class="accordion-header">
-                    <button class="accordion-button fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u1">
-                        1. Variáveis e Tipos
-                    </button>
-                </h2>
-                <div id="u1" class="accordion-collapse collapse show" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p>Variáveis são como "caixas" onde guardamos informações para usar depois. No JavaScript
-                            moderno, utilizamos <span class="tag-highlight">let</span> (para valores que podem mudar) e
-                            <span class="tag-highlight">const</span> (para valores constantes/fixos).
-                        </p>
+              <p>Os principais <strong>Tipos de Dados</strong> são:</p>
+              <ul>
+                <li>
+                  <strong>String:</strong> Textos (ex:
+                  <code>"Olá Mundo"</code>). Sempre entre aspas.
+                </li>
+                <li>
+                  <strong>Number:</strong> Números (ex: <code>25</code>,
+                  <code>3.14</code>). Sem aspas.
+                </li>
+                <li>
+                  <strong>Boolean:</strong> Verdadeiro ou Falso (<code
+                    >true</code
+                  >
+                  ou <code>false</code>).
+                </li>
+              </ul>
 
-                        <p>Os principais <strong>Tipos de Dados</strong> são:</p>
-                        <ul>
-                            <li><strong>String:</strong> Textos (ex: <code>"Olá Mundo"</code>).</li>
-                            <li><strong>Number:</strong> Números inteiros ou decimais (ex: <code>25</code>,
-                                <code>3.14</code>).
-                            </li>
-                            <li><strong>Boolean:</strong> Verdadeiro ou Falso (<code>true</code> ou <code>false</code>).
-                            </li>
-                        </ul>
+              <pre
+                class="code-display bg-dark text-light p-3 rounded border mb-4"
+              >
+let idade = 25; // number (pode mudar)
+idade = 26; // válido
 
-                        <div class="code-display">
-                            <span class="code-label">JS</span>
-                            let idade = 25; // number (pode mudar) <br>
-                            idade = 26; // válido<br><br>
+const nome = "Sam"; // string (fixo)
+nome = "João"; // ERRO! Não se muda uma constante
 
-                            const nome = "Sam"; // string (fixo)<br>
-                            nome = "João"; // ERRO! Não se muda uma constante<br><br>
+let estaLogado = true; // boolean
+            </pre
+              >
 
-                            let estaLogado = true; // boolean<br>
-                        </div>
+              <hr class="my-4" />
 
-                        <div class="quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 1</h5>
-                            <form id="quiz-u1">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual palavra-chave devemos usar para criar uma variável
-                                    que NUNCA terá seu valor alterado?</p>
+              <div class="quiz-box mb-4">
+                <h5>
+                  <i class="bi bi-controller text-warning"></i> Quiz da Unidade
+                  1
+                </h5>
+                <form id="quiz-u1">
+                  <p class="mb-1 mt-3 fw-bold">
+                    1. Qual palavra-chave devemos usar para criar uma variável
+                    que NUNCA terá seu valor alterado?
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u1q1a"
+                      name="q1"
+                      value="a"
+                    />
+                    <label class="form-check-label" for="u1q1a">let</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u1q1b"
+                      name="q1"
+                      value="b"
+                    />
+                    <label class="form-check-label" for="u1q1b">const</label>
+                  </div>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u1q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u1q1a">let</label>
-                                </div>
+                  <p class="fw-bold mt-4 mb-1">
+                    2. Qual é o tipo de dado do valor <code>true</code>?
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u1q2a"
+                      name="q2"
+                      value="a"
+                    />
+                    <label class="form-check-label" for="u1q2a">Boolean</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u1q2b"
+                      name="q2"
+                      value="b"
+                    />
+                    <label class="form-check-label" for="u1q2b">String</label>
+                  </div>
+                </form>
+              </div>
 
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u1q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u1q1b">const</label>
-                                </div>
+              <div
+                class="challenge-box p-3 border rounded bg-light border-warning"
+              >
+                <h5>
+                  <i class="bi bi-keyboard text-warning"></i> Desafio Prático:
+                  Perfil do Jogador
+                </h5>
+                <p class="small text-muted mb-2">
+                  Escreva o código JS abaixo para preencher o seu cartão de
+                  jogador!
+                </p>
+                <ul class="small">
+                  <li>
+                    Crie uma constante chamada <strong>jogador</strong> e
+                    atribua o seu nome (String).
+                  </li>
+                  <li>
+                    Crie uma variável chamada <strong>nivel</strong> e atribua
+                    um número (Number).
+                  </li>
+                </ul>
 
-                                <p class="fw-bold mt-4">2. Qual é o tipo de dado do valor <code>true</code>?</p>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u1q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u1q2a">Boolean</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u1q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u1q2b">String</label>
-                                </div>
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(1, 'b', 'a')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
+                <div
+                  class="preview-area border bg-dark text-light p-4 mb-3 rounded d-flex align-items-center gap-3"
+                >
+                  <i
+                    class="bi bi-person-circle text-warning"
+                    style="font-size: 3rem"
+                  ></i>
+                  <div>
+                    <h4 class="mb-0 text-warning" id="preview-jogador">???</h4>
+                    <p class="mb-0">
+                      Nível:
+                      <span id="preview-nivel" class="text-white">0</span>
+                    </p>
+                  </div>
                 </div>
-            </div>
 
-            <div class="accordion-item locked-unit" id="item-u2">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u2">
-                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 2. Condicionais e Loops
-                    </button>
-                </h2>
-                <div id="u2" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p>Como fazemos o código tomar decisões ou repetir tarefas? Usando <strong>estruturas de
-                                controle de fluxo</strong>.</p>
-
-                        <ul>
-                            <li><strong>Condicionais (if/else):</strong> Executa um bloco de código SE a condição for
-                                verdadeira, SENÃO, executa outro.</li>
-                            <li><strong>Loop (for):</strong> Repete um bloco de código um número específico de vezes.
-                            </li>
-                            <li><strong>Loop (while):</strong> Repete um bloco ENQUANTO uma condição for verdadeira.
-                            </li>
-                        </ul>
-
-                        <div class="code-display">
-                            <span class="code-label">JS</span>
-                            // Condicional<br>
-                            let hora = 14;<br>
-                            if (hora < 12) { <br>
-                                console.log("Bom dia!"); <br>
-                                } else { <br>
-                                console.log("Boa tarde!");<br>
-                                }<br>
-                                // Loop for (inicialização; condição; incremento) <br><br>
-                                for (let i=1; i <=3; i++) { <br>
-                                    console.log("Contagem: " + i);
-                                    <br>}
-                        </div>
-
-                        <div class=" quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 2</h5>
-                            <form id="quiz-u2">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual estrutura usamos para tomar uma decisão de "ou
-                                    isso, ou aquilo" no código?</p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u2q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u2q1a">for / while</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u2q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u2q1b">if / else</label>
-                                </div>
-
-                                <p class="fw-bold mt-4">2. Qual loop repete enquanto a condição for verdadeira?</p>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u2q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u2q2a">while</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u2q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u2q2b">if</label>
-                                </div>
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(2, 'b', 'a')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
+                <div class="editor-container position-relative">
+                  <span
+                    class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2"
+                    >script.js</span
+                  >
+                  <textarea
+                    id="code-js-u1"
+                    class="form-control bg-dark text-light font-monospace p-3"
+                    rows="4"
+                    placeholder="const jogador = ...&#10;let nivel = ..."
+                  ></textarea>
                 </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(1, 'b', 'a')"
+              >
+                <i class="bi bi-check2-circle"></i> Verificar e Concluir Unidade
+              </button>
             </div>
-
-            <div class="accordion-item locked-unit" id="item-u3">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u3">
-                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 3. Funções
-                    </button>
-                </h2>
-                <div id="u3" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p><strong>Funções</strong> são blocos de código que realizam uma tarefa específica e podem ser
-                            reutilizados (chamados) várias vezes, evitando que você repita código.</p>
-
-                        <p>Existem duas formas principais de escrever funções modernas:</p>
-                        <ul>
-                            <li><strong>Declaração Tradicional:</strong> Usa a palavra <code>function</code>.</li>
-                            <li><strong>Arrow Functions:</strong> Uma sintaxe mais curta e limpa usando <code>=></code>.
-                                Muito comum em Callbacks (funções passadas como parâmetro para outras).</li>
-                        </ul>
-
-                        <div class="code-display">
-                            <span class="code-label">JS</span>
-                            // Função Tradicional<br>
-                            function somar(a, b) {<br>
-                            return a + b;<br>
-                            }<br><br>
-
-                            // Arrow Function (faz exatamente a mesma coisa)<br>
-                            const somarArrow = (a, b) => {<br>
-                            return a + b;<br>
-                            };<br><br>
-
-                            // Se tiver só uma linha, pode ser ainda menor:<br>
-                            const dobrar = x => x * 2;<br>
-                        </div>
-
-                        <div class="quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 3</h5>
-                            <form id="quiz-u3">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual é a utilidade da palavra-chave <code>return</code>
-                                    dentro de uma função?</p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u3q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u3q1a">Devolve o resultado</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u3q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u3q1b">Imprime no console</label>
-                                </div>
-
-                                <p class="fw-bold mt-4">2. Qual símbolo identifica arrow functions?</p>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u3q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u3q2a">===</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u3q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u3q2b">=&gt;</label>
-                                </div>
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(3, 'a', 'b')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item locked-unit" id="item-u4">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u4">
-                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 4. Arrays e Métodos
-                    </button>
-                </h2>
-                <div id="u4" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p><strong>Arrays (Vetores)</strong> são listas que guardam múltiplos valores em uma única
-                            variável. Arrays possuem "poderes" embutidos, chamados de métodos, para manipulá-los
-                            facilmente.</p>
-
-                        <ul>
-                            <li><span class="tag-highlight">map()</span>: Cria um novo array transformando todos os
-                                itens originais.</li>
-                            <li><span class="tag-highlight">filter()</span>: Cria um novo array apenas com os itens que
-                                passarem num teste.</li>
-                            <li><span class="tag-highlight">push()</span> / <span class="tag-highlight">pop()</span>:
-                                Adiciona ou remove itens do final da lista.</li>
-                        </ul>
-
-                        <div class="code-display">
-                            <span class="code-label">JS</span>
-                            let notas = [5, 8, 10, 4];<br>
-
-                            // Usando o método filter() com uma Arrow Function<br>
-                            let aprovados = notas.filter(nota => nota >= 7);<br>
-                            console.log(aprovados); // Resultado: [8, 10]<br><br>
-
-                            // Usando o método map() para dar ponto extra<br>
-                            let notasExtras = notas.map(nota => nota + 1);<br>
-                        </div>
-
-                        <div class="quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 4</h5>
-                            <form id="quiz-u4">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual método usamos se quisermos "filtrar" um array para
-                                    remover itens indesejados?</p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u4q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u4q1a">filter()</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u4q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u4q1b">map()</label>
-                                </div>
-
-                                <p class="mb-1 mt-3 fw-bold">2. Como acessamos o primeiro item do array
-                                    <code>let cores = ["azul", "verde"]</code>?
-                                </p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u4q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u4q2a">cores[1]</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u4q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u4q2b">cores[0] (A contagem começa em
-                                        zero)</label>
-                                </div>
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(4, 'a', 'b')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item locked-unit" id="item-u5">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u5">
-                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 5. Objetos e JSON
-                    </button>
-                </h2>
-                <div id="u5" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p>Enquanto arrays são listas, <strong>Objetos</strong> representam coisas do mundo real
-                            agrupando propriedades (chaves) e valores. São definidos usando chaves <code>{}</code>.</p>
-
-                        <p>O <strong>JSON (JavaScript Object Notation)</strong> é um formato de texto derivado dos
-                            objetos JS, usado para enviar e receber dados entre um site e um servidor.</p>
-
-                        <div class="code-display">
-                            <span class="code-label">JS</span>
-                            // Criando um Objeto<br>
-                            let usuario = {<br>
-                            nome: "Ana",<br>
-                            idade: 28,<br>
-                            admin: true<br>
-                            };<br><br>
-
-                            // Acessando propriedades<br>
-                            console.log(usuario.nome); // "Ana"<br><br>
-
-                            // Convertendo o objeto para JSON (Texto) para enviar a um servidor<br>
-                            let textoJSON = JSON.stringify(usuario);<br>
-                        </div>
-
-                        <div class="quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 5</h5>
-                            <form id="quiz-u5">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual sintaxe usamos para criar um objeto no JavaScript?
-                                </p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u5q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u5q1a">Chaves { }</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u5q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u5q1b">Colchetes [ ]</label>
-                                </div>
-                                <p class="mb-1 mt-3 fw-bold">2. Se quisermos ler a idade do objeto <code>usuario</code>,
-                                    como escrevemos?</p>
-
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u5q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u5q2a">usuario[idade]</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u5q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u5q2b">usuario.idade</label>
-                                </div>
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(5, 'a', 'b')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item locked-unit" id="item-u6">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u6">
-                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 6. Manipulação do DOM
-                    </button>
-                </h2>
-                <div id="u6" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p>O <strong>DOM (Document Object Model)</strong> é a representação do seu HTML na memória do
-                            navegador. O JavaScript usa o objeto <code>document</code> para "entrar" no HTML, pegar
-                            elementos, alterá-los ou criar novos.</p>
-
-                        <ul>
-                            <li><span class="tag-highlight">document.querySelector()</span>: Seleciona um elemento
-                                usando seletores CSS (ex: <code>".minha-classe"</code>).</li>
-                            <li><span class="tag-highlight">document.createElement()</span>: Cria um novo elemento (tag)
-                                do zero.</li>
-                            <li><span class="tag-highlight">elemento.textContent</span>: Altera o texto visível.</li>
-                        </ul>
-
-                        <div class="code-display">
-                            <span class="code-label">JS</span>
-                            const titulo = document.querySelector('#domTitulo');<br><br>
-
-                            // Quando chamado, muda o texto e o CSS via JS<br>
-                            function mudarTexto() {<br>
-                            titulo.textContent = "Modificado pelo JS! 🎉";<br>
-                            titulo.style.color = "#d4b106";<br>
-                            }
-                        </div>
-
-                        <div class="interactive-demo text-center py-4">
-                            <h3 id="domTitulo" class="fw-bold mb-3">Título Original</h3>
-                            <button class="btn btn-dark" onclick="mudarTextoDOM()">Executar Código Acima</button>
-                        </div>
-
-                        <div class="quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 6</h5>
-                            <form id="quiz-u6">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual método usamos para selecionar a primeira tag
-                                    <code>&lt;p&gt;</code> do documento?
-                                </p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u6q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u6q1a">document.querySelector('p')</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u6q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u6q1b">document.createElement('p')</label>
-                                </div>
-
-                                <p class="mb-1 mt-3 fw-bold">2. O DOM é o que?</p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u6q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u6q2a">É uma linguagem de programação mais
-                                        antiga que o JS.</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u6q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u6q2b">É a representação em árvore da estrutura
-                                        do HTML que o JS pode
-                                        manipular.</label>
-                                </div>
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(6, 'a', 'b')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item locked-unit" id="item-u7">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u7">
-                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 7. Eventos (Interatividade)
-                    </button>
-                </h2>
-                <div id="u7" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p>A web é interativa porque o JS fica "escutando" as ações do usuário (cliques, digitação,
-                            rolar a página). Esses são os <strong>Eventos</strong>.</p>
-
-                        <p>Usamos o método <span class="tag-highlight">addEventListener()</span> para atrelar uma função
-                            a uma ação do usuário.</p>
-
-                        <div class="row align-items-center mt-4">
-                            <div class="col-lg-7">
-                                <div class="code-display mb-0">
-                                    <span class="code-label">JS</span>
-                                    // Criando uma Lista de Tarefas (To-Do)<br>
-                                    function adicionarTarefa() {<br>
-                                    const input = document.querySelector('#inputTarefa');<br>
-                                    const lista = document.querySelector('#minhaLista');<br><br>
-
-                                    if (input.value === '') return;<br><br>
-
-                                    const novoItem = document.createElement('li');<br>
-                                    novoItem.className = 'list-group-item';<br>
-                                    novoItem.textContent = input.value;<br><br>
-
-                                    lista.appendChild(novoItem); // Adiciona na tela<br>
-                                    input.value = ""; // Limpa o campo<br>
-                                    }
-                                </div>
-                            </div>
-                            <div class="col-lg-5 mt-3 mt-lg-0">
-                                <div class="interactive-demo shadow-sm">
-                                    <div class="demo-label"><i class="bi bi-check2-square"></i> Teste a Lista</div>
-                                    <div class="input-group mb-3">
-                                        <input type="text" id="inputTarefa" class="form-control"
-                                            placeholder="Estudar React...">
-                                        <button class="btn btn-dark" onclick="addTodo()"><i
-                                                class="bi bi-plus-lg"></i></button>
-                                    </div>
-                                    <ul id="minhaLista" class="list-group list-group-flush">
-                                        <li class="list-group-item">Aprender HTML</li>
-                                        <li class="list-group-item">Estilizar com CSS</li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 7</h5>
-                            <form id="quiz-u7">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual método usamos para fazer o JavaScript "escutar" um
-                                    clique em um botão?</p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u7q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u7q1a">addEventListener('click',
-                                        funcao)</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u7q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u7q1b">querySelector('click')</label>
-                                </div>
-
-                                <p class="mb-1 mt-3 fw-bold">2. O que faz o método <code>appendChild()</code>?</p>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u7q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u7q2a">Deleta o elemento selecionado da
-                                        tela.</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u7q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u7q2b">Insere um novo elemento como "filho"
-                                        (dentro) do elemento
-                                        selecionado.</label>
-                                </div>
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(7, 'a', 'b')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="accordion-item locked-unit" id="item-u8">
-                <h2 class="accordion-header">
-                    <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#u8">
-                        <i class="bi bi-lock-fill me-2 lock-icon"></i> 8. Async/Await e APIs
-                    </button>
-                </h2>
-                <div id="u8" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
-                    <div class="accordion-body content-box">
-                        <p>O JavaScript pode se comunicar com outros computadores (servidores) para buscar dados (como a
-                            previsão do tempo, ou a lista de filmes da Netflix). Isso leva tempo. Por isso, usamos a
-                            programação <strong>Assíncrona</strong>.</p>
-
-                        <p>A função <span class="tag-highlight">fetch()</span> faz a requisição à API. Como não sabemos
-                            quando a resposta chega, ela retorna uma <strong>Promise (Promessa)</strong>. Para esperar
-                            por ela, usamos <code>async</code> e <code>await</code>.</p>
-
-                        <div class="code-display">
-                            <span class="code-label">JS</span>
-                            // Função Assíncrona buscando um conselho aleatório<br>
-                            async function buscarConselho() {<br>
-                            // Await: "Espere a internet responder..."<br>
-                            const resposta = await fetch('https://api.adviceslip.com/advice');<br>
-                            const dados = await resposta.json();<br><br>
-
-                            console.log(dados.slip.advice);<br>
-                            }<br>
-                        </div>
-
-                        <div class="interactive-demo text-center">
-                            <button class="btn btn-dark mb-3" onclick="chamarAPI()" id="btnApi">
-                                <i class="bi bi-cloud-arrow-down"></i> Buscar Conselho da API
-                            </button>
-                            <p id="resultadoApi" class="fst-italic fs-5 text-muted">"Os conselhos aparecerão aqui..."
-                            </p>
-                        </div>
-
-                        <div class="quiz-box">
-                            <h5><i class="bi bi-controller"></i> Quiz da Unidade 8</h5>
-                            <form id="quiz-u8">
-                                <p class="mb-1 mt-3 fw-bold">1. Qual método nativo usamos para buscar dados de uma URL
-                                    (API externa)?</p>
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u8q1a" name="q1" value="a">
-                                    <label class="form-check-label" for="u8q1a">fetch()</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u8q1b" name="q1" value="b">
-                                    <label class="form-check-label" for="u8q1b">get()</label>
-                                </div>
-                                <p class="mb-1 mt-3 fw-bold">2. Por que usamos as palavras <code>async</code> e
-                                    <code>await</code>?
-                                </p>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u8q2a" name="q2" value="a">
-                                    <label class="form-check-label" for="u8q2a">Porque fazem o código rodar 10x mais
-                                        rápido do que o normal.</label>
-                                </div>
-
-                                <div class="form-check">
-                                    <input class="form-check-input" type="radio" id="u8q2b" name="q2" value="b">
-                                    <label class="form-check-label" for="u8q2b">Porque operações de rede demoram, e
-                                        precisamos pausar e "esperar"
-                                        (await) a promessa ser resolvida.</label>
-                                </div>
-
-
-                                <button type="button" class="btn btn-js mt-4" onclick="checkQuiz(8, 'a', 'b')">Enviar
-                                    Respostas</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
+          </div>
         </div>
+        <div class="accordion-item locked-unit" id="item-u2">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed fw-bold fs-5"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#u2"
+            >
+              <i class="bi bi-lock-fill me-2 lock-icon text-warning"></i> 2.
+              Condicionais e Loops
+            </button>
+          </h2>
+          <div
+            id="u2"
+            class="accordion-collapse collapse"
+            data-bs-parent="#jsCourseAccordion"
+          >
+            <div class="accordion-body content-box">
+              <p>
+                Como fazemos o código tomar decisões ou repetir tarefas? Usando
+                <strong>estruturas de controle de fluxo</strong>.
+              </p>
+
+              <ul>
+                <li>
+                  <strong>Condicionais (if/else):</strong> Executa um bloco de
+                  código SE a condição for verdadeira, SENÃO, executa outro.
+                </li>
+                <li>
+                  <strong>Loop (for):</strong> Repete um bloco de código um
+                  número específico de vezes.
+                </li>
+                <li>
+                  <strong>Loop (while):</strong> Repete um bloco ENQUANTO uma
+                  condição for verdadeira.
+                </li>
+              </ul>
+
+              <pre
+                class="code-display bg-dark text-light p-3 rounded border mb-4"
+              >
+// Condicional
+let hora = 14;
+if (hora < 12) { 
+  console.log("Bom dia!"); 
+} else { 
+  console.log("Boa tarde!");
+}
+
+// Loop for (inicialização; condição; incremento)
+for (let i = 1; i <= 3; i++) { 
+  console.log("Contagem: " + i);
+}
+// Loop while (condição)
+while (hora > 13) { 
+  console.log("É tarde!"); //Printa no console que é tarde, enquanto a hora for maior que 13
+}
+            </pre
+              >
+
+              <hr class="my-4" />
+
+              <div class="quiz-box mb-4">
+                <h5>
+                  <i class="bi bi-controller text-warning"></i> Quiz da Unidade
+                  2
+                </h5>
+                <form id="quiz-u2">
+                  <p class="mb-1 mt-3 fw-bold">
+                    1. Qual estrutura usamos para tomar uma decisão de "ou isso,
+                    ou aquilo" no código?
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u2q1a"
+                      name="q1"
+                      value="a"
+                    />
+                    <label class="form-check-label" for="u2q1a"
+                      >for / while</label
+                    >
+                  </div>
+
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u2q1b"
+                      name="q1"
+                      value="b"
+                    />
+                    <label class="form-check-label" for="u2q1b"
+                      >if / else</label
+                    >
+                  </div>
+
+                  <p class="fw-bold mt-4 mb-1">
+                    2. Qual loop repete enquanto a condição for verdadeira?
+                  </p>
+
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u2q2a"
+                      name="q2"
+                      value="a"
+                    />
+                    <label class="form-check-label" for="u2q2a">while</label>
+                  </div>
+
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u2q2b"
+                      name="q2"
+                      value="b"
+                    />
+                    <label class="form-check-label" for="u2q2b">if</label>
+                  </div>
+                </form>
+              </div>
+
+              <div
+                class="challenge-box p-3 border rounded bg-light border-warning"
+              >
+                <h5>
+                  <i class="bi bi-shield-lock text-warning"></i> Desafio
+                  Prático: Controle de Acesso
+                </h5>
+                <p class="small text-muted mb-2">
+                  Escreva o código para verificar se o usuário é maior de idade
+                  (18 anos ou mais). Se for, o status deve ser "Liberado",
+                  senão, "Bloqueado".
+                </p>
+                <ul class="small">
+                  <li>A variável <code>idade</code> já está definida.</li>
+                  <li>
+                    Crie um <strong>if/else</strong> verificando se
+                    <code>idade >= 18</code>.
+                  </li>
+                  <li>
+                    Dentro do <code>if</code>, defina a variável
+                    <code>status = "Liberado"</code>.
+                  </li>
+                  <li>
+                    Dentro do <code>else</code>, defina
+                    <code>status = "Bloqueado"</code>.
+                  </li>
+                </ul>
+
+                <div
+                  class="preview-area border bg-dark text-light p-4 mb-3 rounded text-center"
+                >
+                  <h5 class="text-muted">Acesso ao Sistema</h5>
+                  <div
+                    id="preview-status-u2"
+                    class="display-6 fw-bold text-warning"
+                  >
+                    Aguardando código...
+                  </div>
+                </div>
+
+                <div class="editor-container position-relative">
+                  <span
+                    class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2"
+                    >script.js</span
+                  >
+                  <textarea
+                    id="code-js-u2"
+                    class="form-control bg-dark text-light font-monospace p-3"
+                    rows="6"
+                    placeholder="let idade = 20;&#10;let status = '';&#10;&#10;/* Escreva seu if/else aqui */&#10;"
+                  ></textarea>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(2, 'b', 'a')"
+              >
+                <i class="bi bi-check2-circle"></i> Verificar e Concluir Unidade
+              </button>
+            </div>
+          </div>
+        </div>
+        <div class="accordion-item locked-unit" id="item-u3">
+          <h2 class="accordion-header">
+            <button
+              class="accordion-button collapsed fw-bold fs-5"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#u3"
+            >
+              <i class="bi bi-lock-fill me-2 lock-icon text-warning"></i> 3.
+              Funções
+            </button>
+          </h2>
+          <div
+            id="u3"
+            class="accordion-collapse collapse"
+            data-bs-parent="#jsCourseAccordion"
+          >
+            <div class="accordion-body content-box">
+              <p>
+                <strong>Funções</strong> são blocos de código que realizam uma
+                tarefa específica e podem ser reutilizados (chamados) várias
+                vezes, evitando que você repita código.
+              </p>
+
+              <p>
+                Existem duas formas principais de escrever funções modernas:
+              </p>
+              <ul>
+                <li>
+                  <strong>Declaração Tradicional:</strong> Usa a palavra
+                  <code>function</code>.
+                </li>
+                <li>
+                  <strong>Arrow Functions:</strong> Uma sintaxe mais curta e
+                  limpa usando <code>=></code>. Muito comum no React e em
+                  callbacks.
+                </li>
+              </ul>
+
+              <pre
+                class="code-display bg-dark text-light p-3 rounded border mb-4"
+              >
+// Função Tradicional
+function somar(a, b) {
+  return a + b;
+}
+
+// Arrow Function (faz exatamente a mesma coisa)
+const somarArrow = (a, b) => {
+  return a + b;
+};
+
+// Se tiver só uma linha, o "return" é automático:
+const dobrar = x => x * 2;
+            </pre
+              >
+
+              <hr class="my-4" />
+
+              <div class="quiz-box mb-4">
+                <h5>
+                  <i class="bi bi-controller text-warning"></i> Quiz da Unidade
+                  3
+                </h5>
+                <form id="quiz-u3">
+                  <p class="mb-1 mt-3 fw-bold">
+                    1. Qual é a utilidade da palavra-chave
+                    <code>return</code> dentro de uma função?
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u3q1a"
+                      name="q1"
+                      value="a"
+                    />
+                    <label class="form-check-label" for="u3q1a"
+                      >Devolve o resultado</label
+                    >
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u3q1b"
+                      name="q1"
+                      value="b"
+                    />
+                    <label class="form-check-label" for="u3q1b"
+                      >Imprime no console</label
+                    >
+                  </div>
+
+                  <p class="fw-bold mt-4 mb-1">
+                    2. Qual símbolo identifica arrow functions?
+                  </p>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u3q2a"
+                      name="q2"
+                      value="a"
+                    />
+                    <label class="form-check-label" for="u3q2a">===</label>
+                  </div>
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="radio"
+                      id="u3q2b"
+                      name="q2"
+                      value="b"
+                    />
+                    <label class="form-check-label" for="u3q2b">=&gt;</label>
+                  </div>
+                </form>
+              </div>
+
+              <div
+                class="challenge-box p-3 border rounded bg-light border-warning"
+              >
+                <h5>
+                  <i class="bi bi-calculator text-warning"></i> Desafio Prático:
+                  Calculadora de Dano
+                </h5>
+                <p class="small text-muted mb-2">
+                  Crie uma função para calcular o dano de um ataque especial.
+                </p>
+                <ul class="small">
+                  <li>
+                    Crie uma <strong>Arrow Function</strong> chamada
+                    <code>calcularDano</code>.
+                  </li>
+                  <li>
+                    Ela deve receber um parâmetro chamado <code>forca</code>.
+                  </li>
+                  <li>
+                    Ela deve <strong>retornar</strong> (usar
+                    <code>return</code>) o valor da
+                    <code>forca</code> multiplicado por <strong>3</strong> (ex:
+                    <code>forca * 3</code>).
+                  </li>
+                </ul>
+
+                <div
+                  class="preview-area border bg-dark text-light p-4 mb-3 rounded d-flex justify-content-between align-items-center"
+                >
+                  <div class="text-center">
+                    <h6 class="text-muted">Ataque Base</h6>
+                    <div class="display-5 text-secondary">⚔️ 10</div>
+                  </div>
+                  <div class="text-center">
+                    <i class="bi bi-arrow-right fs-1 text-warning"></i>
+                    <p class="small text-muted m-0">Passou pela Função</p>
+                  </div>
+                  <div class="text-center">
+                    <h6 class="text-muted">Dano Final</h6>
+                    <div
+                      id="preview-dano-u3"
+                      class="display-5 fw-bold text-danger"
+                    >
+                      ?
+                    </div>
+                  </div>
+                </div>
+
+                <div class="editor-container position-relative">
+                  <span
+                    class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2"
+                    >script.js</span
+                  >
+                  <textarea
+                    id="code-js-u3"
+                    class="form-control bg-dark text-light font-monospace p-3"
+                    rows="4"
+                    placeholder="const calcularDano = (forca) => {&#10;  /* Escreva o return aqui */&#10;};"
+                  ></textarea>
+                </div>
+              </div>
+
+              <button
+                type="button"
+                class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(3, 'a', 'b')"
+              >
+                <i class="bi bi-check2-circle"></i> Verificar e Concluir Unidade
+              </button>
+            </div>
+          </div>
+        </div>
+<div class="accordion-item locked-unit" id="item-u4">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+            data-bs-target="#u4">
+            <i class="bi bi-lock-fill me-2 lock-icon text-warning"></i> 4. Arrays e Métodos
+        </button>
+    </h2>
+    <div id="u4" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+        <div class="accordion-body content-box">
+            <p><strong>Arrays (Vetores)</strong> são listas que guardam múltiplos valores em uma única variável. Arrays possuem "poderes" embutidos, chamados de <strong>métodos</strong>, para manipulá-los facilmente.</p>
+
+            <ul>
+                <li><span class="tag-highlight bg-warning text-dark">map()</span>: Cria um novo array transformando todos os itens originais.</li>
+                <li><span class="tag-highlight bg-warning text-dark">filter()</span>: Cria um novo array apenas com os itens que passarem num teste (filtro).</li>
+                <li><span class="tag-highlight bg-warning text-dark">push() / pop()</span>: Adiciona ou remove itens do final da lista.</li>
+            </ul>
+
+            <pre class="code-display bg-dark text-light p-3 rounded border mb-4">
+let notas = [5, 8, 10, 4];
+
+// Usando o filter() com uma Arrow Function
+let aprovados = notas.filter(nota => nota >= 7);
+console.log(aprovados); // Resultado: [8, 10]
+
+// Usando o map() para dar ponto extra
+let notasExtras = notas.map(nota => nota + 1);
+            </pre>
+
+            <hr class="my-4">
+
+            <div class="quiz-box mb-4">
+                <h5><i class="bi bi-controller text-warning"></i> Quiz da Unidade 4</h5>
+                <form id="quiz-u4">
+                    <p class="mb-1 mt-3 fw-bold">1. Qual método usamos se quisermos "filtrar" um array para remover itens indesejados?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u4q1a" name="q1" value="a">
+                        <label class="form-check-label" for="u4q1a">filter()</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u4q1b" name="q1" value="b">
+                        <label class="form-check-label" for="u4q1b">map()</label>
+                    </div>
+
+                    <p class="fw-bold mt-4 mb-1">2. Como acessamos o primeiro item do array <code>let cores = ["azul", "verde"]</code>?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u4q2a" name="q2" value="a">
+                        <label class="form-check-label" for="u4q2a">cores[1]</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u4q2b" name="q2" value="b">
+                        <label class="form-check-label" for="u4q2b">cores[0] (A contagem começa em zero)</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="challenge-box p-3 border rounded bg-light border-warning">
+                <h5><i class="bi bi-funnel text-warning"></i> Desafio Prático: Filtro de Notas</h5>
+                <p class="small text-muted mb-2">Use o poder do <code>filter()</code> para resgatar apenas as notas maiores ou iguais a 7!</p>
+                <ul class="small">
+                    <li>A variável <code>notas</code> já tem a lista completa.</li>
+                    <li>Crie uma variável chamada <code>aprovados</code>.</li>
+                    <li>Atribua a ela o resultado de <code>notas.filter(...)</code> testando se a nota é <code>>= 7</code>.</li>
+                </ul>
+
+                <div class="preview-area border bg-dark text-light p-4 mb-3 rounded text-center">
+                    <h6 class="text-muted mb-3">Todas as Notas</h6>
+                    <div class="d-flex justify-content-center gap-2 mb-3">
+                        <span class="badge bg-danger fs-6">5</span>
+                        <span class="badge bg-success fs-6">8</span>
+                        <span class="badge bg-success fs-6">10</span>
+                        <span class="badge bg-danger fs-6">4</span>
+                        <span class="badge bg-success fs-6">7</span>
+                    </div>
+                    <i class="bi bi-arrow-down fs-3 text-warning"></i>
+                    <h6 class="text-muted mt-2 mb-3">Array "aprovados"</h6>
+                    <div id="preview-array-u4" class="display-6 fw-bold text-success font-monospace">
+                        [ ? ]
+                    </div>
+                </div>
+
+                <div class="editor-container position-relative">
+                    <span class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2">script.js</span>
+                    <textarea id="code-js-u4" class="form-control bg-dark text-light font-monospace p-3" rows="3"
+                        placeholder="let notas = [5, 8, 10, 4, 7];&#10;/* Crie a variável aprovados aqui */"></textarea>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(4, 'a', 'b')">
+                <i class="bi bi-check2-circle"></i> Verificar e Concluir Unidade
+            </button>
+        </div>
+    </div>
+</div>
+<div class="accordion-item locked-unit" id="item-u5">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+            data-bs-target="#u5">
+            <i class="bi bi-lock-fill me-2 lock-icon text-warning"></i> 5. Objetos e JSON
+        </button>
+    </h2>
+    <div id="u5" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+        <div class="accordion-body content-box">
+            <p>Enquanto arrays são listas, <strong>Objetos</strong> representam coisas do mundo real, agrupando características através de propriedades (chaves) e valores. São definidos usando chaves <code>{}</code>.</p>
+
+            <p>O <strong>JSON (JavaScript Object Notation)</strong> é um formato de texto derivado dos objetos JS. É a língua universal usada para enviar e receber dados entre um site e um servidor (API).</p>
+
+            <pre class="code-display bg-dark text-light p-3 rounded border mb-4">
+// Criando um Objeto
+let usuario = {
+  nome: "Ana",
+  idade: 28,
+  admin: true
+};
+
+// Acessando propriedades usando o "ponto" (.)
+console.log(usuario.nome); // Imprime: "Ana"
+console.log(usuario.idade); // Imprime: 28
+
+// Convertendo o objeto para JSON (Texto) para enviar pela rede
+let textoJSON = JSON.stringify(usuario);
+            </pre>
+
+            <hr class="my-4">
+
+            <div class="quiz-box mb-4">
+                <h5><i class="bi bi-controller text-warning"></i> Quiz da Unidade 5</h5>
+                <form id="quiz-u5">
+                    <p class="mb-1 mt-3 fw-bold">1. Qual sintaxe usamos para criar um objeto no JavaScript?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u5q1a" name="q1" value="a">
+                        <label class="form-check-label" for="u5q1a">Chaves { }</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u5q1b" name="q1" value="b">
+                        <label class="form-check-label" for="u5q1b">Colchetes [ ]</label>
+                    </div>
+                    
+                    <p class="mb-1 mt-3 fw-bold">2. Se quisermos ler a idade do objeto <code>usuario</code>, como escrevemos?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u5q2a" name="q2" value="a">
+                        <label class="form-check-label" for="u5q2a">usuario[idade]</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u5q2b" name="q2" value="b">
+                        <label class="form-check-label" for="u5q2b">usuario.idade</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="challenge-box p-3 border rounded bg-light border-warning">
+                <h5><i class="bi bi-person-badge text-warning"></i> Desafio Prático: Cartão de Jogador</h5>
+                <p class="small text-muted mb-2">Crie o objeto que vai alimentar o crachá do jogador na tela!</p>
+                <ul class="small">
+                    <li>Crie a variável <code>jogador</code> e atribua a ela um <strong>Objeto</strong> <code>{ }</code>.</li>
+                    <li>O objeto precisa ter três propriedades (lembre-se da vírgula entre elas):</li>
+                    <li><code>nome</code> (String: ex. "Seu Nome")</li>
+                    <li><code>classe</code> (String: ex. "Mago")</li>
+                    <li><code>nivel</code> (Número: ex. 42)</li>
+                </ul>
+
+                <div class="preview-area border bg-dark text-light p-4 mb-3 rounded d-flex justify-content-center">
+                    <div class="card bg-secondary text-white shadow" style="width: 18rem; border: 2px solid #ffc107;">
+                        <div class="card-body text-center">
+                            <i class="bi bi-person-circle display-1 text-light mb-2"></i>
+                            <h4 class="card-title fw-bold text-warning" id="preview-nome-u5">???</h4>
+                            <span class="badge bg-dark fs-6 mb-2" id="preview-classe-u5">Sem Classe</span>
+                            <p class="card-text m-0 text-light">Nível: <span id="preview-nivel-u5" class="fw-bold">0</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="editor-container position-relative">
+                    <span class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2">script.js</span>
+                    <textarea id="code-js-u5" class="form-control bg-dark text-light font-monospace p-3" rows="7"
+                        placeholder="let jogador = {&#10;  /* Suas propriedades aqui */&#10;&#10;};"></textarea>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(5, 'a', 'b')">
+                <i class="bi bi-check2-circle"></i> Verificar e Concluir Unidade
+            </button>
+        </div>
+    </div>
+</div>
+<div class="accordion-item locked-unit" id="item-u6">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+            data-bs-target="#u6">
+            <i class="bi bi-lock-fill me-2 lock-icon text-warning"></i> 6. Manipulação do DOM
+        </button>
+    </h2>
+    <div id="u6" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+        <div class="accordion-body content-box">
+            <p>O <strong>DOM (Document Object Model)</strong> é a representação do seu HTML na memória do navegador. O JavaScript usa o objeto <code>document</code> para "entrar" no HTML, buscar elementos na tela, alterá-los ou criar novos.</p>
+
+            <ul>
+                <li><span class="tag-highlight bg-warning text-dark">document.querySelector()</span>: Seleciona um elemento HTML usando a mesma sintaxe do CSS (ex: <code>".minha-classe"</code> ou <code>"#meu-id"</code>).</li>
+                <li><span class="tag-highlight bg-warning text-dark">elemento.textContent</span>: Altera o texto visível dentro de uma tag.</li>
+                <li><span class="tag-highlight bg-warning text-dark">elemento.style</span>: Altera o CSS do elemento diretamente via JavaScript.</li>
+            </ul>
+
+            <pre class="code-display bg-dark text-light p-3 rounded border mb-4">
+// 1. Busca o elemento com o ID "meuTitulo" no HTML
+const titulo = document.querySelector('#meuTitulo');
+
+// 2. Modifica o texto
+titulo.textContent = "Hackeado pelo JS! 🚀";
+
+// 3. Modifica a cor (CSS)
+titulo.style.color = "red";
+            </pre>
+
+            <hr class="my-4">
+
+            <div class="quiz-box mb-4">
+                <h5><i class="bi bi-controller text-warning"></i> Quiz da Unidade 6</h5>
+                <form id="quiz-u6">
+                    <p class="mb-1 mt-3 fw-bold">1. Qual método usamos para selecionar a primeira tag <code>&lt;p&gt;</code> do documento?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u6q1a" name="q1" value="a">
+                        <label class="form-check-label" for="u6q1a">document.querySelector('p')</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u6q1b" name="q1" value="b">
+                        <label class="form-check-label" for="u6q1b">document.createElement('p')</label>
+                    </div>
+
+                    <p class="mb-1 mt-3 fw-bold">2. O que é o DOM?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u6q2a" name="q2" value="a">
+                        <label class="form-check-label" for="u6q2a">Uma linguagem de programação mais antiga que o JS.</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u6q2b" name="q2" value="b">
+                        <label class="form-check-label" for="u6q2b">A estrutura em árvore do HTML que o JS pode manipular.</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="challenge-box p-3 border rounded bg-light border-warning">
+                <h5><i class="bi bi-magic text-warning"></i> Desafio Final: Conserte o Sistema!</h5>
+                <p class="small text-muted mb-2">Um botão de sistema está com erro na tela. Use o DOM para consertá-lo!</p>
+                <ul class="small">
+                    <li>Use <code>document.querySelector</code> para selecionar o botão pelo ID: <code>#btn-sistema</code> e salve na variável <code>meuBotao</code>.</li>
+                    <li>Mude o <code>textContent</code> de <code>meuBotao</code> para "Sistema Online".</li>
+                    <li>Mude a cor de fundo (<code>style.backgroundColor</code>) para <code>"green"</code>.</li>
+                </ul>
+
+                <div class="preview-area border bg-dark text-light p-4 mb-3 rounded text-center">
+                    <h6 class="text-muted mb-4">Painel de Controle</h6>
+                    <button id="btn-sistema" class="btn btn-lg fw-bold" style="background-color: red; color: white;">ERRO 404</button>
+                </div>
+
+                <div class="editor-container position-relative">
+                    <span class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2">script.js</span>
+                    <textarea id="code-js-u6" class="form-control bg-dark text-light font-monospace p-3" rows="6"
+                        placeholder="// 1. Selecione o botão&#10;let meuBotao = &#10;&#10;// 2. Mude o texto e a cor&#10;"></textarea>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(6, 'a', 'b')">
+                <i class="bi bi-check2-circle"></i> Verificar e Finalizar Curso
+            </button>
+        </div>
+    </div>
+</div>        
+<div class="accordion-item locked-unit" id="item-u7">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+            data-bs-target="#u7">
+            <i class="bi bi-lock-fill me-2 lock-icon text-warning"></i> 7. Eventos (Interatividade)
+        </button>
+    </h2>
+    <div id="u7" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+        <div class="accordion-body content-box">
+            <p>A web é viva porque o JS fica "escutando" as ações do usuário (cliques, digitação, rolar a página). Esses são os chamados <strong>Eventos</strong>.</p>
+
+            <p>Usamos o método <span class="tag-highlight bg-warning text-dark">addEventListener()</span> para "grudar" uma função a uma ação de um elemento.</p>
+
+            <div class="row align-items-center mt-4 mb-4">
+                <div class="col-lg-7">
+                    <pre class="code-display bg-dark text-light p-3 rounded border mb-0 h-100">
+// Criando uma Lista de Tarefas (To-Do)
+function adicionarTarefa() {
+  const input = document.querySelector('#inputTarefa');
+  const lista = document.querySelector('#minhaLista');
+
+  // Se o campo estiver vazio, não faz nada
+  if (input.value === '') return;
+
+  // Cria um novo item (<li>)
+  const novoItem = document.createElement('li');
+  novoItem.className = 'list-group-item';
+  novoItem.textContent = input.value;
+
+  // Adiciona na tela e limpa o campo
+  lista.appendChild(novoItem);
+  input.value = "";
+}
+                    </pre>
+                </div>
+                <div class="col-lg-5 mt-3 mt-lg-0">
+                    <div class="interactive-demo shadow-sm border p-3 rounded bg-light">
+                        <div class="fw-bold mb-2 text-muted">
+                            <i class="bi bi-check2-square text-warning"></i> Teste o código ao lado:
+                        </div>
+                        <div class="input-group mb-3">
+                            <input type="text" id="inputTarefa" class="form-control" placeholder="Estudar React...">
+                            <button class="btn btn-dark" onclick="addTodoDemo()">
+                                <i class="bi bi-plus-lg"></i> Adicionar
+                            </button>
+                        </div>
+                        <ul id="minhaLista" class="list-group list-group-flush border rounded">
+                            <li class="list-group-item">Aprender HTML</li>
+                            <li class="list-group-item">Estilizar com CSS</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <hr class="my-4">
+
+            <div class="quiz-box mb-4">
+                <h5><i class="bi bi-controller text-warning"></i> Quiz da Unidade 7</h5>
+                <form id="quiz-u7">
+                    <p class="mb-1 mt-3 fw-bold">1. Qual método usamos para fazer o JavaScript "escutar" um clique em um botão?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u7q1a" name="q1" value="a">
+                        <label class="form-check-label" for="u7q1a">addEventListener('click', funcao)</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u7q1b" name="q1" value="b">
+                        <label class="form-check-label" for="u7q1b">querySelector('click')</label>
+                    </div>
+
+                    <p class="mb-1 mt-3 fw-bold">2. O que faz o método <code>appendChild()</code>?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u7q2a" name="q2" value="a">
+                        <label class="form-check-label" for="u7q2a">Deleta o elemento selecionado da tela.</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u7q2b" name="q2" value="b">
+                        <label class="form-check-label" for="u7q2b">Insere um novo elemento como "filho" (dentro) do elemento selecionado.</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="challenge-box p-3 border rounded bg-light border-warning">
+                <h5><i class="bi bi-lightning-charge text-warning"></i> Desafio Final: Dê Vida ao Botão!</h5>
+                <p class="small text-muted mb-2">Um botão que não faz nada é triste. Vamos colocar uma ação nele!</p>
+                <ul class="small">
+                    <li>O botão tem o ID <code>#btn-magico</code>.</li>
+                    <li>Use <code>addEventListener</code> para escutar o evento de <code>'click'</code>.</li>
+                    <li>Dentro da função, mude o <code>textContent</code> dele para <strong>"Fui Clicado!"</strong> e mude a cor dele (<code>style.backgroundColor</code>) para <strong>"green"</strong>.</li>
+                </ul>
+
+                <div class="preview-area border bg-dark text-light p-5 mb-3 rounded text-center" id="sandbox-u7">
+                    <button id="btn-magico" class="btn btn-lg fw-bold" style="background-color: #dc3545; color: white;">
+                        <i class="bi bi-hand-index"></i> Me Clique!
+                    </button>
+                </div>
+
+                <div class="editor-container position-relative">
+                    <span class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2">script.js</span>
+                    <textarea id="code-js-u7" class="form-control bg-dark text-light font-monospace p-3" rows="6"
+                        placeholder="let botao = document.querySelector('#btn-magico');&#10;&#10;botao.addEventListener('click', function() {&#10;  // O que acontece ao clicar?&#10;  &#10;});"></textarea>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(7, 'a', 'b')">
+                <i class="bi bi-check2-circle"></i> Verificar e Concluir Unidade
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="accordion-item locked-unit" id="item-u8">
+    <h2 class="accordion-header">
+        <button class="accordion-button collapsed fw-bold fs-5" type="button" data-bs-toggle="collapse"
+            data-bs-target="#u8">
+            <i class="bi bi-lock-fill me-2 lock-icon text-warning"></i> 8. Async/Await e APIs
+        </button>
+    </h2>
+    <div id="u8" class="accordion-collapse collapse" data-bs-parent="#jsCourseAccordion">
+        <div class="accordion-body content-box">
+            <p>O JavaScript pode se comunicar com outros computadores na internet para buscar dados em tempo real (como a previsão do tempo, cotação do dólar ou listas de filmes). O nome desse mensageiro é <strong>API</strong>.</p>
+
+            <p>Como a internet pode demorar para responder, usamos a programação <strong>Assíncrona</strong>. O JS diz: <em>"Vou pedir os dados e continuar trabalhando. Quando a resposta chegar, eu aviso!"</em></p>
+
+            <ul>
+                <li><span class="tag-highlight bg-warning text-dark">fetch('url')</span>: É o comando que "vai buscar" os dados na API.</li>
+                <li><span class="tag-highlight bg-warning text-dark">await</span>: Significa "espere". Diz ao JS para pausar e esperar a resposta da internet chegar antes de ir para a próxima linha.</li>
+                <li><span class="tag-highlight bg-warning text-dark">async</span>: Toda função que usa <code>await</code> precisa ter a palavra <code>async</code> antes dela.</li>
+            </ul>
+
+            <pre class="code-display bg-dark text-light p-3 rounded border mb-4">
+// 1. A função precisa ser "async"
+async function buscarFilmes() {
+  
+  // 2. Esperamos (await) o fetch buscar os dados
+  const resposta = await fetch('https://api.exemplo.com/filmes');
+  
+  // 3. Esperamos a conversão dos dados para JSON (formato de objeto JS)
+  const dados = await resposta.json();
+
+  console.log(dados);
+}
+            </pre>
+
+            <hr class="my-4">
+
+            <div class="quiz-box mb-4">
+                <h5><i class="bi bi-controller text-warning"></i> Quiz da Unidade 8</h5>
+                <form id="quiz-u8">
+                    <p class="mb-1 mt-3 fw-bold">1. Qual método nativo usamos para buscar dados de uma URL (API externa)?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u8q1a" name="q1" value="a">
+                        <label class="form-check-label" for="u8q1a">fetch()</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u8q1b" name="q1" value="b">
+                        <label class="form-check-label" for="u8q1b">get()</label>
+                    </div>
+                    
+                    <p class="mb-1 mt-3 fw-bold">2. Por que usamos as palavras <code>async</code> e <code>await</code>?</p>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u8q2a" name="q2" value="a">
+                        <label class="form-check-label" for="u8q2a">Porque fazem o código rodar 10x mais rápido do que o normal.</label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="radio" id="u8q2b" name="q2" value="b">
+                        <label class="form-check-label" for="u8q2b">Porque operações de rede demoram, e precisamos "esperar" a promessa de dados chegar.</label>
+                    </div>
+                </form>
+            </div>
+
+            <div class="challenge-box p-3 border rounded bg-light border-warning">
+                <h5><i class="bi bi-globe2 text-warning"></i> Desafio Final: Oráculo de Conselhos</h5>
+                <p class="small text-muted mb-2">Conecte-se à API pública de conselhos! Crie a requisição e injete o texto no HTML.</p>
+                <ul class="small">
+                    <li>Use <code>await fetch('https://api.adviceslip.com/advice')</code> e salve na variável <strong>resposta</strong>.</li>
+                    <li>Use <code>await resposta.json()</code> e salve na variável <strong>dados</strong>.</li>
+                    <li>O texto que a API devolve fica escondido em <code>dados.slip.advice</code>.</li>
+                    <li>O código de selecionar o parágrafo na tela já está feito para você!</li>
+                </ul>
+
+                <div class="preview-area border bg-dark text-light p-4 mb-3 rounded text-center position-relative">
+                    <i class="bi bi-chat-quote display-4 text-warning mb-2"></i>
+                    <p id="preview-conselho" class="fst-italic fs-5 mt-3">"Seu conselho aparecerá aqui..."</p>
+                    
+                    <button id="btn-testar-api" class="btn btn-outline-warning mt-3 btn-sm">
+                        <i class="bi bi-play-fill"></i> Testar Requisição
+                    </button>
+                </div>
+
+                <div class="editor-container position-relative">
+                    <span class="position-absolute top-0 end-0 badge bg-warning text-dark mt-2 me-2">script.js</span>
+                    <textarea id="code-js-u8" class="form-control bg-dark text-light font-monospace p-3" rows="8"
+                        placeholder="async function gerarConselho() {&#10;  const paragrafo = document.querySelector('#preview-conselho');&#10;  paragrafo.textContent = 'Buscando...';&#10;&#10;  // 1. Faça o fetch aqui&#10;  &#10;&#10;  // 2. Converta para json&#10;  &#10;&#10;  // 3. Mostre na tela (Descomente a linha abaixo e complete)&#10;  // paragrafo.textContent = &#10;}"></textarea>
+                </div>
+            </div>
+
+            <button type="button" class="btn btn-warning mt-4 w-100 fw-bold shadow-sm"
+                onclick="checkJSUnitAndCode(8, 'a', 'b')">
+                <i class="bi bi-trophy"></i> Verificar e Concluir Curso!
+            </button>
+        </div>
+    </div>
+</div>      
+</div>
     </main>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        const TOTAL_JS_UNITS = 8;
+      const TOTAL_JS_UNITS = 8;
 
-        document.addEventListener("DOMContentLoaded", () => {
-            localStorage.setItem('lastModuleVisited', 'modulos/js.html');
-            updateUI();
-        });
+      document.addEventListener("DOMContentLoaded", () => {
+        localStorage.setItem("lastModuleVisited", "modulos/js.html");
+        updateUI();
+      });
 
-        // FUNÇÃO DE ALERTA CUSTOMIZADO (Toast)
-        function showToast(message, type) {
-            const toast = document.getElementById('toastAlert');
-            const icon = document.getElementById('toastIcon');
-            const msg = document.getElementById('toastMessage');
+      // FUNÇÃO DE ALERTA CUSTOMIZADO (Toast)
+      function showToast(message, type) {
+        const toast = document.getElementById("toastAlert");
+        const icon = document.getElementById("toastIcon");
+        const msg = document.getElementById("toastMessage");
 
-            toast.className = 'custom-toast';
-            icon.className = 'bi';
+        toast.className = "custom-toast";
+        icon.className = "bi";
 
-            if (type === 'success') {
-                toast.classList.add('success');
-                icon.classList.add('bi-check-circle-fill');
-            } else if (type === 'error') {
-                toast.classList.add('error');
-                icon.classList.add('bi-x-circle-fill');
-            } else if (type === 'warning') {
-                toast.classList.add('error');
-                icon.classList.add('bi-exclamation-triangle-fill');
+        if (type === "success") {
+          toast.classList.add("success");
+          icon.classList.add("bi-check-circle-fill");
+        } else if (type === "error") {
+          toast.classList.add("error");
+          icon.classList.add("bi-x-circle-fill");
+        } else if (type === "warning") {
+          toast.classList.add("error");
+          icon.classList.add("bi-exclamation-triangle-fill");
+        }
+
+        msg.innerText = message;
+
+        void toast.offsetWidth;
+
+        toast.classList.add("show");
+
+        setTimeout(() => {
+          toast.classList.remove("show");
+        }, 3500);
+      }
+
+      // FUNÇÕES DOS DEMOS INTERATIVOS
+      function mudarTextoDOM() {
+        const titulo = document.querySelector("#domTitulo");
+        titulo.textContent = "Modificado pelo JS! 🎉";
+        titulo.style.color = "#d4b106";
+      }
+
+      function addTodoDemo() {
+        const input = document.querySelector('#inputTarefa');
+        const lista = document.querySelector('#minhaLista');
+        if (input.value.trim() === '') return;
+        const novoItem = document.createElement('li');
+        novoItem.className = 'list-group-item';
+        novoItem.innerHTML = `<i class="bi bi-arrow-right-short text-warning"></i> ${input.value}`;
+        lista.appendChild(novoItem);
+        input.value = "";
+    }
+
+      async function chamarAPI() {
+        const result = document.getElementById("resultadoApi");
+        const btn = document.getElementById("btnApi");
+        btn.disabled = true;
+        result.innerText = "Buscando...";
+
+        try {
+          const response = await fetch("https://api.adviceslip.com/advice");
+          const data = await response.json();
+          result.innerText = `"${data.slip.advice}"`;
+          result.style.color = "#000";
+          result.classList.add("fw-bold");
+        } catch (error) {
+          result.innerText = "Erro ao buscar dados.";
+        } finally {
+          btn.disabled = false;
+        }
+      }
+
+      // LÓGICA DO CURSO
+      function updateUI() {
+        let jsProgress = parseInt(localStorage.getItem("jsProgress")) || 0;
+        document.getElementById("js-progress-text").innerText =
+          `${jsProgress}/${TOTAL_JS_UNITS}`;
+
+        for (let i = 1; i <= TOTAL_JS_UNITS; i++) {
+          const itemDiv = document.getElementById(`item-u${i}`);
+          const btn = itemDiv.querySelector(".accordion-button");
+          const icon = itemDiv.querySelector(".lock-icon");
+
+          if (i <= jsProgress + 1) {
+            itemDiv.classList.remove("locked-unit");
+            if (icon) icon.className = "bi bi-unlock-fill me-2 text-warning";
+
+            if (i <= jsProgress) {
+              const quizBtn = document.querySelector(`#quiz-u${i} button`);
+              if (quizBtn) {
+                quizBtn.disabled = true;
+                quizBtn.innerHTML =
+                  "<i class='bi bi-check2-all'></i> Unidade Concluída";
+                quizBtn.classList.replace("btn-js", "btn-success");
+              }
             }
-
-            msg.innerText = message;
-
-            void toast.offsetWidth;
-
-            toast.classList.add('show');
-
-            setTimeout(() => {
-                toast.classList.remove('show');
-            }, 3500);
+          }
         }
+      }
 
-        // FUNÇÕES DOS DEMOS INTERATIVOS
-        function mudarTextoDOM() {
-            const titulo = document.querySelector('#domTitulo');
-            titulo.textContent = "Modificado pelo JS! 🎉";
-            titulo.style.color = "#d4b106";
-        }
+      document.addEventListener("DOMContentLoaded", () => {
+        initJSLiveEditor(1);
+        initJSLiveEditor(2);
+        initJSLiveEditor(3);
+        initJSLiveEditor(4);
+        initJSLiveEditor(5);
+        initJSLiveEditor(6);
+        initJSLiveEditor(7);
+        initJSLiveEditor(8);
+      });
 
-        function addTodo() {
-            const input = document.querySelector('#inputTarefa');
-            const lista = document.querySelector('#minhaLista');
-            if (input.value.trim() === '') return;
+      // Função para dar o feedback visual "ao vivo" pro JS
+      function initJSLiveEditor(unitId) {
+        const codeInput = document.getElementById(`code-js-u${unitId}`);
+        if (!codeInput) return;
 
-            const novoItem = document.createElement('li');
-            novoItem.className = 'list-group-item d-flex justify-content-between align-items-center bg-light';
-            novoItem.innerHTML = `${input.value} <button class="btn btn-sm btn-outline-danger border-0" onclick="this.parentElement.remove()"><i class="bi bi-trash"></i></button>`;
+        codeInput.addEventListener("input", () => {
+          const code = codeInput.value;
 
-            lista.appendChild(novoItem);
-            input.value = '';
-        }
+          try {
+            if (unitId === 1) {
+              // Criamos uma função temporária com o código do aluno.
+              // O "return" no final tenta capturar as variáveis se ele as criou.
+              const func = new Function(`
+                    ${code}
+                    return { 
+                        j: typeof jogador !== 'undefined' ? jogador : '???', 
+                        n: typeof nivel !== 'undefined' ? nivel : 0 
+                    };
+                `);
 
-        async function chamarAPI() {
-            const result = document.getElementById('resultadoApi');
-            const btn = document.getElementById('btnApi');
-            btn.disabled = true;
-            result.innerText = "Buscando...";
+              const result = func(); // Executa o código do aluno!
 
-            try {
-                const response = await fetch('https://api.adviceslip.com/advice');
-                const data = await response.json();
-                result.innerText = `"${data.slip.advice}"`;
-                result.style.color = "#000";
-                result.classList.add("fw-bold");
-            } catch (error) {
-                result.innerText = "Erro ao buscar dados.";
-            } finally {
-                btn.disabled = false;
+              // Atualiza a tela com o resultado
+              document.getElementById("preview-jogador").innerText = result.j;
+              document.getElementById("preview-nivel").innerText = result.n;
             }
-        }
+            if (unitId === 2) {
+              const func = new Function(`
+                    ${code}
+                    return typeof status !== 'undefined' ? status : 'Aguardando código...';
+                `);
 
-        // LÓGICA DO CURSO
-        function updateUI() {
-            let jsProgress = parseInt(localStorage.getItem('jsProgress')) || 0;
-            document.getElementById('js-progress-text').innerText = `${jsProgress}/${TOTAL_JS_UNITS}`;
+              const result = func();
+              const statusElement =
+                document.getElementById("preview-status-u2");
 
-            for (let i = 1; i <= TOTAL_JS_UNITS; i++) {
-                const itemDiv = document.getElementById(`item-u${i}`);
-                const btn = itemDiv.querySelector('.accordion-button');
-                const icon = itemDiv.querySelector('.lock-icon');
+              statusElement.innerText = result;
 
-                if (i <= jsProgress + 1) {
-                    itemDiv.classList.remove('locked-unit');
-                    if (icon) icon.className = "bi bi-unlock-fill me-2 text-warning";
-
-                    if (i <= jsProgress) {
-                        const quizBtn = document.querySelector(`#quiz-u${i} button`);
-                        if (quizBtn) {
-                            quizBtn.disabled = true;
-                            quizBtn.innerHTML = "<i class='bi bi-check2-all'></i> Unidade Concluída";
-                            quizBtn.classList.replace('btn-js', 'btn-success');
-                        }
+              // Brincando com as cores dependendo do resultado!
+              if (result === "Liberado") {
+                statusElement.className = "display-6 fw-bold text-success";
+              } else if (result === "Bloqueado") {
+                statusElement.className = "display-6 fw-bold text-danger";
+              } else {
+                statusElement.className = "display-6 fw-bold text-warning";
+              }
+            }
+            if (unitId === 3) {
+              // Tentamos construir a função do aluno na memória
+              const func = new Function(`
+                    ${code}
+                    // Verificamos se ele criou a função calcularDano
+                    if (typeof calcularDano === 'function') {
+                        return calcularDano(10); // Testamos a função dele com a força 10
                     }
-                }
+                    return '?';
+                `);
+
+              const result = func();
+              const danoElement = document.getElementById("preview-dano-u3");
+
+              // Se a função dele retornou um número válido
+              if (typeof result === "number" && !isNaN(result)) {
+                danoElement.innerText = result;
+                danoElement.classList.add("text-danger");
+              } else {
+                danoElement.innerText = "?";
+              }
             }
-        }
+          if (unitId === 4) {
+                const func = new Function(`
+                    ${code}
+                    // Verifica se o array 'aprovados' existe e se é um array de verdade
+                    if (typeof aprovados !== 'undefined' && Array.isArray(aprovados)) {
+                        return aprovados;
+                    }
+                    return null;
+                `);
 
-        function checkQuiz(unitId, correctQ1, correctQ2) {
-            const form = document.getElementById(`quiz-u${unitId}`);
-            const q1Answer = form.querySelector('input[name="q1"]:checked');
-            const q2Answer = form.querySelector('input[name="q2"]:checked');
-
-            if (!q1Answer || !q2Answer) {
-                showToast("Por favor, responda todas as perguntas da unidade antes de enviar!", "warning");
-                return;
-            }
-
-            if (q1Answer.value === correctQ1 && q2Answer.value === correctQ2) {
-
-                showToast(`Incrível! Você dominou a Unidade ${unitId}!`, "success");
-
-                let jsProgress = parseInt(localStorage.getItem('jsProgress')) || 0;
-                if (jsProgress < unitId) {
-                    localStorage.setItem('jsProgress', unitId);
-
-                    let globalUnits = parseInt(localStorage.getItem('unitsCompleted')) || 0;
-                    let globalQuizzes = parseInt(localStorage.getItem('quizzesAnswered')) || 0;
-                    let globalScore = parseFloat(localStorage.getItem('totalScore')) || 0;
-
-                    localStorage.setItem('unitsCompleted', globalUnits + 1);
-                    localStorage.setItem('quizzesAnswered', globalQuizzes + 1);
-                    localStorage.setItem('totalScore', globalScore + 15);
-                }
-
-                updateUI();
-
-                if (unitId < TOTAL_JS_UNITS) {
-                    let currentCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId}`), { toggle: false });
-                    let nextCollapse = new bootstrap.Collapse(document.getElementById(`u${unitId + 1}`), { toggle: false });
-                    currentCollapse.hide();
-                    nextCollapse.show();
-
-                    setTimeout(() => {
-                        document.getElementById(`item-u${unitId + 1}`).scrollIntoView({ behavior: 'smooth', block: 'start' });
-                    }, 300);
+                const result = func(); 
+                const arrayElement = document.getElementById('preview-array-u4');
+                
+                if (result !== null) {
+                    // Transforma o array em texto: ex [8, 10, 7]
+                    arrayElement.innerText = "[ " + result.join(", ") + " ]";
+                    
+                    // Se estiver certinho, fica verde, se não, fica amarelo
+                    if(result.join(",") === "8,10,7") {
+                        arrayElement.className = "display-6 fw-bold text-success font-monospace";
+                    } else {
+                        arrayElement.className = "display-6 fw-bold text-warning font-monospace";
+                    }
                 } else {
-                    setTimeout(() => {
-                        showToast("🎉 PARABÉNS! Você finalizou os 3 módulos da Trilha Front-End!", "success");
-                        // Opcional: Redirecionar para o painel principal após um tempo
-                        // window.location.href = "index.html";
-                    }, 3000);
+                    arrayElement.innerText = "[ ? ]";
+                    arrayElement.className = "display-6 fw-bold text-secondary font-monospace";
                 }
+            }
+        if (unitId === 5) {
+                const func = new Function(`
+                    ${code}
+                    // Verifica se o aluno declarou o objeto jogador e o retorna
+                    if (typeof jogador !== 'undefined' && typeof jogador === 'object') {
+                        return jogador;
+                    }
+                    return null;
+                `);
 
-            } else {
-                showToast("Quase lá! Revise os conceitos lógicos e tente mais uma vez.", "error");
+                const result = func(); 
+                
+                const nomeEl = document.getElementById('preview-nome-u5');
+                const classeEl = document.getElementById('preview-classe-u5');
+                const nivelEl = document.getElementById('preview-nivel-u5');
+                
+                if (result !== null) {
+                    // Preenche o cartão com os dados ou mantém default se a propriedade não existir
+                    nomeEl.innerText = result.nome ? result.nome : "???";
+                    classeEl.innerText = result.classe ? result.classe : "Sem Classe";
+                    nivelEl.innerText = result.nivel !== undefined ? result.nivel : "0";
+                    
+                    // Um feedback visual para o Nível
+                    if(result.nivel > 0) {
+                        nivelEl.className = "fw-bold text-success";
+                    }
+                } else {
+                    nomeEl.innerText = "???";
+                    classeEl.innerText = "Sem Classe";
+                    nivelEl.innerText = "0";
+                    nivelEl.className = "fw-bold";
+                }
+            }
+        if (unitId === 6) {
+                // Pegamos o botão original para poder resetá-lo se o código falhar ou apagar
+                const btn = document.getElementById('btn-sistema');
+                
+                // Reseta antes de aplicar o novo código
+                btn.textContent = "ERRO 404";
+                btn.style.backgroundColor = "red";
+                
+                // ATENÇÃO: Para o Live Editor funcionar com querySelector, 
+                // o código do aluno precisa rodar no contexto da nossa página.
+                // Usamos Function para rodar o código do aluno:
+                const func = new Function(code);
+                func(); // Executa o código que o aluno digitou
+            }
+        if (unitId === 7) {
+                const sandbox = document.getElementById('sandbox-u7');
+                
+                // 1. Reseta o botão para o estado original "virgem" (sem eventos atrelados)
+                sandbox.innerHTML = `
+                    <button id="btn-magico" class="btn btn-lg fw-bold" style="background-color: #dc3545; color: white;">
+                        <i class="bi bi-hand-index"></i> Me Clique!
+                    </button>
+                `;
+                
+                // 2. Executa o código do aluno, atrelando o novo evento ao novo botão
+                const func = new Function(code);
+                func(); 
+            }
+        } catch (e) {
+            // Se der erro de sintaxe (ex: esqueceu uma aspa), cai aqui silenciosamente.
+            // O texto volta ao padrão.
+            if (unitId === 1) {
+              document.getElementById("preview-jogador").innerText =
+                "Erro de Sintaxe...";
+            }
+             if (unitId === 2) {
+              document.getElementById("preview-status-u2").innerText =
+                "Erro de Sintaxe...";
+              document.getElementById("preview-status-u2").className =
+                "display-6 fw-bold text-secondary";
+            }
+             if (unitId === 3) {
+              document.getElementById("preview-dano-u3").innerText = "Erro...";
+            }
+             if (unitId === 4) {
+                document.getElementById('preview-array-u4').innerText = "Erro...";
+                document.getElementById('preview-array-u4').className = "display-6 fw-bold text-danger font-monospace";
+            }
+            if (unitId === 5) {
+                document.getElementById('preview-nome-u5').innerText = "Erro no Objeto";
+                document.getElementById('preview-classe-u5').innerText = "...";
+                document.getElementById('preview-nivel-u5').innerText = "0";
+            }
+            if (unitId === 6) {
+                const btn = document.getElementById('btn-sistema');
+                btn.textContent = "ERRO 404";
+                btn.style.backgroundColor = "red";
+            }
+            if (unitId === 7) {
+                const sandbox = document.getElementById('sandbox-u7');
+                sandbox.innerHTML = `
+                    <button id="btn-magico" class="btn btn-lg fw-bold" style="background-color: #dc3545; color: white;">
+                        <i class="bi bi-hand-index"></i> Me Clique!
+                    </button>
+                `;
+            }
+          }
+        });
+      }
+
+      // Sua nova função unificada para validar o módulo de JS
+      function checkJSUnitAndCode(unitId, correctQ1, correctQ2) {
+        const form = document.getElementById(`quiz-u${unitId}`);
+        const q1Answer = form.querySelector('input[name="q1"]:checked');
+        const q2Answer = form.querySelector('input[name="q2"]:checked');
+        const codeInput = document.getElementById(`code-js-u${unitId}`);
+
+        if (!q1Answer || !q2Answer) {
+          showToast(
+            "Por favor, responda todas as perguntas do quiz!",
+            "warning",
+          );
+          return;
+        }
+
+        let isQuizCorrect =
+          q1Answer.value === correctQ1 && q2Answer.value === correctQ2;
+        let isCodeCorrect = false;
+
+        // Sanitiza o código do aluno para facilitar a validação em texto
+        let codeSanitized = codeInput
+          ? codeInput.value.replace(/\s+/g, "")
+          : "";
+
+        if (unitId === 1) {
+          // Validação de Código JS Unidade 1:
+          // Verifica se ele usou const jogador e let nivel com os valores adequados
+          const hasConstJogador =
+            codeSanitized.includes('constjogador="') ||
+            codeSanitized.includes("constjogador='");
+          const hasLetNivel = codeSanitized.includes("letnivel=");
+
+          if (
+            hasConstJogador &&
+            hasLetNivel &&
+            document.getElementById("preview-jogador").innerText !== "???"
+          ) {
+            isCodeCorrect = true;
+          }
+        } else if (unitId === 2) {
+          // Validação de Código JS Unidade 2:
+          // Verifica se o aluno escreveu a estrutura if/else e se a tela mostra Liberado ou Bloqueado
+          const hasIf = codeSanitized.includes("if(idade>=18)");
+          const hasElse = codeSanitized.includes("else{");
+          const previewStatus =
+            document.getElementById("preview-status-u2").innerText;
+
+          // Aceita se estiver verde (Liberado) ou vermelho (Bloqueado) dependendo de como ele setou a idade
+          if (
+            hasIf &&
+            hasElse &&
+            (previewStatus === "Liberado" || previewStatus === "Bloqueado")
+          ) {
+            isCodeCorrect = true;
+          }
+        } else if (unitId === 3) {
+          // Validação de Código JS Unidade 3: Funções
+          // Verifica se ele usou return e se o cálculo visual bate com o esperado (10 * 3 = 30)
+          const hasReturn = codeSanitized.includes("return");
+          const hasMultiplier = codeSanitized.includes("*3");
+          const finalDamage =
+            document.getElementById("preview-dano-u3").innerText;
+
+          if (hasReturn && hasMultiplier && finalDamage === "30") {
+            isCodeCorrect = true;
+          }
+        }
+        else if (unitId === 4) {
+        // Validação de Código JS Unidade 4: Arrays
+        // Verifica se usou o método .filter e se o array visual bate com [ 8, 10, 7 ]
+        const hasFilter = codeSanitized.includes('.filter(');
+        const finalArrayText = document.getElementById('preview-array-u4').innerText;
+
+        // O join na tela coloca espaços, então esperamos "[ 8, 10, 7 ]"
+        if (hasFilter && finalArrayText.replace(/\s+/g, '') === "[8,10,7]") {
+            isCodeCorrect = true;
+        }
+    }
+    else if (unitId === 5) {
+        // Validação de Código JS Unidade 5: Objetos
+        // Verifica se a tela capturou valores além do "???" padrão
+        const nomeFinal = document.getElementById('preview-nome-u5').innerText;
+        const classeFinal = document.getElementById('preview-classe-u5').innerText;
+        
+        // Se o nome e a classe mudaram do default, consideramos correto
+        if (nomeFinal !== "???" && nomeFinal !== "Erro no Objeto" && classeFinal !== "Sem Classe" && classeFinal !== "...") {
+            isCodeCorrect = true;
+        }
+    } else if (unitId === 6) {
+        // Validação de Código JS Unidade 6: DOM
+        // Verifica se o botão realmente mudou no HTML visual da página
+        const btn = document.getElementById('btn-sistema');
+        const textIsCorrect = btn.textContent === "Sistema Online";
+        // O navegador converte "green" para rgb(0, 128, 0)
+        const colorIsCorrect = btn.style.backgroundColor === "green" || btn.style.backgroundColor === "rgb(0, 128, 0)";
+        const usedQuerySelector = codeSanitized.includes('queryselector');
+
+        if (textIsCorrect && colorIsCorrect && usedQuerySelector) {
+            isCodeCorrect = true;
+        }
+    } else if (unitId === 7) {
+        // Validação de Código JS Unidade 7: Eventos
+        const btnMagico = document.getElementById('btn-magico');
+        const hasEventListener = codeSanitized.includes('addeventlistener');
+        const hasClick = codeSanitized.includes('click');
+
+        if (btnMagico && hasEventListener && hasClick) {
+            // SIMULAMOS O CLIQUE AUTOMATICAMENTE!
+            btnMagico.click();
+
+            // Depois do clique, checamos se o aluno mudou as propriedades que pedimos
+            const textoCorreto = btnMagico.textContent.includes("Fui Clicado!");
+            const corCorreta = btnMagico.style.backgroundColor === "green" || btnMagico.style.backgroundColor === "rgb(0, 128, 0)";
+
+            if (textoCorreto && corCorreta) {
+                isCodeCorrect = true;
             }
         }
+    } else if (unitId === 8) {
+        // Validação de Código JS Unidade 8: APIs e Fetch
+        const paragrafo = document.getElementById('preview-conselho');
+        
+        // Verifica se o aluno escreveu as palavras chaves cruciais
+        const usedFetch = codeSanitized.includes('fetch');
+        const usedAwait = codeSanitized.includes('await');
+        const usedJson = codeSanitized.includes('.json()');
+
+        // Se o texto não é o default, não é "Buscando..." e não contém "Erro"
+        const textChanged = paragrafo.textContent !== "Seu conselho aparecerá aqui..." 
+                         && paragrafo.textContent !== "Buscando..."
+                         && !paragrafo.textContent.includes("Erro");
+
+        if (usedFetch && usedAwait && usedJson && textChanged) {
+            isCodeCorrect = true;
+        } else if (!textChanged) {
+            alert("Você precisa clicar em 'Testar Requisição' para que a API busque o conselho antes de verificar!");
+            return; // Interrompe a verificação para ele testar
+        }
+    }
+
+        // Avaliação Final da Unidade
+        if (isQuizCorrect && isCodeCorrect) {
+          if (q1Answer.value === correctQ1 && q2Answer.value === correctQ2) {
+            showToast(`Incrível! Você dominou a Unidade ${unitId}!`, "success");
+
+            let jsProgress = parseInt(localStorage.getItem("jsProgress")) || 0;
+            if (jsProgress < unitId) {
+              localStorage.setItem("jsProgress", unitId);
+
+              let globalUnits =
+                parseInt(localStorage.getItem("unitsCompleted")) || 0;
+              let globalQuizzes =
+                parseInt(localStorage.getItem("quizzesAnswered")) || 0;
+              let globalScore =
+                parseFloat(localStorage.getItem("totalScore")) || 0;
+
+              localStorage.setItem("unitsCompleted", globalUnits + 1);
+              localStorage.setItem("quizzesAnswered", globalQuizzes + 1);
+              localStorage.setItem("totalScore", globalScore + 15);
+            }
+
+            updateUI();
+          }
+        } else if (!isQuizCorrect) {
+          showToast(
+            "Quase lá! Revise as respostas do quiz e tente novamente.",
+            "error",
+          );
+        } else {
+          showToast(
+            "O quiz está certo, mas há um erro no seu código! Verifique as instruções.",
+            "error",
+          );
+        }
+      }
+
+      // Adicione isso no final do seu script principal, ou chame quando a Unidade 8 abrir:
+
+document.getElementById('btn-testar-api')?.addEventListener('click', async () => {
+    const code = document.getElementById('code-js-u8').value;
+    const paragrafo = document.getElementById('preview-conselho');
+    
+    try {
+        // Um truque avançado do JS: Criar uma Função Assíncrona dinamicamente a partir de uma string!
+        const AsyncFunction = Object.getPrototypeOf(async function(){}).constructor;
+        
+        // Colocamos o código do aluno dentro da função e a executamos
+        const func = new AsyncFunction(`
+            try {
+                ${code}
+                // Executa a função que o aluno teoricamente criou
+                if (typeof gerarConselho === 'function') {
+                    await gerarConselho();
+                }
+            } catch (err) {
+                document.getElementById('preview-conselho').textContent = "Erro no código: " + err.message;
+            }
+        `);
+        
+        await func(); // Dispara o código do aluno!
+
+    } catch (e) {
+        paragrafo.textContent = "Erro de sintaxe. Verifique chaves, vírgulas e aspas!";
+    }
+});
     </script>
-        <script src="../js/animation.js"></script>
-
-</body>
-
+    <script src="../js/animation.js"></script>
+  </body>
 </html>
