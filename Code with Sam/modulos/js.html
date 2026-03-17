@@ -1712,8 +1712,8 @@ async function buscarFilmes() {
     } else if (unitId === 7) {
         // Validação de Código JS Unidade 7: Eventos
         const btnMagico = document.getElementById('btn-magico');
-        const hasEventListener = codeSanitized.includes('addeventlistener');
-        const hasClick = codeSanitized.includes('click');
+        const hasEventListener = codeSanitized.includes('addeventlistener') || codeSanitized.includes('addEventListener');
+        const hasClick = codeSanitized.includes('click') || codeSanitized.includes('Click');
 
         if (btnMagico && hasEventListener && hasClick) {
             // SIMULAMOS O CLIQUE AUTOMATICAMENTE!

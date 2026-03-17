@@ -17,10 +17,8 @@
     /* 2. Chamamos a animação */
     animation: bkgAnimado 5s ease infinite;    z-index: 99999;
 
-    /* Otimiza a performance, avisando a placa de vídeo para focar nisso */
     will-change: transform;
     
-    /* Garante que o painel intercepte cliques enquanto estiver visível */
     pointer-events: all; 
 
     /* COMEÇA VISÍVEL */
