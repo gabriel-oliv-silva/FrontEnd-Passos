@@ -11,15 +11,36 @@
 #page-transition {
     position: fixed;
     inset: 0;
-    background: linear-gradient(135deg, #3274f0,#3274f0, #ff7b59);
-    z-index: 99999;
+    background: linear-gradient(135deg, #3274f0, #5993ff, #3274f0);
+    background-size: 400% 400%; 
+    
+    /* 2. Chamamos a animação */
+    animation: bkgAnimado 5s ease infinite;    z-index: 99999;
+
+    /* Otimiza a performance, avisando a placa de vídeo para focar nisso */
+    will-change: transform;
+    
+    /* Garante que o painel intercepte cliques enquanto estiver visível */
+    pointer-events: all; 
 
     /* COMEÇA VISÍVEL */
     transform: translateY(0);
     transition: transform 0.6s cubic-bezier(.77,0,.18,1);
 }
-
+@keyframes bkgAnimado {
+    0% {
+        background-position: 0% 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0% 50%;
+    }
+}
 /* anima saída (revelar página) */
 #page-transition.loaded {
     transform: translateY(-100%);
+    
+    pointer-events: none; 
 }

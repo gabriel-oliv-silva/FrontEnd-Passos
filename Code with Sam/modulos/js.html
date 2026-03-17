@@ -1701,10 +1701,10 @@ async function buscarFilmes() {
         // Validação de Código JS Unidade 6: DOM
         // Verifica se o botão realmente mudou no HTML visual da página
         const btn = document.getElementById('btn-sistema');
-        const textIsCorrect = btn.textContent === "Sistema Online";
+        const textIsCorrect = btn.textContent === "Sistema Online" || btn.textContent === "sistema online";
         // O navegador converte "green" para rgb(0, 128, 0)
         const colorIsCorrect = btn.style.backgroundColor === "green" || btn.style.backgroundColor === "rgb(0, 128, 0)";
-        const usedQuerySelector = codeSanitized.includes('queryselector');
+        const usedQuerySelector = codeSanitized.includes('queryselector') || codeSanitized.includes('querySelector');
 
         if (textIsCorrect && colorIsCorrect && usedQuerySelector) {
             isCodeCorrect = true;
@@ -1720,7 +1720,7 @@ async function buscarFilmes() {
             btnMagico.click();
 
             // Depois do clique, checamos se o aluno mudou as propriedades que pedimos
-            const textoCorreto = btnMagico.textContent.includes("Fui Clicado!");
+            const textoCorreto = btnMagico.textContent.includes("Fui Clicado!") || btnMagico.textContent.includes("fui clicado!");
             const corCorreta = btnMagico.style.backgroundColor === "green" || btnMagico.style.backgroundColor === "rgb(0, 128, 0)";
 
             if (textoCorreto && corCorreta) {
@@ -1744,8 +1744,8 @@ async function buscarFilmes() {
         if (usedFetch && usedAwait && usedJson && textChanged) {
             isCodeCorrect = true;
         } else if (!textChanged) {
-            alert("Você precisa clicar em 'Testar Requisição' para que a API busque o conselho antes de verificar!");
-            return; // Interrompe a verificação para ele testar
+            showToast("Você precisa clicar em 'Testar Requisição' para que a API busque o conselho antes de verificar!", "warning");
+            return; 
         }
     }
 
